@@ -10,7 +10,7 @@ from .core.config import config
 from .core.logger import logger
 
 
-#__all__ = "main",
+__all__ = "main",
 
 
 def main(argv=None) -> int:
@@ -41,15 +41,6 @@ def main(argv=None) -> int:
         return 1
     logger.debug("successful completion")
     return 0
-
-def paok(paok):
-    """ apokdja skd jk a
-
-    :param argv: argument ;mcsa;lcm;sdlc;lmsd;mc;asdlm;csd;mlist to parse (sys.argv by default)
-    :return: exit status
-    """
-    print("hello")
- 
 
 def _args(argv):
     """ Parse command line arguments.
