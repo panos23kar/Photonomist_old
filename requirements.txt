@@ -1,0 +1,6 @@
+## Python requirements for using the photonomist application.
+##
+##   pyhon -m pip install --requirement=requirements.txt
+##
+python-dotenv>=0.12
+PyYAML>=3.11
