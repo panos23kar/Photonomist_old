@@ -5,7 +5,8 @@
 """
 import os
 def path_exists(photo_path:str):
-    """Verifies that the provided path exists
+    """Verifies that the provided path exists.
+
     :param photo_path: path to photos
     """
     if os.path.exists(photo_path):
@@ -21,6 +22,7 @@ def main():
 
     """
     photo_path = input("Enter the path to your photos: ")
+    path_exists(photo_path)
 
 
 # Make the script executable.

@@ -18,3 +18,9 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Source Code
+=================
+
+.. automodule:: photonomist.__main__
+   :members:
