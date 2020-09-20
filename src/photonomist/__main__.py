@@ -9,9 +9,7 @@ def path_exists(photo_path:str):
 
     :param photo_path: path to photos
     """
-    if os.path.exists(photo_path):
-        return True
-    else:
+    if not os.path.exists(photo_path):
         raise FileNotFoundError("The provided path was not found!")
     
 def main():
