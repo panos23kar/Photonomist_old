@@ -11,8 +11,11 @@ environment or setuptools develop mode to test against the development version.
 import pytest
 from photonomist.__main__ import path_exists
 
-def test_invalid_path():
-    sample_path = r'blablabla'
+@pytest.mark.parametrize("sample_path", [("blablabla"), 
+                                         (0), 
+                                         (None), 
+                                         (1)])
+def test_invalid_path(sample_path):
     with pytest.raises(FileNotFoundError, match="The provided path was not found!"):
         path_exists(sample_path)
 
