@@ -5,7 +5,7 @@
 """
 import os
 
-def path_string(photo_path:str):
+def path_string(photo_path:str)->str:
     """Verifies that the provided path is string
 
     :param photo_path: path to photos
@@ -42,6 +42,13 @@ def path_items(photo_path:str):
     """
     if not os.listdir(photo_path):
         raise Exception("The provided path does not contain any files!")
+
+def path_photos(photo_path:str):
+    """Verifies that the provided path contains items with .jpg and/or .nef extension.
+
+    :param photo_path: path to photos
+    """
+    pass
     
 def main():
     """ Execute the application.

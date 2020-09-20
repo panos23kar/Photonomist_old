@@ -9,7 +9,7 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -53,6 +53,14 @@ def test_user_input_is_string(sample_path):
     """
     with pytest.raises(Exception, match="Your input is not valid!"):
         path_string(sample_path)
+
+def test_path_contains_jpg_neff_files():
+    """Test src\\photonomist\\__main__ > path_photos
+    """
+    sample_path = r'C:\repos\photonomist\src\photonomist'
+    with pytest.raises(FileNotFoundError, match="The provided path does not contain any files with .jpg or .nef extension!"):
+        path_photos(sample_path)
+
 
 # Make the script executable.
 if __name__ == "__main__":
