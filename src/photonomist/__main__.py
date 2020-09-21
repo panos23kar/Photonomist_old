@@ -87,7 +87,7 @@ def disk_space(export_path, photos_total_size):
     if free > photos_total_size:
         print('You have enough free disk space!')
     else:
-        raise Exception(f"You need at least {photos_total_size} free bytes but you only have {free} avaialable!")
+        raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")
 
 
 def main():

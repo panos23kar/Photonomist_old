@@ -97,7 +97,7 @@ def test_enough_free_disk_space(capsys):
 def test_not_enough_free_disk_space(capsys):
     sample_path = r'C:'
     photos_total_size = 5000000000000000000
-    with pytest.raises(Exception, match="You need at least 5000000000000000000 free bytes but you only have"):
+    with pytest.raises(Exception, match="You need at least 5000000001073741824 free bytes but you only have"):
         disk_space(sample_path, photos_total_size)
 
 # Make the script executable.
