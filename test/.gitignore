@@ -1,5 +1,5 @@
 # Ignore pytest cache files.
 
 .pytest_cache/
-.data/testing_empty_folder/*
-.data/testing_folder_with_paths/*
+data/testing_empty_folder/*
+data/testing_folder_with_photos/*
