@@ -9,7 +9,7 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -57,19 +57,18 @@ def test_user_input_is_string(sample_path):
 def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
     """
-    sample_path = r'C:\repos\photonomist\test\data\testing_empty_folder'
+    sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_empty_folder')
     with pytest.raises(Exception, match="The provided path does not contain any files with .jpg or .nef extension!"):
-        path_photos(sample_path)
+        path_photos(sample_photo_roots)
 
 def test_path_contains_files_extensions_jpg_nef(capsys):
     """Test src\\photonomist\\__main__ > path_photos
     """
-    sample_path = r'C:\repos\photonomist\test\data\testing_folder_with_photos'
-    path_photos(sample_path)
+    sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
+    path_photos(sample_photo_roots)
     captured = capsys.readouterr()
     assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blanef\blablanef\blablablanef' in captured.out
     assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla\blablabla' in captured.out
-
 
 
 # Make the script executable.

@@ -43,40 +43,51 @@ def path_items(photo_path:str):
     if not os.listdir(photo_path):
         raise Exception("The provided path does not contain any files!")
 
-def path_photos(photo_path:str):
-    """Verifies that the provided path contains items with .jpg and/or .nef extension.
-
+def traverse_photo_path(photo_path:str):
+    """Traverses/Identifies all the directories and files that exist under the provided path.
+   
     :param photo_path: path to photos
+    :return: A list with all paths that contain .jpg or .nef photos
     """
     photo_roots = []
     # traverse root directory, and list directories as dirs and files as files
     for root, dirs, files in os.walk(photo_path):
-        print('root-->', root)
-        print('dirs-->', dirs)
-        print('files-->', files)
-        print('-'*20)
         for _file in files:
-            if _file.endswith('jpg'.lower()) or _file.endswith('nef'.lower()):
+            if _file.lower().endswith('jpg') or _file.lower().endswith('nef'):
                 photo_roots.append(root)
     
+    return photo_roots
+
+def path_photos(photo_roots:list):
+    """Prints all the roots that contain photos. In no roots raises an error
+
+    :param photo_roots: list with all roots that contain photos
+    """
     if not photo_roots:
         raise Exception("The provided path does not contain any files with .jpg or .nef extension!")
     else:
         print('I found photos in: ')
         print(*photo_roots, sep = "\n")
+
     
 def main():
     """ Execute the application.
 
     It asks the user to specify the path to the photos.
-    It assesses the validυity of the provided path and verifies that there is enough storage space.
-
+    It assesses the validity of the provided path and verifies that there is enough storage space.
     """
+
+    # Photo path validation
     photo_path = clean_path(path_string(input("Enter the path to your photos: ")))
     path_exists(photo_path)
     path_items(photo_path)
-    path_photos(photo_path)
+
+    photo_roots = traverse_photo_path(photo_path)
+    path_photos(photo_roots)
+
+    # Export path validation
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
+    path_exists(export_path)
 
 
 # Make the script executable.
