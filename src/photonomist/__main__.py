@@ -48,7 +48,22 @@ def path_photos(photo_path:str):
 
     :param photo_path: path to photos
     """
-    pass
+    photo_roots = []
+    # traverse root directory, and list directories as dirs and files as files
+    for root, dirs, files in os.walk(photo_path):
+        print('root-->', root)
+        print('dirs-->', dirs)
+        print('files-->', files)
+        print('-'*20)
+        for _file in files:
+            if _file.endswith('jpg'.lower()) or _file.endswith('nef'.lower()):
+                photo_roots.append(root)
+    
+    if not photo_roots:
+        raise Exception("The provided path does not contain any files with .jpg or .nef extension!")
+    else:
+        print('I found photos in: ')
+        print(*photo_roots, sep = "\n")
     
 def main():
     """ Execute the application.
@@ -60,6 +75,7 @@ def main():
     photo_path = clean_path(path_string(input("Enter the path to your photos: ")))
     path_exists(photo_path)
     path_items(photo_path)
+    path_photos(photo_path)
 
 
 # Make the script executable.

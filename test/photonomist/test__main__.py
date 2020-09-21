@@ -54,12 +54,22 @@ def test_user_input_is_string(sample_path):
     with pytest.raises(Exception, match="Your input is not valid!"):
         path_string(sample_path)
 
-def test_path_contains_jpg_neff_files():
+def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
     """
-    sample_path = r'C:\repos\photonomist\src\photonomist'
-    with pytest.raises(FileNotFoundError, match="The provided path does not contain any files with .jpg or .nef extension!"):
+    sample_path = r'C:\repos\photonomist\test\data\testing_empty_folder'
+    with pytest.raises(Exception, match="The provided path does not contain any files with .jpg or .nef extension!"):
         path_photos(sample_path)
+
+def test_path_contains_files_extensions_jpg_nef(capsys):
+    """Test src\\photonomist\\__main__ > path_photos
+    """
+    sample_path = r'C:\repos\photonomist\test\data\testing_folder_with_photos'
+    path_photos(sample_path)
+    captured = capsys.readouterr()
+    assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blanef\blablanef\blablablanef' in captured.out
+    assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla\blablabla' in captured.out
+
 
 
 # Make the script executable.
