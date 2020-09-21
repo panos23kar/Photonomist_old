@@ -9,7 +9,7 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -64,7 +64,7 @@ def test_extracts_photo_roots():
     """Test src\\photonomist\\__main__ > traverse_photo_path
     """
     sample_path =  r'C:\repos\photonomist\test\data\testing_folder_with_photos'
-    assert len(traverse_photo_path(sample_path)) == 4
+    assert len(traverse_photo_path(sample_path)) == 5
 
 def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
@@ -82,6 +82,10 @@ def test_path_contains_files_extensions_jpg_nef(capsys):
     assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blanef\blablanef\blablablanef' in captured.out
     assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla\blablabla' in captured.out
 
+def test_photos_total_size():
+    sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
+    photos_total_size = photos_size(sample_photo_roots)
+    assert photos_total_size == 53316894
 
 # Make the script executable.
 if __name__ == "__main__":

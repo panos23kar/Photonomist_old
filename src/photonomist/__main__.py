@@ -54,12 +54,12 @@ def traverse_photo_path(photo_path:str):
     for root, dirs, files in os.walk(photo_path):
         for _file in files:
             if _file.lower().endswith('jpg') or _file.lower().endswith('nef'):
-                if root not in photo_roots: photo_roots.append(root)
+                if root + '\\' + _file not in photo_roots: photo_roots.append(root + '\\' + _file)
     
     return photo_roots
 
 def path_photos(photo_roots:list):
-    """Prints all the roots that contain photos. In no roots raises an error
+    """Prints all the roots that contain photos. If there aren't any roots raises an error
 
     :param photo_roots: list with all roots that contain photos
     """
@@ -69,7 +69,17 @@ def path_photos(photo_roots:list):
         print('I found photos in: ')
         print(*photo_roots, sep = "\n")
 
-    
+def photos_size(photo_roots):
+    """Calculates the size (in bytes) of all photos found in the provided path
+
+    :param photo_roots: list with all roots that contain photos
+    :return: The size in bytes of all photos
+    """
+    total_size = 0
+    for photo_root in photo_roots:
+        total_size += os.stat(photo_root).st_size
+    return total_size
+
 def main():
     """ Execute the application.
 
@@ -84,6 +94,8 @@ def main():
 
     photo_roots = traverse_photo_path(photo_path)
     path_photos(photo_roots)
+
+    photos_total_size = photos_size(photo_roots)
 
     # Export path validation
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
