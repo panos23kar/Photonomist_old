@@ -76,6 +76,7 @@ def main():
     path_exists(photo_path)
     path_items(photo_path)
     path_photos(photo_path)
+    export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
 
 
 # Make the script executable.
