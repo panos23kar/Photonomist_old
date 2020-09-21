@@ -3,7 +3,8 @@
     python -m photonomist  ...
 
 """
-import os
+import os, shutil
+
 
 def path_string(photo_path:str)->str:
     """Verifies that the provided path is string
@@ -75,10 +76,19 @@ def photos_size(photo_roots):
     :param photo_roots: list with all roots that contain photos
     :return: The size in bytes of all photos
     """
+    # It is an extra loop. I could have generated the total size in traverse_photo_path function
     total_size = 0
     for photo_root in photo_roots:
         total_size += os.stat(photo_root).st_size
     return total_size
+
+def disk_space(export_path, photos_total_size):
+    total, used, free = shutil.disk_usage(export_path)
+    if free > photos_total_size:
+        print('You have enough free disk space!')
+    else:
+        raise Exception(f"You need at least {photos_total_size} free bytes but you only have {free} avaialable!")
+
 
 def main():
     """ Execute the application.
@@ -100,6 +110,7 @@ def main():
     # Export path validation
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     path_exists(export_path)
+    disk_space(export_path, photos_total_size)
 
 
 # Make the script executable.
