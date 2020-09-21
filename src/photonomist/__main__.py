@@ -54,7 +54,7 @@ def traverse_photo_path(photo_path:str):
     for root, dirs, files in os.walk(photo_path):
         for _file in files:
             if _file.lower().endswith('jpg') or _file.lower().endswith('nef'):
-                photo_roots.append(root)
+                if root not in photo_roots: photo_roots.append(root)
     
     return photo_roots
 

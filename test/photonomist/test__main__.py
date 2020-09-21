@@ -54,6 +54,18 @@ def test_user_input_is_string(sample_path):
     with pytest.raises(Exception, match="Your input is not valid!"):
         path_string(sample_path)
 
+def test_extracts_0_photo_roots():
+    """Test src\\photonomist\\__main__ > traverse_photo_path
+    """
+    sample_path =  r'C:\repos\photonomist\test\data\testing_empty_folder'
+    assert len(traverse_photo_path(sample_path)) == 0
+
+def test_extracts_photo_roots():
+    """Test src\\photonomist\\__main__ > traverse_photo_path
+    """
+    sample_path =  r'C:\repos\photonomist\test\data\testing_folder_with_photos'
+    assert len(traverse_photo_path(sample_path)) == 4
+
 def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
     """
