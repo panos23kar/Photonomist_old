@@ -13,6 +13,12 @@ environment or setuptools develop mode to test against the development version.
 import pytest
 from photonomist.photo import Photo
 
+@pytest.fixture
+def my_photo():
+    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    my_photo = Photo(photo_path)
+    return my_photo
+
 def test_is_photo_object():
     """Test src\\photonomist\\photo.Photo> __init__
     """
@@ -20,11 +26,9 @@ def test_is_photo_object():
     my_photo = Photo(photo_path)
     assert isinstance(my_photo, Photo)
 
-def test_extract_tags_from_a_valid_photo():
+def test_extract_tags_from_a_valid_photo(my_photo):
     """Test src\\photonomist\\photo.Photo> extract_exif
     """
-    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
-    my_photo = Photo(photo_path)
     my_photo.extract_exif_tags()
     assert "EXIF DateTimeOriginal" in list(my_photo.tags.keys())
     assert "Image DateTimeOriginal" in list(my_photo.tags.keys())
@@ -37,27 +41,21 @@ def test_extract_tags_from_a_invalid_photo():
     my_photo.extract_exif_tags()
     assert my_photo.tags == 'NoTags'
 
-def test_extract_metadata():
+def test_extract_metadata(my_photo):
     """Test src\\photonomist\\photo.Photo> metadata_dict
     """
-    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
-    my_photo = Photo(photo_path)
     my_photo.metadata_dict()
     assert "DateTimeOriginal" in list(my_photo.metadata.keys())
 
-def test_extract_metadata_does_not_extract_empty_values():
+def test_extract_metadata_does_not_extract_empty_values(my_photo):
     """Test src\\photonomist\\photo.Photo> metadata_dict
     """
-    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
-    my_photo = Photo(photo_path)
     my_photo.metadata_dict()
     assert "Copyright" not in list(my_photo.metadata.keys())
 
-def test_extract_metadata_with_extracted_tags():
+def test_extract_metadata_with_extracted_tags(my_photo):
     """Test src\\photonomist\\photo.Photo> metadata_dict
     """
-    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
-    my_photo = Photo(photo_path)
     my_photo.extract_exif_tags()
     my_photo.metadata_dict()
     assert "DateTimeOriginal" in list(my_photo.metadata.keys())
