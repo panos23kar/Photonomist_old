@@ -25,11 +25,33 @@ class Photo:
             photo_file = open(self.original_path, 'rb')
             self.tags = exifread.process_file(photo_file, details=False)
         except:
-            self.tags = None
+            print("I didn't manage to extract photo's tags!")
+            self.tags = 'NoTags' # I didn't use None because of the check in metadata_dict
+
+    def metadata_dict(self):
+        """Populates the metadata dictionary with all key tags that contain values.
+        It also avoids duplicate keys with different tags:
+        *Example: 
+        Image DateTimeOriginal, value 2019:12:14 15:04:33
+        EXIF DateTimeOriginal, value 2019:12:14 15:04:33
+        *
+        """
+        # if not self.tags:
+        #     self.extract_exif_tags()
+        try:
+            self.tags
+        except:
+            self.extract_exif_tags()
+        
+        self.metadata = {}
+        for tag_key in self.tags.keys():
+            key_no_tag = tag_key.split()[1]
+            if (len(str(self.tags[tag_key]))>0) and (key_no_tag not in self.metadata): #len(str(self.tags[tag_key]))>0 because ``if self.tags[tag_key]`` doesn't work
+                self.metadata[key_no_tag] = self.tags[tag_key]
 
 if __name__ == "__main__":
     kati = Photo(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
-    kati.extract_exif_tags()
-    #print(type(tags))
-    for tag in kati.tags.keys():
-        print(f"Key: {tag}, value {kati.tags[tag]}")
+    #kati.extract_exif_tags()
+    kati.metadata_dict()
+    for key,value in kati.metadata.items():
+        print(f"key--> {key} \t\t value--> {value}")

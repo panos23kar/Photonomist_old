@@ -35,7 +35,29 @@ def test_extract_tags_from_a_invalid_photo():
     photo_path = r"a\\random\\path\\to\\a\\photo"
     my_photo = Photo(photo_path)
     my_photo.extract_exif_tags()
-    assert my_photo.tags is None
+    assert my_photo.tags == 'NoTags'
 
 def test_extract_metadata():
-    pass
+    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """
+    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    my_photo = Photo(photo_path)
+    my_photo.metadata_dict()
+    assert "DateTimeOriginal" in list(my_photo.metadata.keys())
+
+def test_extract_metadata_does_not_extract_empty_values():
+    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """
+    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    my_photo = Photo(photo_path)
+    my_photo.metadata_dict()
+    assert "Copyright" not in list(my_photo.metadata.keys())
+
+def test_extract_metadata_with_extracted_tags():
+    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """
+    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    my_photo = Photo(photo_path)
+    my_photo.extract_exif_tags()
+    my_photo.metadata_dict()
+    assert "DateTimeOriginal" in list(my_photo.metadata.keys())
