@@ -12,3 +12,11 @@ environment or setuptools develop mode to test against the development version.
 
 import pytest
 from photonomist.photo import Photo
+
+def test_is_photo_object():
+    """Test src\\photonomist\\photo.Photo> __init__
+
+    """
+    photo_path = r"a\\random\\path\\to\\a\\photo"
+    my_photo = Photo(photo_path)
+    assert isinstance(my_photo, Photo)
