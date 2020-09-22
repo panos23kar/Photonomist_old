@@ -1,6 +1,6 @@
 """Test suite for the __main__ module.
 
-This tesy suite aims to test user's input and its validity!
+This test suite aims to test user's input and its validity!
 
 The script can be executed on its own or incorporated into a larger test suite.
 However the tests are run, be aware of which version of the module is actually
