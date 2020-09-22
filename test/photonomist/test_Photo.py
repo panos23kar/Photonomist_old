@@ -15,8 +15,27 @@ from photonomist.photo import Photo
 
 def test_is_photo_object():
     """Test src\\photonomist\\photo.Photo> __init__
-
     """
     photo_path = r"a\\random\\path\\to\\a\\photo"
     my_photo = Photo(photo_path)
     assert isinstance(my_photo, Photo)
+
+def test_extract_tags_from_a_valid_photo():
+    """Test src\\photonomist\\photo.Photo> extract_exif
+    """
+    photo_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    my_photo = Photo(photo_path)
+    my_photo.extract_exif_tags()
+    assert "EXIF DateTimeOriginal" in list(my_photo.tags.keys())
+    assert "Image DateTimeOriginal" in list(my_photo.tags.keys())
+
+def test_extract_tags_from_a_invalid_photo():
+    """Test src\\photonomist\\photo.Photo> extract_exif_tags
+    """
+    photo_path = r"a\\random\\path\\to\\a\\photo"
+    my_photo = Photo(photo_path)
+    my_photo.extract_exif_tags()
+    assert my_photo.tags is None
+
+def test_extract_metadata():
+    pass
