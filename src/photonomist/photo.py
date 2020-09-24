@@ -36,9 +36,7 @@ class Photo:
         EXIF DateTimeOriginal, value 2019:12:14 15:04:33
         *
         """
-        # if not self.tags:
-        #     self.extract_exif_tags()
-        try:
+        try: #TODO move to __init__
             self.tags
         except:
             self.extract_exif_tags()
@@ -49,9 +47,25 @@ class Photo:
             if (len(str(self.tags[tag_key]))>0) and (key_no_tag not in self.metadata): #len(str(self.tags[tag_key]))>0 because ``if self.tags[tag_key]`` doesn't work
                 self.metadata[key_no_tag] = self.tags[tag_key]
 
+    def get_date(self):
+        """Returns the date of a photo from the metadata dictionary
+        
+        :return: date of photo
+        :rtype: str
+        """
+        try:#TODO move to __init__
+            self.metadata
+        except:
+            self.metadata_dict()
+
+        date = str(self.metadata["DateTimeDigitized"]).split()[0]
+        return date
+
+
 if __name__ == "__main__":
     kati = Photo(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
     #kati.extract_exif_tags()
-    kati.metadata_dict()
-    for key,value in kati.metadata.items():
-        print(f"key--> {key} \t\t value--> {value}")
+    #kati.metadata_dict()
+    # for key,value in kati.metadata.items():
+    #     print(f"key--> {key} \t\t value--> {value}")
+    print(kati.get_date())

@@ -59,3 +59,8 @@ def test_extract_metadata_with_extracted_tags(my_photo):
     my_photo.extract_exif_tags()
     my_photo.metadata_dict()
     assert "DateTimeOriginal" in list(my_photo.metadata.keys())
+
+def test_return_date(my_photo):
+    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """
+    assert "2019:12:14" == my_photo.get_date()
