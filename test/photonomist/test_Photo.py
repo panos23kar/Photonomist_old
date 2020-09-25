@@ -11,6 +11,7 @@ environment or setuptools develop mode to test against the development version.
 """
 
 import pytest
+import os
 from photonomist.photo import Photo
 
 @pytest.fixture
@@ -64,3 +65,16 @@ def test_return_date(my_photo):
     """Test src\\photonomist\\photo.Photo> metadata_dict
     """
     assert "2019:12:14" == my_photo.get_date()
+
+def test_move_to_photo_to_other_folder(my_photo):
+    """Test src\\photonomist\\photo.Photo> move_to_folder
+    """
+    new_dir = r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder"
+    my_photo.move_to_folder(new_dir)
+    file_list = os.listdir(new_dir)
+    assert "DSC_0262.NEF" in file_list
+
+def test_object_name_is_photo_name(my_photo, capsys):
+    print(my_photo, end='')
+    captured = capsys.readouterr()
+    assert captured.out == "DSC_0262.NEF"

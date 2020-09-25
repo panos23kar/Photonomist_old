@@ -24,3 +24,6 @@ Source Code
 
 .. automodule:: photonomist.__main__
    :members:
+
+.. automodule:: photonomist.photo
+   :members:
