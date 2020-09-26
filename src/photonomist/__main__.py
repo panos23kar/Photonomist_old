@@ -4,7 +4,7 @@
 
 """
 import os, shutil
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(photo_path:str)->str:
@@ -166,7 +166,8 @@ def main():
     # Iterate over list of photos
     date_set = set()
     for photo_path in photo_roots:
-        date = Photo(photo_path).get_date()
+        curr_photo = Photo(photo_path)
+        date = curr_photo.get_date()
         
         if date:
             date_set.add(date)
@@ -174,6 +175,8 @@ def main():
             if not dir_name_exists(photo_folder_name, export_path):
                 # I dont simply use the dataset because the dir might exist from the past
                 create_photo_dir(photo_folder_name, export_path)
+            
+            curr_photo.move_to_folder(os.path.join(export_path, photo_folder_name))
 
     
     for dt in date_set:
