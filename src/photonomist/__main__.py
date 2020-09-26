@@ -72,7 +72,7 @@ def path_photos(photo_roots:list):
         print('I found photos in: ')
         print(*photo_roots, sep = "\n")
 
-def photos_size(photo_roots):
+def photos_size(photo_roots:list)->int:
     """Calculates the size (in bytes) of all photos found in the provided path
 
     :param photo_roots: list with all roots that contain photos
@@ -84,7 +84,15 @@ def photos_size(photo_roots):
         total_size += os.stat(photo_root).st_size
     return total_size
 
-def disk_space(export_path, photos_total_size):
+def disk_space(export_path:str, photos_total_size:int):
+    """Calculates the total, used and free space of the exported path disk.
+    If the total size of the photos is greater than the free, it raises an exception.
+
+    :param export_path: path to the dir where the photo folder structure will be created
+    :type export_path: str
+    :param photos_total_size: the total size of photos which identified in the provided 'input' path
+    :type photos_total_size: int
+    """
     total, used, free = shutil.disk_usage(export_path)
     if free > photos_total_size:
         print('You have enough free disk space!')

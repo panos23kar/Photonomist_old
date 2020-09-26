@@ -74,7 +74,7 @@ class Photo:
         """Moves the photo to a new directory.
         If directory doesn't exist it creates one
 
-        :param new_folder_path: 
+        :param new_folder_path: the path to dir where the photo will be moved to
         :type new_folder_path: str
         """
         new_path = os.path.join(new_folder_path, self.__str__())        
