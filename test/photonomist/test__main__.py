@@ -9,7 +9,7 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -99,6 +99,11 @@ def test_not_enough_free_disk_space(capsys):
     photos_total_size = 5000000000000000000
     with pytest.raises(Exception, match="You need at least 5000000001073741824 free bytes but you only have"):
         disk_space(sample_path, photos_total_size)
+
+def test_create_photo_folder_name():
+    date = "2016:12:17"
+    export_path = r"C:\Users\potis\Pictures\2016\blabla"
+    assert "2016_12_17_place_reason_people" == photo_dir_name(date, export_path)
 
 # Make the script executable.
 if __name__ == "__main__":
