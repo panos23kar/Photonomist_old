@@ -118,6 +118,19 @@ def photo_dir_name(date:str):
     year, month, day = date.split(':')
     return f"{year}_{month}_{day}_place_reason_people"
 
+def dir_name_exists(dir_name:str, export_path:str):
+    """ Checks if the name of a folder already contains the date of a photo
+
+    :param dir_name: name of the folder to check if exists
+    :type dir_name: str
+    :param export_path: path to the dir where the photo folder will be created
+    :type export_path: str
+    """
+    for folder_name in os.walk(export_path):
+        if os.path.join(export_path, dir_name) == folder_name[0]: 
+            return True
+    return False
+
 def main():
     """ Execute the application.
 
@@ -156,4 +169,7 @@ def main():
 # Make the script executable.
 
 if __name__ == "__main__":
+    dir_name = "2016_12_17_place_reason_people"
+    export_path = r"C:\Users\potis\Pictures\2016\blabla"
+    dir_name_exists(dir_name, export_path)
     raise SystemExit(main())

@@ -9,7 +9,7 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -83,11 +83,15 @@ def test_path_contains_files_extensions_jpg_nef(capsys):
     assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla\blablabla' in captured.out
 
 def test_photos_total_size():
+    """Test src\\photonomist\\__main__ > photos_size
+    """
     sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
     photos_total_size = photos_size(sample_photo_roots)
     assert photos_total_size == 53316894
 
 def test_enough_free_disk_space(capsys):
+    """Test src\\photonomist\\__main__ > disk_space
+    """
     sample_path = r'C:'
     photos_total_size = 500
     disk_space(sample_path, photos_total_size)
@@ -95,15 +99,33 @@ def test_enough_free_disk_space(capsys):
     assert 'You have enough free disk space!' in captured.out
 
 def test_not_enough_free_disk_space(capsys):
+    """Test src\\photonomist\\__main__ > disk_space
+    """
     sample_path = r'C:'
     photos_total_size = 5000000000000000000
     with pytest.raises(Exception, match="You need at least 5000000001073741824 free bytes but you only have"):
         disk_space(sample_path, photos_total_size)
 
 def test_create_photo_folder_name():
+    """Test src\\photonomist\\__main__ > photo_dir_name
+    """
     date = "2016:12:17"
+    assert "2016_12_17_place_reason_people" == photo_dir_name(date)
+
+def test_photo_folder_exist_in_export_path():
+    """Test src\\photonomist\\__main__ > dir_name_exists
+    """
+    dir_name = "2016_12_17_place_reason_people"
     export_path = r"C:\Users\potis\Pictures\2016\blabla"
-    assert "2016_12_17_place_reason_people" == photo_dir_name(date, export_path)
+    assert dir_name_exists(dir_name, export_path) == True
+
+def test_photo_folder_does_not_exist_in_export_path():
+    """Test src\\photonomist\\__main__ > dir_name_exists
+    """
+    dir_name = "random_random"
+    export_path = r"C:\Users\potis\Pictures\2016\blabla"
+    assert dir_name_exists(dir_name, export_path) == False
+
 
 # Make the script executable.
 if __name__ == "__main__":
