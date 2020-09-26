@@ -71,7 +71,8 @@ class Photo:
         return date
     
     def move_to_folder(self, new_folder_path:str):
-        """Moves the photo to a new directory
+        """Moves the photo to a new directory.
+        If directory doesn't exist it creates one
 
         :param new_folder_path: 
         :type new_folder_path: str
