@@ -40,7 +40,7 @@ def test_extract_tags_from_a_invalid_photo():
     photo_path = r"a\\random\\path\\to\\a\\photo"
     my_photo = Photo(photo_path)
     my_photo.extract_exif_tags()
-    assert my_photo.tags == 'NoTags'
+    assert my_photo.tags == {}
 
 def test_extract_metadata(my_photo):
     """Test src\\photonomist\\photo.Photo> metadata_dict
