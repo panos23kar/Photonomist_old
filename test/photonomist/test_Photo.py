@@ -62,9 +62,16 @@ def test_extract_metadata_with_extracted_tags(my_photo):
     assert "DateTimeOriginal" in list(my_photo.metadata.keys())
 
 def test_return_date(my_photo):
-    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """Test src\\photonomist\\photo.Photo> get_date
     """
     assert "2019:12:14" == my_photo.get_date()
+
+def test_date_return_none_if_no_metadata():
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    photo_path = r"a\random\path\to\a\photo"
+    my_photo = Photo(photo_path)
+    assert None == my_photo.get_date()
 
 @pytest.fixture()
 def move_photo_del_folder():

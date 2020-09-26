@@ -48,9 +48,9 @@ class Photo:
         | *EXIF DateTimeOriginal, value 2019:12:14 15:04:33*
         """
         self.extract_exif_tags()
+        self.metadata = {}
         
         if self.tags:
-            self.metadata = {}
             for tag_key in self.tags.keys():
                 key_no_tag = tag_key.split()[1]
                 if (len(str(self.tags[tag_key]))>0) and (key_no_tag not in self.metadata): #len(str(self.tags[tag_key]))>0 because ``if self.tags[tag_key]`` doesn't work
