@@ -4,6 +4,7 @@
 
 """
 import os, shutil
+from .photo import Photo
 
 
 def path_string(photo_path:str)->str:
@@ -46,6 +47,7 @@ def path_items(photo_path:str):
 
 def traverse_photo_path(photo_path:str):
     """Traverses/Identifies all the directories and files that exist under the provided path.
+    If there are any .jpg or .nef files, they are added to the list.
    
     :param photo_path: path to photos
     :return: A list with all paths that contain .jpg or .nef photos

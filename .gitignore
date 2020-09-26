@@ -40,3 +40,4 @@ Thumbs.db
 
 # Ignore coverage file from pytest lib
 .coverage
+htmlcov/
