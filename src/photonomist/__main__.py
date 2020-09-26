@@ -131,6 +131,16 @@ def dir_name_exists(dir_name:str, export_path:str):
             return True
     return False
 
+def create_photo_dir(dir_name:str, export_path:str):
+    """ Creates a folder with the specified name
+
+    :param dir_name: name of the folder to create
+    :type dir_name: str
+    :param export_path: path to the dir where the photo folder will be created
+    :type export_path: str
+    """
+    os.makedirs(os.path.join(export_path, dir_name))
+
 def main():
     """ Execute the application.
 
@@ -157,11 +167,14 @@ def main():
     date_set = set()
     for photo_path in photo_roots:
         date = Photo(photo_path).get_date()
-        photo_dir_name(date)
         
         if date:
             date_set.add(date)
-            #print(date)
+            photo_folder_name = photo_dir_name(date)
+            if not dir_name_exists(photo_folder_name, export_path):
+                # I dont simply use the dataset because the dir might exist from the past
+                create_photo_dir(photo_folder_name, export_path)
+
     
     for dt in date_set:
         print(dt)
@@ -169,7 +182,4 @@ def main():
 # Make the script executable.
 
 if __name__ == "__main__":
-    dir_name = "2016_12_17_place_reason_people"
-    export_path = r"C:\Users\potis\Pictures\2016\blabla"
-    dir_name_exists(dir_name, export_path)
     raise SystemExit(main())

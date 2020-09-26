@@ -9,7 +9,8 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists
+import os
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -125,6 +126,20 @@ def test_photo_folder_does_not_exist_in_export_path():
     dir_name = "random_random"
     export_path = r"C:\Users\potis\Pictures\2016\blabla"
     assert dir_name_exists(dir_name, export_path) == False
+
+@pytest.fixture()
+def delete_folder_after_test():
+    delete_folder_after_test = "1990_07_23_place_reason_people"
+    yield delete_folder_after_test
+    os.rmdir(r"C:\Users\potis\Pictures\2016\blabla\1990_07_23_place_reason_people")
+
+def test_create_photo_folder(delete_folder_after_test):
+    """Test src\\photonomist\\__main__ > create_photo_dir
+    """
+    dir_name = delete_folder_after_test
+    export_path = r"C:\Users\potis\Pictures\2016\blabla"
+    create_photo_dir(dir_name, export_path)
+    assert r"1990_07_23_place_reason_people" in os.listdir(export_path)
 
 
 # Make the script executable.
