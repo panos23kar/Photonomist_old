@@ -153,9 +153,11 @@ def main():
     path_exists(photo_path)
     path_items(photo_path)
 
+    # Extract paths to photos
     photo_roots = traverse_photo_path(photo_path)
     path_photos(photo_roots)
 
+    # Total size of the photos to be transferred
     photos_total_size = photos_size(photo_roots)
 
     # Export path validation
@@ -177,10 +179,6 @@ def main():
                 create_photo_dir(photo_folder_name, export_path)
             
             curr_photo.move_to_folder(os.path.join(export_path, photo_folder_name))
-
-    
-    for dt in date_set:
-        print(dt)
 
 # Make the script executable.
 
