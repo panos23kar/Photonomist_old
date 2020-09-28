@@ -9,8 +9,8 @@ precedence over the version in this project directory. Use a virtualenv test
 environment or setuptools develop mode to test against the development version.
 """
 import pytest
-import os
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir
+import os, shutil
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -140,6 +140,21 @@ def test_create_photo_folder(delete_folder_after_test):
     export_path = r"C:\Users\potis\Pictures\2016\blabla"
     create_photo_dir(dir_name, export_path)
     assert r"1990_07_23_place_reason_people" in os.listdir(export_path)
+
+@pytest.fixture()
+def move_photo_del_folder():
+    move_photo_del_folder = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    yield move_photo_del_folder
+    shutil.move(r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people\DSC_0262.NEF", r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    os.rmdir(r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
+    os.rmdir(r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder")
+
+def test_transfer_photo_to_another_folder_if_it_has_valid_date(move_photo_del_folder):
+    """Test src\\photonomist\\__main__ > transfer__photo
+    """
+    export_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder"
+    transfer_photo(move_photo_del_folder, export_path)
+    assert "DSC_0262.NEF" in os.listdir(r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
 
 
 # Make the script executable.

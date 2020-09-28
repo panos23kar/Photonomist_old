@@ -141,11 +141,27 @@ def create_photo_dir(dir_name:str, export_path:str):
     """
     os.makedirs(os.path.join(export_path, dir_name))
 
-def main():
-    """ Execute the application.
+def transfer_photo(photo_path:str, export_path:str):
+    """ Transfers a photo to a date folder, if date was extracted.
 
-    It asks the user to specify the path to the photos.
-    It assesses the validity of the provided path and verifies that there is enough storage space.
+    :param photo_path: path to photo
+    :type photo_path: str
+    :param export_path: path to the dir where the photo folder will be created
+    :type export_path: str
+    """
+    photo = Photo(photo_path)
+    date = photo.get_date()
+    
+    if date:
+        photo_folder_name = photo_dir_name(date)
+        if not dir_name_exists(photo_folder_name, export_path):
+            # I dont simply use a set because the photo_dir might exist from the past
+            create_photo_dir(photo_folder_name, export_path)
+        photo.move_to_folder(os.path.join(export_path, photo_folder_name))
+
+def main():
+    """ Executes the application. It is responsible for getting the user's input, asserting its validity
+    and initiate the transfer process
     """
 
     # Photo path validation
@@ -166,21 +182,9 @@ def main():
     disk_space(export_path, photos_total_size)
 
     # Iterate over list of photos
-    date_set = set()
     for photo_path in photo_roots:
-        curr_photo = Photo(photo_path)
-        date = curr_photo.get_date()
-        
-        if date:
-            date_set.add(date)
-            photo_folder_name = photo_dir_name(date)
-            if not dir_name_exists(photo_folder_name, export_path):
-                # I dont simply use the dataset because the dir might exist from the past
-                create_photo_dir(photo_folder_name, export_path)
-            
-            curr_photo.move_to_folder(os.path.join(export_path, photo_folder_name))
-
+        transfer_photo(photo_path, export_path)
+ 
 # Make the script executable.
-
 if __name__ == "__main__":
     raise SystemExit(main())
