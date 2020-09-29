@@ -10,7 +10,7 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -155,6 +155,20 @@ def test_transfer_photo_to_another_folder_if_it_has_valid_date(move_photo_del_fo
     export_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder"
     transfer_photo(move_photo_del_folder, export_path)
     assert "DSC_0262.NEF" in os.listdir(r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
+
+def test_if_export_and_input_paths_point_to_the_same_disk():
+    """Test src\\photonomist\\__main__ > paths_same_disk
+    """
+    photos_path = r"C:\a\random\path\to\photos"
+    export_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder"
+    assert paths_same_disk(photos_path, export_path) == True
+
+def test_if_export_and_input_paths_do_not_point_to_the_same_disk():
+    """Test src\\photonomist\\__main__ > paths_same_disk
+    """
+    photos_path = r"G:\DCIM\104D5500"
+    export_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos"
+    assert paths_same_disk(photos_path, export_path) == False
 
 
 # Make the script executable.

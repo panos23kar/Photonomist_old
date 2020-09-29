@@ -165,12 +165,12 @@ def main():
     """
 
     # Photo path validation
-    photo_path = clean_path(path_string(input("Enter the path to your photos: ")))
-    path_exists(photo_path)
-    path_items(photo_path)
+    photos_path = clean_path(path_string(input("Enter the path to your photos: ")))
+    path_exists(photos_path)
+    path_items(photos_path)
 
     # Extract paths to photos
-    photo_roots = traverse_photo_path(photo_path)
+    photo_roots = traverse_photo_path(photos_path)
     path_photos(photo_roots)
 
     # Total size of the photos to be transferred
