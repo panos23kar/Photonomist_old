@@ -63,7 +63,7 @@ class Photo:
         :rtype: str
         """
         if self.metadata:
-            date = str(self.metadata["DateTimeDigitized"]).split()[0]
+            date = str(self.metadata["DateTimeOriginal"]).split()[0]
             return date
         else:
             return None
