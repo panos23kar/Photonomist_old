@@ -84,6 +84,16 @@ def photos_size(photo_roots:list)->int:
         total_size += os.stat(photo_root).st_size
     return total_size
 
+def paths_same_disk(photos_path:str, export_path:str):
+    """Checks if the input photos paths and export path are "located" on the same disk
+
+    :param photos_path: path to photos
+    :type photos_path: str
+    :param export_path: path to the dir where the photo folder structure will be created
+    :type export_path: str
+    """
+    return True if photos_path[0].lower() == export_path[0].lower() else False
+
 def disk_space(export_path:str, photos_total_size:int):
     """Calculates the total, used and free space of the exported path disk.
     If the total size of the photos is greater than the free, it raises an exception.
