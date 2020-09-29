@@ -183,15 +183,13 @@ def main():
     photo_roots = traverse_photo_path(photos_path)
     path_photos(photo_roots)
 
-    # Total size of the photos to be transferred
-    photos_total_size = photos_size(photo_roots)
-
     # Export path validation
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     path_exists(export_path)
 
     # Disk space validation
     if not paths_same_disk:
+        photos_total_size = photos_size(photo_roots)
         disk_space(export_path, photos_total_size)
 
     # Iterate over list of photos
