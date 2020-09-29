@@ -151,6 +151,17 @@ def create_photo_dir(dir_name:str, export_path:str):
     """
     os.makedirs(os.path.join(export_path, dir_name))
 
+def write_not_transferred_photos(photo_path:str, export_path:str):
+    """Writes the paths of the photos that was not possible to be transferred. 
+
+    :param photo_path: path to photo
+    :type photo_path: str
+    :param export_path: path to the dir where the photo folder will be created
+    :type export_path: str
+    """
+    with open(export_path + "not_transerred.txt", "a") as myfile:
+        myfile.write(photo_path + "\n")
+
 def transfer_photo(photo_path:str, export_path:str):
     """ Transfers a photo to a date folder, if date was extracted.
 
@@ -168,6 +179,8 @@ def transfer_photo(photo_path:str, export_path:str):
             # I dont simply use a set because the photo_dir might exist from the past
             create_photo_dir(photo_folder_name, export_path)
         photo.move_to_folder(os.path.join(export_path, photo_folder_name))
+    else:
+        write_not_transferred_photos(photo_path, export_path)
 
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
