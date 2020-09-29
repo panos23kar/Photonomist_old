@@ -189,7 +189,10 @@ def main():
     # Export path validation
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     path_exists(export_path)
-    disk_space(export_path, photos_total_size)
+
+    # Disk space validation
+    if not paths_same_disk:
+        disk_space(export_path, photos_total_size)
 
     # Iterate over list of photos
     for photo_path in photo_roots:
