@@ -62,7 +62,8 @@ class Photo:
         :return: date of photo
         :rtype: str
         """
-        if self.metadata:
+        if self.metadata and "DateTimeOriginal" in self.metadata:
+        #if self.metadata:
             date = str(self.metadata["DateTimeOriginal"]).split()[0]
             return date
         else:
@@ -92,5 +93,6 @@ if __name__ == "__main__":
     #     print(f"key--> {key} \t\t value--> {value}")
     #print(kati)
     #kati.move_to_folder(r"C:\repos\photonomist\test\data\testing_folder_with_photos\move_folder")
-    photo_path = r"C:\Users\potis\Pictures\2016\2016-08-31\IMG-20160831-WA0020.jpg"
-    my_photo = Photo(photo_path)
+    #photo_path = r"C:\Users\potis\Pictures\2016\2016-08-31\IMG-20160831-WA0020.jpg"
+    photo_path = r"C:\Users\potis\Pictures\pesentation_conference.JPG"
+    my_photo = Photo(photo_path).get_date()
