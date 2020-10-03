@@ -20,17 +20,21 @@ def path_string(path:str)->str:
         raise Exception("Your input is not a valid path!") #TODO Log it
     return path
 
-def clean_path(photos_path:str)->str:
-    """Removes second quotes/apostrophes in case that a user has typed/pasted the path with quote.
+def clean_path(path:str)->str:
+    """Removes redundant quotes/apostrophes from the provided path.
+    (In case a user has typed/pasted the path with quotes)
 
-    :param photos_path: 'raw' path to photos
-    :return: path to photos without redundant quotes
+    :param path: 'raw' path
+    :type path: str
+
+    :return: path without redundant quotes
+    :rtype: str
     """
-    if ord(photos_path[0]) == 34 or ord(photos_path[0])==39:
-        photos_path = photos_path[1:]
-    if ord(photos_path[-1]) == 34 or ord(photos_path[-1])==39:
-        photos_path = photos_path[:-1]
-    return photos_path
+    if ord(path[0]) == 34 or ord(path[0])==39:
+        path = path[1:]
+    if ord(path[-1]) == 34 or ord(path[-1])==39:
+        path = path[:-1]
+    return path
 
 def path_exists(photos_path:str):
     """Verifies that the provided path exists.
