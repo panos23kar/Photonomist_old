@@ -88,12 +88,16 @@ def path_photos(photos_roots:list):
         print(*photos_roots, sep = "\n")
 
 def photos_size(photos_roots:list)->int:
-    """Calculates the size (in bytes) of all photos found in the provided path
+    """Calculates the size (in bytes) of all photos found in the provided path.
 
-    :param photos_roots: list with all roots that contain photos
-    :return: The size in bytes of all photos
+    :param photos_roots: a list with all the roots that point to photos
+    :type path: list
+
+    :return: The total size (in bytes) of photos
+    :rtype: int
     """
     # It is an extra loop. I could have generated the total size in traverse_photo_path function
+    # With the extra function is more readdable and testable
     total_size = 0
     for photo_root in photos_roots:
         total_size += os.stat(photo_root).st_size
