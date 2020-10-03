@@ -52,7 +52,7 @@ def test_user_input_is_string(sample_path):
 
     Parametrized to test invalid int, floats, boolean and NoneType arguments.
     """
-    with pytest.raises(Exception, match="Your input is not valid!"):
+    with pytest.raises(Exception, match="Your input is not a valid path!"):
         path_string(sample_path)
 
 def test_extracts_0_photo_roots():
