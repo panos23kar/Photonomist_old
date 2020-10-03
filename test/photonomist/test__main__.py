@@ -10,7 +10,7 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -170,6 +170,25 @@ def test_if_export_and_input_paths_do_not_point_to_the_same_disk():
     export_path = r"C:\repos\photonomist\test\data\testing_folder_with_photos"
     assert paths_same_disk(photos_path, export_path) == False
 
+def test_input_path_validation_path_exists():
+    """ Test for src\\photonomist\\__main__ > input_path_validation
+    """
+    sample_path = "blablabla"
+    with pytest.raises(FileNotFoundError, match="The provided path was not found!"):
+        input_path_validation(sample_path)
+
+def test_input_path_validation_path_items():
+    """ Test for src\\photonomist\\__main__ > input_path_validation
+    """
+    sample_path = r'test\data\testing_empty_folder'
+    with pytest.raises(Exception, match="The provided path does not contain any files!"):
+        input_path_validation(sample_path)
+
+def test_input_path_validation_traverse_photos_path():
+    """ Test for src\\photonomist\\__main__ > input_path_validation
+    """
+    sample_path =  r'C:\repos\photonomist\test\data\testing_folder_with_photos'
+    assert len(input_path_validation(sample_path)) == 5
 
 # Make the script executable.
 if __name__ == "__main__":

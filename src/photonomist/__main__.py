@@ -240,7 +240,6 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
