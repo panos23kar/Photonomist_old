@@ -64,6 +64,7 @@ def traverse_photos_path(photos_path:str)->list:
     :return: A list with all paths to .jpg or .nef photos
     :rtype: list
     """
+    # I could have uused a tuple and overwrite at each iteration
     photos_roots = []
 
     # traverse root directory, and list directories as dirs and files as files. List comp was less readable
