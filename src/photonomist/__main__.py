@@ -147,12 +147,12 @@ def photo_dir_name(date:str)->str:
     year, month, day = date.split(':')
     return f"{year}_{month}_{day}_place_reason_people"
 
-def dir_name_exists(dir_name:str, export_path:str):
-    """ Checks if the name of a folder already contains the date of a photo
+def dir_name_exists(dir_name:str, export_path:str)->bool:
+    """Checks if a folder's name already contains the date of a photo
 
-    :param dir_name: name of the folder to check if exists
+    :param dir_name: the folder's name to check if exists
     :type dir_name: str
-    :param export_path: path to the dir where the photo folder will be created
+    :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
     """
     for folder_name in os.walk(export_path):
