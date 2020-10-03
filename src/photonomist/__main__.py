@@ -128,21 +128,21 @@ def disk_space(export_path:str, photos_total_size:int):
     else:
         raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
-def photo_dir_name(date:str):
+def photo_dir_name(date:str)->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
-    | Directory name pattern: year_month_day_place_reason_people
-    | **Year**: The year that the photo was captured (photo's metadata)
-    | **Month** : The month that the photo was captured (photo's metadata)
-    | **Day** : The day that the photo was captured (photo's metadata)
-    | **Place** : The city/location/place where the photo was captured (user defined)
-    | **Reason** : The reason why you were there (Ex.: vacation, photo shooting, work) (user defined)
-    | **People** : People with whom you were there (Ex.: family, friend1,friend2, boss) (user defined)
+    | Name pattern: year_month_day_place_reason_people
+    | **Year**      : The year when the photo was captured (photo's metadata)
+    | **Month**     : The month when the photo was captured (photo's metadata)
+    | **Day**       : The day when the photo was captured (photo's metadata)
+    | **Place**     : The city/location/place where the photo was captured (user defined)
+    | **Reason**    : The reason why you were there (Ex.: vacation, photo shooting, work) (user defined)
+    | **People**    : People with whom you were there (Ex.: family, friend1,friend2, boss) (user defined)
     
-    :param date: date that will be used as the first three elements of the folder name
+    :param date: the date which will be used to populate the first three elements of the folder name
     :type date: str
-    :param export_path: path to the dir where the photo folder will be created
-    :type export_path: str
+    :return: the wonna be directory name
+    :rtype: str
     """
     year, month, day = date.split(':')
     return f"{year}_{month}_{day}_place_reason_people"
