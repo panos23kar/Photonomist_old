@@ -36,13 +36,14 @@ def clean_path(path:str)->str:
         path = path[:-1]
     return path
 
-def path_exists(photos_path:str):
+def path_exists(path:str):
     """Verifies that the provided path exists.
 
-    :param photos_path: path to photos
+    :param path: provided path
+    :type path: str
     """
-    if not os.path.exists(photos_path):
-        raise FileNotFoundError("The provided path was not found!")
+    if not os.path.exists(path):
+        raise FileNotFoundError("The provided path was not found!")#TODO Log it
 
 def path_items(photos_path:str):
     """Verifies that the provided path contains items (not only photos).
@@ -50,7 +51,7 @@ def path_items(photos_path:str):
     :param photos_path: path to photos
     """
     if not os.listdir(photos_path):
-        raise Exception("The provided path does not contain any files!")
+        raise Exception("The provided path does not contain any files!")#TODO Log it
 
 def traverse_photos_path(photos_path:str):
     """Traverses/Identifies all the directories and files that exist under the provided path.
@@ -74,7 +75,7 @@ def path_photos(photos_roots:list):
     :param photos_roots: list with all roots that contain photos
     """
     if not photos_roots:
-        raise Exception("The provided path does not contain any files with .jpg or .nef extension!")
+        raise Exception("The provided path does not contain any files with .jpg or .nef extension!")#TODO Log it
     else:
         print('I found photos in: ')
         print(*photos_roots, sep = "\n")
@@ -114,7 +115,7 @@ def disk_space(export_path:str, photos_total_size:int):
     if free > photos_total_size:
         print('You have enough free disk space!')
     else:
-        raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")
+        raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
 def photo_dir_name(date:str):
     """Generates the name of the folder where the photos will be moved according to their dates.
