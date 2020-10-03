@@ -104,22 +104,22 @@ def photos_size(photos_roots:list)->int:
     return total_size
 
 def paths_same_disk(photos_path:str, export_path:str)->bool:
-    """Checks if the input photos path and export path are "located" on the same disk
+    """Checks if the provided input path and the export path are "located" on the same disk.
 
     :param photos_path: path to photos
     :type photos_path: str
-    :param export_path: path to the dir where the photo folder structure will be created
+    :param export_path: path to the directory where the photo folder structure will be created
     :type export_path: str
     """
     return True if photos_path[0].lower() == export_path[0].lower() else False
 
 def disk_space(export_path:str, photos_total_size:int):
-    """Calculates the total, used and free space of the exported path disk.
-    If the total size of the photos is greater than the free, it raises an exception.
+    """Obtains the total, used and free space of the exported path disk.
+    If the total size of the photos is greater than the free space, it raises an exception.
 
-    :param export_path: path to the dir where the photo folder structure will be created
+    :param export_path: path to the directory where the photo folder structure will be created
     :type export_path: str
-    :param photos_total_size: the total size of photos which identified in the provided 'input' path
+    :param photos_total_size: the total size of photos which were identified in the provided input path
     :type photos_total_size: int
     """
     total, used, free = shutil.disk_usage(export_path)
