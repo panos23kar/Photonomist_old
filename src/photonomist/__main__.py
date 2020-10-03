@@ -1,21 +1,24 @@
-""" Main application entry point.
+""" Main application // Entry point.
 
-    python -m photonomist  ...
-
+    Run the application (via Command Prompt):
+        python -m photonomist
 """
 import os, shutil
 from .photo import Photo
 
 
-def path_string(photos_path:str)->str:
-    """Verifies that the provided path is string
+def path_string(path:str)->str:
+    """Verifies that the provided path is of type string.
 
-    :param photos_path: path to photos
-    :return: photo to paths
+    :param path: provided path
+    :type path: str
+
+    :return: provided path
+    :rtype: str
     """
-    if (photos_path is None) or (type(photos_path) != str) or (len(photos_path)<3):
-        raise Exception("Your input is not valid!")
-    return photos_path
+    if (path is None) or (type(path) != str) or (len(path)<3):
+        raise Exception("Your input is not a valid path!") #TODO Log it
+    return path
 
 def clean_path(photos_path:str)->str:
     """Removes second quotes/apostrophes in case that a user has typed/pasted the path with quote.
