@@ -17,7 +17,7 @@ class Photo:
         """Constructor method
         """
         self.path = photo_path
-        self.metadata_dict()
+        self.__metadata_dict()
     
     def __str__(self)->str:
         """Returns the string representation (name) of the photo
@@ -27,7 +27,7 @@ class Photo:
         """
         return os.path.split(self.path)[1]
 
-    def extract_exif_tags(self):
+    def __extract_exif_tags(self):
         """Extracts the metadata tags from a photo using `exifread <https://exif-py.readthedocs.io/en/latest/>`_ library.
         It contains duplicate values with different tags.
         """
@@ -37,9 +37,8 @@ class Photo:
             self.tags = exifread.process_file(photo_file, details=False)
         except:
             print("I didn't manage to extract photo's tags!")
-            #self.tags = 'NoTags' # I didn't use None because of the check in metadata_dict
 
-    def metadata_dict(self):
+    def __metadata_dict(self):
         """Populates the metadata dictionary with all key tags that contain values.
         It also avoids duplicate keys with different tags:
 
@@ -47,7 +46,7 @@ class Photo:
         | *Image DateTimeOriginal, value 2019:12:14 15:04:33*
         | *EXIF DateTimeOriginal, value 2019:12:14 15:04:33*
         """
-        self.extract_exif_tags()
+        self.__extract_exif_tags()
         self.metadata = {}
         
         if self.tags:

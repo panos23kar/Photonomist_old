@@ -28,37 +28,37 @@ def test_is_photo_object():
     assert isinstance(my_photo, Photo)
 
 def test_extract_tags_from_a_valid_photo(my_photo):
-    """Test src\\photonomist\\photo.Photo> extract_exif
+    """Test src\\photonomist\\photo.Photo> __extract_exif
     """
-    my_photo.extract_exif_tags()
+    my_photo._Photo__extract_exif_tags()
     assert "EXIF DateTimeOriginal" in list(my_photo.tags.keys())
     assert "Image DateTimeOriginal" in list(my_photo.tags.keys())
 
 def test_extract_tags_from_a_invalid_photo():
-    """Test src\\photonomist\\photo.Photo> extract_exif_tags
+    """Test src\\photonomist\\photo.Photo> __extract_exif_tags
     """
     photo_path = r"a\\random\\path\\to\\a\\photo"
     my_photo = Photo(photo_path)
-    my_photo.extract_exif_tags()
+    my_photo._Photo__extract_exif_tags()
     assert my_photo.tags == {}
 
 def test_extract_metadata(my_photo):
-    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """Test src\\photonomist\\photo.Photo> __metadata_dict
     """
-    my_photo.metadata_dict()
+    my_photo._Photo__metadata_dict()
     assert "DateTimeOriginal" in list(my_photo.metadata.keys())
 
 def test_extract_metadata_does_not_extract_empty_values(my_photo):
-    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """Test src\\photonomist\\photo.Photo> __metadata_dict
     """
-    my_photo.metadata_dict()
+    my_photo._Photo__metadata_dict()
     assert "Copyright" not in list(my_photo.metadata.keys())
 
 def test_extract_metadata_with_extracted_tags(my_photo):
-    """Test src\\photonomist\\photo.Photo> metadata_dict
+    """Test src\\photonomist\\photo.Photo> __metadata_dict
     """
-    my_photo.extract_exif_tags()
-    my_photo.metadata_dict()
+    my_photo._Photo__extract_exif_tags()
+    my_photo._Photo__metadata_dict()
     assert "DateTimeOriginal" in list(my_photo.metadata.keys())
 
 def test_return_date(my_photo):
