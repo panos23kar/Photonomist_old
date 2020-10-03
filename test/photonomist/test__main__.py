@@ -10,7 +10,7 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photo_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'C:\repos\photonomist\test\data\blablabla'), 
@@ -56,28 +56,28 @@ def test_user_input_is_string(sample_path):
         path_string(sample_path)
 
 def test_extracts_0_photo_roots():
-    """Test src\\photonomist\\__main__ > traverse_photo_path
+    """Test src\\photonomist\\__main__ > traverse_photos_path
     """
     sample_path =  r'C:\repos\photonomist\test\data\testing_empty_folder'
-    assert len(traverse_photo_path(sample_path)) == 0
+    assert len(traverse_photos_path(sample_path)) == 0
 
 def test_extracts_photo_roots():
-    """Test src\\photonomist\\__main__ > traverse_photo_path
+    """Test src\\photonomist\\__main__ > traverse_photos_path
     """
     sample_path =  r'C:\repos\photonomist\test\data\testing_folder_with_photos'
-    assert len(traverse_photo_path(sample_path)) == 5
+    assert len(traverse_photos_path(sample_path)) == 5
 
 def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
     """
-    sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_empty_folder')
+    sample_photo_roots = traverse_photos_path(r'C:\repos\photonomist\test\data\testing_empty_folder')
     with pytest.raises(Exception, match="The provided path does not contain any files with .jpg or .nef extension!"):
         path_photos(sample_photo_roots)
 
 def test_path_contains_files_extensions_jpg_nef(capsys):
     """Test src\\photonomist\\__main__ > path_photos
     """
-    sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
+    sample_photo_roots = traverse_photos_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
     path_photos(sample_photo_roots)
     captured = capsys.readouterr()
     assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blanef\blablanef\blablablanef' in captured.out
@@ -86,7 +86,7 @@ def test_path_contains_files_extensions_jpg_nef(capsys):
 def test_photos_total_size():
     """Test src\\photonomist\\__main__ > photos_size
     """
-    sample_photo_roots = traverse_photo_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
+    sample_photo_roots = traverse_photos_path(r'C:\repos\photonomist\test\data\testing_folder_with_photos')
     photos_total_size = photos_size(sample_photo_roots)
     assert photos_total_size == 53316894
 

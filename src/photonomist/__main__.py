@@ -7,80 +7,80 @@ import os, shutil
 from .photo import Photo
 
 
-def path_string(photo_path:str)->str:
+def path_string(photos_path:str)->str:
     """Verifies that the provided path is string
 
-    :param photo_path: path to photos
+    :param photos_path: path to photos
     :return: photo to paths
     """
-    if (photo_path is None) or (type(photo_path) != str) or (len(photo_path)<3):
+    if (photos_path is None) or (type(photos_path) != str) or (len(photos_path)<3):
         raise Exception("Your input is not valid!")
-    return photo_path
+    return photos_path
 
-def clean_path(photo_path:str)->str:
+def clean_path(photos_path:str)->str:
     """Removes second quotes/apostrophes in case that a user has typed/pasted the path with quote.
 
-    :param photo_path: 'raw' path to photos
+    :param photos_path: 'raw' path to photos
     :return: path to photos without redundant quotes
     """
-    if ord(photo_path[0]) == 34 or ord(photo_path[0])==39:
-        photo_path = photo_path[1:]
-    if ord(photo_path[-1]) == 34 or ord(photo_path[-1])==39:
-        photo_path = photo_path[:-1]
-    return photo_path
+    if ord(photos_path[0]) == 34 or ord(photos_path[0])==39:
+        photos_path = photos_path[1:]
+    if ord(photos_path[-1]) == 34 or ord(photos_path[-1])==39:
+        photos_path = photos_path[:-1]
+    return photos_path
 
-def path_exists(photo_path:str):
+def path_exists(photos_path:str):
     """Verifies that the provided path exists.
 
-    :param photo_path: path to photos
+    :param photos_path: path to photos
     """
-    if not os.path.exists(photo_path):
+    if not os.path.exists(photos_path):
         raise FileNotFoundError("The provided path was not found!")
 
-def path_items(photo_path:str):
+def path_items(photos_path:str):
     """Verifies that the provided path contains items (not only photos).
 
-    :param photo_path: path to photos
+    :param photos_path: path to photos
     """
-    if not os.listdir(photo_path):
+    if not os.listdir(photos_path):
         raise Exception("The provided path does not contain any files!")
 
-def traverse_photo_path(photo_path:str):
+def traverse_photos_path(photos_path:str):
     """Traverses/Identifies all the directories and files that exist under the provided path.
     If there are any .jpg or .nef files, they are added to the list.
    
-    :param photo_path: path to photos
+    :param photos_path: path to photos
     :return: A list with all paths that contain .jpg or .nef photos
     """
-    photo_roots = []
+    photos_roots = []
     # traverse root directory, and list directories as dirs and files as files
-    for root, dirs, files in os.walk(photo_path):
+    for root, dirs, files in os.walk(photos_path):
         for _file in files:
             if _file.lower().endswith('jpg') or _file.lower().endswith('nef'):
-                if root + '\\' + _file not in photo_roots: photo_roots.append(root + '\\' + _file)
+                if root + '\\' + _file not in photos_roots: photos_roots.append(root + '\\' + _file)
     
-    return photo_roots
+    return photos_roots
 
-def path_photos(photo_roots:list):
+def path_photos(photos_roots:list):
     """Prints all the roots that contain photos. If there aren't any roots raises an error
 
-    :param photo_roots: list with all roots that contain photos
+    :param photos_roots: list with all roots that contain photos
     """
-    if not photo_roots:
+    if not photos_roots:
         raise Exception("The provided path does not contain any files with .jpg or .nef extension!")
     else:
         print('I found photos in: ')
-        print(*photo_roots, sep = "\n")
+        print(*photos_roots, sep = "\n")
 
-def photos_size(photo_roots:list)->int:
+def photos_size(photos_roots:list)->int:
     """Calculates the size (in bytes) of all photos found in the provided path
 
-    :param photo_roots: list with all roots that contain photos
+    :param photos_roots: list with all roots that contain photos
     :return: The size in bytes of all photos
     """
     # It is an extra loop. I could have generated the total size in traverse_photo_path function
     total_size = 0
-    for photo_root in photo_roots:
+    for photo_root in photos_roots:
         total_size += os.stat(photo_root).st_size
     return total_size
 
@@ -193,8 +193,8 @@ def main():
     path_items(photos_path)
 
     # Extract paths to photos
-    photo_roots = traverse_photo_path(photos_path)
-    path_photos(photo_roots)
+    photos_roots = traverse_photos_path(photos_path)
+    path_photos(photos_roots)
 
     # Export path validation
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
@@ -202,11 +202,11 @@ def main():
 
     # Disk space validation
     if not paths_same_disk:
-        photos_total_size = photos_size(photo_roots)
+        photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
     # Iterate over list of photos
-    for photo_path in photo_roots:
+    for photo_path in photos_roots:
         transfer_photo(photo_path, export_path)
  
 # Make the script executable.
