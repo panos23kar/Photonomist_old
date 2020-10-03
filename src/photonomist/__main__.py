@@ -175,7 +175,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
 
     :param photo_path: path to photo
     :type photo_path: str
-    :param export_path: path to the dir where the photo folder will be created
+    :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
     """
     with open(os.path.join(export_path, "not_transerred.txt"), "a") as myfile:
