@@ -161,7 +161,7 @@ def dir_name_exists(dir_name:str, export_path:str)->bool:
     return False
 
 def create_photo_dir(dir_name:str, export_path:str):
-    """ Creates a folder with the specified name
+    """Creates a folder with the specified name
 
     :param dir_name: name of the folder to be created
     :type dir_name: str
@@ -182,11 +182,11 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
         myfile.write(photo_path + "\n")
 
 def transfer_photo(photo_path:str, export_path:str):
-    """ Transfers a photo to a date folder, if date was extracted.
+    """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
     :type photo_path: str
-    :param export_path: path to the dir where the photo folder will be created
+    :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
     """
     photo = Photo(photo_path)
@@ -220,7 +220,7 @@ def main():
     path_exists(export_path)
 
     # Disk space validation
-    if not paths_same_disk:
+    if not paths_same_disk(photos_path, export_path):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
