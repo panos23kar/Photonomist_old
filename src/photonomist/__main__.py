@@ -45,12 +45,13 @@ def path_exists(path:str):
     if not os.path.exists(path):
         raise FileNotFoundError("The provided path was not found!")#TODO Log it
 
-def path_items(photos_path:str):
-    """Verifies that the provided path contains items (not only photos).
+def path_items(path:str):
+    """Verifies that the provided path contains files (not only photos).
 
-    :param photos_path: path to photos
+    :param path: provided path
+    :type path: str
     """
-    if not os.listdir(photos_path):
+    if not os.listdir(path):
         raise Exception("The provided path does not contain any files!")#TODO Log it
 
 def traverse_photos_path(photos_path:str):
