@@ -201,28 +201,57 @@ def transfer_photo(photo_path:str, export_path:str):
     else:
         write_not_transferred_photos(photo_path, export_path)
 
-def main():
-    """ Executes the application. It is responsible for getting the user's input, asserting its validity
-    and initiate the transfer process
-    """
+def input_path_validation(photos_path:str)->list:
+    """Validates if the provided input path:
+    | 1) exists 
+    | 2) contains files 
+    | 3)contains .jpg or .nef photos
 
-    # Photo path validation
-    photos_path = clean_path(path_string(input("Enter the path to your photos: ")))
+    :param photos_path: path to photos
+    :type photos_path: str
+
+    :return: A list with all paths to .jpg or .nef photos
+    :rtype: list
+    """
     path_exists(photos_path)
     path_items(photos_path)
 
-    # Extract paths to photos
+    # Extract photos' paths
     photos_roots = traverse_photos_path(photos_path)
     path_photos(photos_roots)
+    return photos_roots
 
-    # Export path validation
-    export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
+def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
+    """Validates if the export path:
+    | 1) exists 
+    | 2) there is enough disk space
+
+    :param export_path: path to the directory where the photo folder structure will be created
+    :type export_path: str
+    :param photos_path: path to photos
+    :type photos_path: str
+    :param photos_roots: list with all roots that contain photos
+    :type path: list
+    """
     path_exists(export_path)
 
     # Disk space validation
     if not paths_same_disk(photos_path, export_path):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
+
+
+def main():
+    """ Executes the application. It is responsible for getting the user's input, asserting its validity
+    and initiating the transfer process
+    """
+    # Input path 
+    photos_path = clean_path(path_string(input("Enter the path to your photos: ")))
+    photos_roots = input_path_validation(photos_path)
+
+    # Export path
+    export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
+    export_path_validation(export_path, photos_path, photos_roots)
 
     # Iterate over list of photos
     for photo_path in photos_roots:
