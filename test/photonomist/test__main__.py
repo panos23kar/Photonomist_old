@@ -190,6 +190,15 @@ def test_input_path_validation_traverse_photos_path():
     sample_path =  r'C:\repos\photonomist\test\data\testing_folder_with_photos'
     assert len(input_path_validation(sample_path)) == 5
 
+def test_export_path_validation_path_exists():
+    """ Test for src\\photonomist\\__main__ > export_path_validation
+    """
+    export_path = "blablabla"
+    input_path = "blablabla"
+    path_roots = ["blablabla"]
+    with pytest.raises(FileNotFoundError, match="The provided path was not found!"):
+        export_path_validation(export_path, input_path, path_roots)
+
 # Make the script executable.
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
