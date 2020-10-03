@@ -103,8 +103,8 @@ def photos_size(photos_roots:list)->int:
         total_size += os.stat(photo_root).st_size
     return total_size
 
-def paths_same_disk(photos_path:str, export_path:str):
-    """Checks if the input photos paths and export path are "located" on the same disk
+def paths_same_disk(photos_path:str, export_path:str)->bool:
+    """Checks if the input photos path and export path are "located" on the same disk
 
     :param photos_path: path to photos
     :type photos_path: str
