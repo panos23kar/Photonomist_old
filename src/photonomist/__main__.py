@@ -55,19 +55,23 @@ def path_items(path:str):
         raise Exception("The provided path does not contain any files!")#TODO Log it
 
 def traverse_photos_path(photos_path:str):
-    """Traverses/Identifies all the directories and files that exist under the provided path.
-    If there are any .jpg or .nef files, they are added to the list.
+    """Recursively traverses all the directories under the provided path.
+    Identified .jpg and .nef files are appended to the photos_roots list.
    
     :param photos_path: path to photos
-    :return: A list with all paths that contain .jpg or .nef photos
+    :type photos_path: str
+
+    :return: A list with all paths to .jpg or .nef photos
+    :rtype: list
     """
     photos_roots = []
-    # traverse root directory, and list directories as dirs and files as files
+
+    # traverse root directory, and list directories as dirs and files as files. List comp was less readable
     for root, dirs, files in os.walk(photos_path):
         for _file in files:
             if _file.lower().endswith('jpg') or _file.lower().endswith('nef'):
                 if root + '\\' + _file not in photos_roots: photos_roots.append(root + '\\' + _file)
-    
+        
     return photos_roots
 
 def path_photos(photos_roots:list):
