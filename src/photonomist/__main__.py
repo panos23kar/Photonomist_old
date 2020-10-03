@@ -163,9 +163,9 @@ def dir_name_exists(dir_name:str, export_path:str)->bool:
 def create_photo_dir(dir_name:str, export_path:str):
     """ Creates a folder with the specified name
 
-    :param dir_name: name of the folder to create
+    :param dir_name: name of the folder to be created
     :type dir_name: str
-    :param export_path: path to the dir where the photo folder will be created
+    :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
     """
     os.makedirs(os.path.join(export_path, dir_name))
