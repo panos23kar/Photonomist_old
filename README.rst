@@ -15,46 +15,47 @@ Motivation
 As both a photo-owner and a photo-lover, I found myself struggling with grouping my photos in a sustainable way.
 
 I kept creating different directories, with different name patterns to store my photos in a meaningfull way.
-Each time I was sure that after 3 months I would remember when, where and with whom I had captured each banch of photos.
+Each time I was sure that after 3 months I would remember when, where and with whom I had captured each bunch of photos.
 
 
-Except for that, I was always failing with the groupping them depending on different criteria. 
+Except for that, I was always failing with grouping them criteria-wise. 
 I know that proffs and semi-proffs tend to group photos according to their rating (1 star.. 5 stars), 
-but in my case the time aspect proved to be the most meaningful.
+but in my case the time aspect proved to be the most meaningful one.
 
-It was impossible, though, to check the date of each photo and create a different directory for each date and
+It was impossible, though, to check the date of each photo and create a directory for each date and
 then manually move the photos to the corresponding directory. 
 Especially, when I was supposed to "tidy" photos of 2 years time-span!!!!
 
-That's why I decided to build this cool app, which does the dirty work for me (but not only)!!
+That's why I decided to build this cool app, which does the dirty work for me!!
 
 Features
 ==========
 Photonomist just took its first breath. It is in version 0.1.0.
 
-What makes it standing out, except for **taking care of your photos for you** is that:
+What makes it standing out, except for **taking care of your photos** is that:
 
 - It ascertains the **validity** of user's input
 - It verifies that the **provided input path contains** *.jpg* or *.nef* (*Nikon* raw) photos
 - It checks if you have *enough disk space* **ONLY** in case that the **input** and the **export** path point to different disks. I.e. if you move your photos from a cellphone to a hard drive!
 - It automatically **extracts** your photos' metadata, **creates and names** directories using the extracted dates and **moves** the photos to the corresponding directory
-- It **writes** in the *not_transerred.txt* all the photos' that was not possible to be moved
+- It **writes** in the *not_transferred.txt* the photos that was not possible to be moved
 
 Minimum Requirements
 ====================
-- Python 3.8+
+- Python_ 3.8+
 - Download `Anaconda`_
 
+.. _Python: https://www.python.org/downloads/
 .. _Anaconda: https://www.anaconda.com/products/individual
 
 |
 
 Basic Setup
 ===========
-Create **Photonomist** Virtual Environmet
------------------------------------------
+Create **Photonomist** Virtual Environment
+------------------------------------------
 1. Start *Anaconda Powershell Prompt*
-2. Change Directory to Photonomist root dir (*cd C:\\repos\\photonomist*)
+2. Change Directory to photonomist root dir (*cd C:\\repos\\photonomist*)
 3. Create the environment from the environment.yml file
 
 .. code-block:: console
@@ -133,21 +134,46 @@ Build documentation:
 
 |
 
+Generate Executable:
+----------------------
+- **Change Directory to photonomist src\\photonomist dir** (*cd C:\\repos\\photonomist\\src\\photonomist*)
+
+.. code-block:: console
+
+    $ pyinstaller --onefile __main__.py
+
+- Go back to the location where the __main__ script is (*C:\\repos\\photonomist\\src\\photonomist*).
+- Open the **dist** folder
+- Double-click the __main__ .exe file
+
+|
+
+Generate environment.yml:
+-------------------------
+- Start *Anaconda Powershell Prompt*
+- Activate the *photonomist* env ( $ conda activate photonomist)
+
+.. code-block:: console
+
+    $ conda env export > environment.yml
+
+- A environment.yml has been created in photonomist root dir (*C:\\repos\\photonomist*)
+
 Usage
 ======
 
-1. Double click the .exe file
+1. - Double click the .exe file
 
 |       **OR**
 
 2. - Start *Anaconda Powershell Prompt*
    - Activate the *Photonomist* env ( $ conda activate photonomist)
-   - Run: $ python -m photonomist
+   - Run: *$ python -m photonomist*
 
 |       **OR**
 
 3. - Open your favorite `IDE`_
-   - Do your magic and activate the *Photonomist* env
+   - Do your magic and activate the *photonomist* env
    - Open the *__main__* file
    - Run it
 
