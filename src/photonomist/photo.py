@@ -11,10 +11,12 @@ class Photo:
 
     :param photo_path: Path to photo
     :type photo_path: str
+    |
     """
 
     def __init__(self, photo_path:str):
         """Constructor method
+        |
         """
         self.path = photo_path
         self.__metadata_dict()
@@ -24,12 +26,15 @@ class Photo:
 
         :return: name of the photo
         :rtype: str
+        |
         """
         return os.path.split(self.path)[1]
 
     def __extract_exif_tags(self):
         """Extracts the metadata tags from a photo using `exifread <https://exif-py.readthedocs.io/en/latest/>`_ library.
         It contains duplicate values with different tags.
+        
+        |
         """
         self.__tags = {}
         try:
@@ -47,6 +52,7 @@ class Photo:
         | *Example:*
         | *Image DateTimeOriginal, value 2019:12:14 15:04:33*
         | *EXIF DateTimeOriginal, value 2019:12:14 15:04:33*
+        |
         """
         self.__extract_exif_tags()
         self.metadata = {}
@@ -66,6 +72,7 @@ class Photo:
         
         :return: date of photo
         :rtype: str
+        |
         """
         if self.metadata and "DateTimeOriginal" in self.metadata:
             date = str(self.metadata["DateTimeOriginal"]).split()[0]
@@ -79,6 +86,7 @@ class Photo:
 
         :param new_folder_path: the path to directory
         :type new_folder_path: str
+        |
         """
         new_path = os.path.join(new_folder_path, self.__str__())        
         try:

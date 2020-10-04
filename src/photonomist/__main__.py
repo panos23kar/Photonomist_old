@@ -1,7 +1,8 @@
-""" Main application // Entry point.
+""" Main application
 
-    Run the application (via Command Prompt):
+    Run the application (via **Anaconda Command Prompt**):
         python -m photonomist
+    |
 """
 import os, shutil
 from photo import Photo
@@ -15,6 +16,7 @@ def path_string(path:str)->str:
 
     :return: provided path
     :rtype: str
+    |
     """
     if (path is None) or (type(path) != str) or (len(path)<3):
         raise Exception("Your input is not a valid path!") #TODO Log it
@@ -29,6 +31,7 @@ def clean_path(path:str)->str:
 
     :return: path without redundant quotes
     :rtype: str
+    |
     """
     if ord(path[0]) == 34 or ord(path[0])==39:
         path = path[1:]
@@ -41,6 +44,7 @@ def path_exists(path:str):
 
     :param path: provided path
     :type path: str
+    |
     """
     if not os.path.exists(path):
         raise FileNotFoundError("The provided path was not found!")#TODO Log it
@@ -50,6 +54,7 @@ def path_items(path:str):
 
     :param path: provided path
     :type path: str
+    |
     """
     if not os.listdir(path):
         raise Exception("The provided path does not contain any files!")#TODO Log it
@@ -63,6 +68,7 @@ def traverse_photos_path(photos_path:str)->list:
 
     :return: A list with all paths to .jpg or .nef photos
     :rtype: list
+    |
     """
     # I could have uused a tuple and overwrite at each iteration
     photos_roots = []
@@ -80,6 +86,7 @@ def path_photos(photos_roots:list):
 
     :param photos_roots: list with all roots that contain photos
     :type path: list
+    |
     """
     if not photos_roots:
         raise Exception("The provided path does not contain any files with .jpg or .nef extension!")#TODO Log it
@@ -91,10 +98,11 @@ def photos_size(photos_roots:list)->int:
     """Calculates the size (in bytes) of all photos found in the provided path.
 
     :param photos_roots: a list with all the roots that point to photos
-    :type path: list
+    :type photos_roots: list
 
     :return: The total size (in bytes) of photos
     :rtype: int
+    |
     """
     # It is an extra loop. I could have generated the total size in traverse_photo_path function
     # With the extra function is more readdable and testable
@@ -110,6 +118,7 @@ def paths_same_disk(photos_path:str, export_path:str)->bool:
     :type photos_path: str
     :param export_path: path to the directory where the photo folder structure will be created
     :type export_path: str
+    |
     """
     return True if photos_path[0].lower() == export_path[0].lower() else False
 
@@ -121,6 +130,7 @@ def disk_space(export_path:str, photos_total_size:int):
     :type export_path: str
     :param photos_total_size: the total size of photos which were identified in the provided input path
     :type photos_total_size: int
+    |
     """
     total, used, free = shutil.disk_usage(export_path)
     if free > photos_total_size:
@@ -131,7 +141,8 @@ def disk_space(export_path:str, photos_total_size:int):
 def photo_dir_name(date:str)->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
-    | Name pattern: year_month_day_place_reason_people
+    | **Name pattern**: *year_month_day_place_reason_people*
+    |
     | **Year**      : The year when the photo was captured (photo's metadata)
     | **Month**     : The month when the photo was captured (photo's metadata)
     | **Day**       : The day when the photo was captured (photo's metadata)
@@ -143,6 +154,7 @@ def photo_dir_name(date:str)->str:
     :type date: str
     :return: the wonna be directory name
     :rtype: str
+    |
     """
     year, month, day = date.split(':')
     return f"{year}_{month}_{day}_place_reason_people"
@@ -154,6 +166,7 @@ def dir_name_exists(dir_name:str, export_path:str)->bool:
     :type dir_name: str
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
+    |
     """
     for folder_name in os.walk(export_path):
         if os.path.join(export_path, dir_name) == folder_name[0]: 
@@ -167,6 +180,7 @@ def create_photo_dir(dir_name:str, export_path:str):
     :type dir_name: str
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
+    |
     """
     os.makedirs(os.path.join(export_path, dir_name))
 
@@ -177,6 +191,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     :type photo_path: str
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
+    |
     """
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
@@ -188,6 +203,7 @@ def transfer_photo(photo_path:str, export_path:str):
     :type photo_path: str
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
+    |
     """
     photo = Photo(photo_path)
     date = photo.get_date()
@@ -212,6 +228,7 @@ def input_path_validation(photos_path:str)->list:
 
     :return: A list with all paths to .jpg or .nef photos
     :rtype: list
+    |
     """
     path_exists(photos_path)
     path_items(photos_path)
@@ -232,6 +249,7 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
     :type photos_path: str
     :param photos_roots: list with all roots that contain photos
     :type path: list
+    |
     """
     path_exists(export_path)
 
@@ -243,6 +261,7 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
+    |
     """
     # Input path 
     photos_path = clean_path(path_string(input("Enter the path to your photos: ")))
