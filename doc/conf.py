@@ -17,7 +17,7 @@ sys.path.insert(0,r'C:\repos\photonomist\src\photonomist')
 
 # -- Project information -----------------------------------------------------
 
-project = 'photonomist_doc'
+project = 'photonomist'
 copyright = '2020, Panagiotis Karydakis'
 author = 'Panagiotis Karydakis'
 
