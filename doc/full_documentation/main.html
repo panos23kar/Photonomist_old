@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Module &#8212; photonomist  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Photo Module" href="photo.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="main-module">
+<h1>Main Module<a class="headerlink" href="#main-module" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="module-photonomist.__main__"></span><p>Main application</p>
+<dl class="simple">
+<dt>Run the application (via <strong>Anaconda Command Prompt</strong>):</dt><dd><p>python -m photonomist</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py function">
+<dt id="photonomist.__main__.clean_path">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">clean_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#photonomist.__main__.clean_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes redundant quotes/apostrophes from the provided path.
+(In case a user has typed/pasted the path with quotes)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – ‘raw’ path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>path without redundant quotes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.create_photo_dir">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">create_photo_dir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.create_photo_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a folder with the specified name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir_name</strong> (<em>str</em>) – name of the folder to be created</p></li>
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder will be created</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.dir_name_exists">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">dir_name_exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#photonomist.__main__.dir_name_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a folder’s name already contains the date of a photo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir_name</strong> (<em>str</em>) – the folder’s name to check if exists</p></li>
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder will be created</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.disk_space">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">disk_space</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">photos_total_size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.disk_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains the total, used and free space of the exported path disk.
+If the total size of the photos is greater than the free space, it raises an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder structure will be created</p></li>
+<li><p><strong>photos_total_size</strong> (<em>int</em>) – the total size of photos which were identified in the provided input path</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.export_path_validation">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">export_path_validation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">photos_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">photos_roots</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.export_path_validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates if the export path:
+| 1) exists 
+| 2) there is enough disk space</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder structure will be created</p></li>
+<li><p><strong>photos_path</strong> (<em>str</em>) – path to photos</p></li>
+<li><p><strong>photos_roots</strong> – list with all roots that contain photos</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.input_path_validation">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">input_path_validation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photos_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#photonomist.__main__.input_path_validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates if the provided input path:
+| 1) exists 
+| 2) contains files 
+| 3)contains .jpg or .nef photos</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>photos_path</strong> (<em>str</em>) – path to photos</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list with all paths to .jpg or .nef photos</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.main">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the application. It is responsible for getting the user’s input, asserting its validity
+and initiating the transfer process</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.path_exists">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">path_exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.path_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that the provided path exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – provided path</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.path_items">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">path_items</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.path_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that the provided path contains files (not only photos).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – provided path</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.path_photos">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">path_photos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photos_roots</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.path_photos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the photo paths. If there aren’t any, it raises an error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>photos_roots</strong> – list with all roots that contain photos</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.path_string">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">path_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#photonomist.__main__.path_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that the provided path is of type string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – provided path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>provided path</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.paths_same_disk">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">paths_same_disk</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photos_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#photonomist.__main__.paths_same_disk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the provided input path and the export path are “located” on the same disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>photos_path</strong> (<em>str</em>) – path to photos</p></li>
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder structure will be created</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.photo_dir_name">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">photo_dir_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#photonomist.__main__.photo_dir_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the name of the folder where the photos will be moved according to their dates.</p>
+<div class="line-block">
+<div class="line"><strong>Name pattern</strong>: <em>year_month_day_place_reason_people</em></div>
+<div class="line"><br /></div>
+<div class="line"><strong>Year</strong>      : The year when the photo was captured (photo’s metadata)</div>
+<div class="line"><strong>Month</strong>     : The month when the photo was captured (photo’s metadata)</div>
+<div class="line"><strong>Day</strong>       : The day when the photo was captured (photo’s metadata)</div>
+<div class="line"><strong>Place</strong>     : The city/location/place where the photo was captured (user defined)</div>
+<div class="line"><strong>Reason</strong>    : The reason why you were there (Ex.: vacation, photo shooting, work) (user defined)</div>
+<div class="line"><strong>People</strong>    : People with whom you were there (Ex.: family, friend1,friend2, boss) (user defined)</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>date</strong> (<em>str</em>) – the date which will be used to populate the first three elements of the folder name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the wonna be directory name</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.photos_size">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">photos_size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photos_roots</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#photonomist.__main__.photos_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the size (in bytes) of all photos found in the provided path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>photos_roots</strong> (<em>list</em>) – a list with all the roots that point to photos</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The total size (in bytes) of photos</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.transfer_photo">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">transfer_photo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photo_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.transfer_photo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a photo to a “date” folder, if a date was extracted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>photo_path</strong> (<em>str</em>) – path to photo</p></li>
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder will be created</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.traverse_photos_path">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">traverse_photos_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photos_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#photonomist.__main__.traverse_photos_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively traverses all the directories under the provided path.
+Identified .jpg and .nef files are appended to the photos_roots list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>photos_path</strong> (<em>str</em>) – path to photos</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list with all paths to .jpg or .nef photos</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="photonomist.__main__.write_not_transferred_photos">
+<code class="sig-prename descclassname">photonomist.__main__.</code><code class="sig-name descname">write_not_transferred_photos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photo_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">export_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.__main__.write_not_transferred_photos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the paths of the photos that was not possible to be transferred.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>photo_path</strong> (<em>str</em>) – path to photo</p></li>
+<li><p><strong>export_path</strong> (<em>str</em>) – path to the directory where the photo folder will be created</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">photonomist</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="photo.html">Photo Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Main Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="photo.html" title="previous chapter">Photo Module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Panagiotis Karydakis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/main.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

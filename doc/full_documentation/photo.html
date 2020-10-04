@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Class &#8212; photonomist  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Main Module" href="main.html" />
+    <link rel="prev" title="Photonomist Documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="photo-class">
+<h1>Photo Class<a class="headerlink" href="#photo-class" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="photonomist.photo.Photo">
+<em class="property">class </em><code class="sig-prename descclassname">photonomist.photo.</code><code class="sig-name descname">Photo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photo_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.photo.Photo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to represent a photo.
+A photo object holds a photo’s metadata.
+It can also move itself to another directory and return its captured date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>photo_path</strong> (<em>str</em>) – Path to photo</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py method">
+<dt id="photonomist.photo.Photo.__extract_exif_tags">
+<code class="sig-name descname">__extract_exif_tags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.photo.Photo.__extract_exif_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts the metadata tags from a photo using <a class="reference external" href="https://exif-py.readthedocs.io/en/latest/">exifread</a> library.
+It contains duplicate values with different tags.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="photonomist.photo.Photo.__metadata_dict">
+<code class="sig-name descname">__metadata_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.photo.Photo.__metadata_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the metadata dictionary with all key/tags (extracted using the 
+<a class="reference external" href="https://exif-py.readthedocs.io/en/latest/">exifread</a> library) that contain values.
+It also avoids duplicate keys with different tags:</p>
+<div class="line-block">
+<div class="line"><em>Example:</em></div>
+<div class="line"><em>Image DateTimeOriginal, value 2019:12:14 15:04:33</em></div>
+<div class="line"><em>EXIF DateTimeOriginal, value 2019:12:14 15:04:33</em></div>
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="photonomist.photo.Photo.get_date">
+<code class="sig-name descname">get_date</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#photonomist.photo.Photo.get_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the date of a photo from the metadata dictionary. 
+As date considered the value of the “DateTimeOriginal” tag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>date of photo</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="photonomist.photo.Photo.move_to_folder">
+<code class="sig-name descname">move_to_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_folder_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#photonomist.photo.Photo.move_to_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves the photo to another directory.
+If directory doesn’t exist it creates one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_folder_path</strong> (<em>str</em>) – the path to directory</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">photonomist</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Photo Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Photonomist Documentation!</a></li>
+      <li>Next: <a href="main.html" title="next chapter">Main Module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Panagiotis Karydakis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/photo.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

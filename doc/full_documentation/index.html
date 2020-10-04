@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photonomist Documentation! &#8212; photonomist  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Photo Class" href="photo.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="photonomist-documentation">
+<h1>Photonomist Documentation!<a class="headerlink" href="#photonomist-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="photonomist">
+<h1>Photonomist<a class="headerlink" href="#photonomist" title="Permalink to this headline">¶</a></h1>
+<p>Photonomist aims at helping photo-lovers (or simply photo-owners :D) with tidying their photos.
+Given a path that contains photos, photonomist will extract the dates of your photos,
+create directories and group photos according to their dates.</p>
+<p>Photonomist took its name from the words:</p>
+<ul class="simple">
+<li><p>Photo..  –&gt; Photography (art of captruring the light)                (Greek root: (Φως) Φωτογραφία)</p></li>
+<li><p>..nomist –&gt; Taxonomist  (person who groups entities into categories) (Greek root: Ταξινομία ή Ταξινόμηση)</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="motivation">
+<h1>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h1>
+<p>As both a photo-owner and a photo-lover, I found myself struggling with grouping my photos in a sustainable way.</p>
+<p>I kept creating different directories, with different name patterns to store my photos in a meaningfull way.
+Each time I was sure that after 3 months I would remember when, where and with whom I had captured each bunch of photos.</p>
+<p>Except for that, I was always failing with grouping them criteria-wise.
+I know that proffs and semi-proffs tend to group photos according to their rating (1 star.. 5 stars),
+but in my case the time aspect proved to be the most meaningful one.</p>
+<p>It was impossible, though, to check the date of each photo and create a directory for each date and
+then manually move the photos to the corresponding directory.
+Especially, when I was supposed to “tidy” photos of 2 years time-span!!!!</p>
+<p>That’s why I decided to build this cool app, which does the dirty work for me!!</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="features">
+<h1>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
+<p>Photonomist just took its first breath. It is in version 0.1.0.</p>
+<p>What makes it standing out, except for <strong>taking care of your photos</strong> is that:</p>
+<ul class="simple">
+<li><p>It ascertains the <strong>validity</strong> of user’s input</p></li>
+<li><p>It verifies that the <strong>provided input path contains</strong> <em>.jpg</em> or <em>.nef</em> (<em>Nikon</em> raw) photos</p></li>
+<li><p>It checks if you have <em>enough disk space</em> <strong>ONLY</strong> in case that the <strong>input</strong> and the <strong>export</strong> path point to different disks. I.e. if you move your photos from a cellphone to a hard drive!</p></li>
+<li><p>It automatically <strong>extracts</strong> your photos’ metadata, <strong>creates and names</strong> directories using the extracted dates and <strong>moves</strong> the photos to the corresponding directory</p></li>
+<li><p>It <strong>writes</strong> in the <em>not_transferred.txt</em> the photos that was not possible to be moved</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="minimum-requirements">
+<h1>Minimum Requirements<a class="headerlink" href="#minimum-requirements" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/downloads/">Python</a> 3.8+</p></li>
+<li><p>Download <a class="reference external" href="https://www.anaconda.com/products/individual">Anaconda</a></p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="source-code">
+<h1>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photo.html">Photo Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main Module</a></li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">photonomist</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="photo.html">Photo Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="photo.html" title="next chapter">Photo Class</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Panagiotis Karydakis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
