@@ -41,3 +41,4 @@ Thumbs.db
 # Ignore coverage file from pytest lib
 .coverage
 htmlcov/
+src/photonomist/__main__.spec

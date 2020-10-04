@@ -4,7 +4,7 @@
         python -m photonomist
 """
 import os, shutil
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(path:str)->str:
@@ -178,7 +178,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
     """
-    with open(os.path.join(export_path, "not_transerred.txt"), "a") as myfile:
+    with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
 def transfer_photo(photo_path:str, export_path:str):
