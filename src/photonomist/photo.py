@@ -1,5 +1,4 @@
 """ This module hosts the Photo class 
-
 """
 import exifread
 import os, shutil

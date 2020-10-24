@@ -76,7 +76,7 @@ def traverse_photos_path(photos_path:str)->list:
     # traverse root directory, and list directories as dirs and files as files. List comp was less readable
     for root, dirs, files in os.walk(photos_path):
         for _file in files:
-            if _file.lower().endswith('jpg') or _file.lower().endswith('nef'):
+            if _file.lower().endswith('jpg') or _file.lower().endswith('nef') or _file.lower().endswith('jpeg'):
                 if root + '\\' + _file not in photos_roots: photos_roots.append(root + '\\' + _file)
         
     return photos_roots
