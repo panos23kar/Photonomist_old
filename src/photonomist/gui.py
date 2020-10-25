@@ -24,7 +24,7 @@ class Gui:
         Specifies the title and dimensions of main window
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("500x500")
+        self.__gui.geometry("460x300")
     
     def __start_gui(self):
         """
@@ -36,10 +36,14 @@ class Gui:
         """
         It hosts input label, input path and input button"""
 
-        e1 = tk.Entry(self.__gui)
-        e1.insert(0, 'username')
-        e1.pack()
+        self.__input_path_label = tk.Label(self.__gui, text="Input path:")
+        self.__input_path_label.place(x=20, y=10)
 
+        self.__input_path_entry = tk.Entry(self.__gui)
+        self.__input_path_entry.place(x=90, y=12, width= 300)
+
+        self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...")
+        self.__input_path_file_explorer_button.place(x=395, y=10, height=21)
 # from tkinter import filedialog
 # from tkinter import *
 
