@@ -2,6 +2,7 @@
 This file hosts the graphical user interface code"""
 
 import tkinter as tk
+from tkinter import filedialog
 
 class Gui:
     """This class is used to "draw" the graphical user interface through which 
@@ -42,8 +43,16 @@ class Gui:
         self.__input_path_entry = tk.Entry(self.__gui)
         self.__input_path_entry.place(x=90, y=12, width= 300)
 
-        self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...")
+        self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...", command = self.__file_explorer)
         self.__input_path_file_explorer_button.place(x=395, y=10, height=21)
+    
+    def __file_explorer(self):
+        self.__input_path1 =  filedialog.askdirectory(initialdir = "/",title = "Select file")
+        print(self.__input_path1)
+    
+
+
+
 # from tkinter import filedialog
 # from tkinter import *
 
