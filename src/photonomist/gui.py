@@ -15,8 +15,9 @@ class Gui:
         """
         self.__gui = tk.Tk()
         self.__main_window()
+        self.__input_path()
 
-        self.start_gui()
+        self.__start_gui()
     
     def __main_window(self):
         """
@@ -25,11 +26,26 @@ class Gui:
         self.__gui.title("Photonomist")
         self.__gui.geometry("500x500")
     
-    def start_gui(self):
+    def __start_gui(self):
         """
         Starts the graphical user interface
         """
         self.__gui.mainloop()
+    
+    def __input_path(self):
+        """
+        It hosts input label, input path and input button"""
+
+        e1 = tk.Entry(self.__gui)
+        e1.insert(0, 'username')
+        e1.pack()
+
+# from tkinter import filedialog
+# from tkinter import *
+
+# root = Tk()
+# root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+# print (root.filename)
 
 if __name__ == "__main__":
     Gui()
