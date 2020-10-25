@@ -38,18 +38,19 @@ class Gui:
         It hosts input label, input path and input button"""
 
         self.__input_path_label = tk.Label(self.__gui, text="Input path:")
-        self.__input_path_label.place(x=20, y=10)
+        self.__input_path_label.place(x=20, y=20)
 
-        self.__input_path_entry = tk.Entry(self.__gui)
-        self.__input_path_entry.place(x=90, y=12, width= 300)
+        self.__input_path_value = tk.StringVar() 
 
-        self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...", command = self.__file_explorer)
-        self.__input_path_file_explorer_button.place(x=395, y=10, height=21)
+        self.__input_path_entry = tk.Entry(self.__gui, textvariable = self.__input_path_value)
+        self.__input_path_entry.place(x=90, y=22, width= 300)
+
+        self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...", command = self.__input_path_file_explorer)
+        self.__input_path_file_explorer_button.place(x=395, y=20, height=21)
     
-    def __file_explorer(self):
-        self.__input_path1 =  filedialog.askdirectory(initialdir = "/",title = "Select file")
-        print(self.__input_path1)
-    
+    def __input_path_file_explorer(self):
+        self.__input_path_button_value =  filedialog.askdirectory(initialdir = "/",title = "Select file")
+        self.__input_path_value.set(self.__input_path_button_value)    
 
 
 

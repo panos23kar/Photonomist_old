@@ -61,12 +61,12 @@ def path_items(path:str):
 
 def traverse_photos_path(photos_path:str)->list:
     """Recursively traverses all the directories under the provided path.
-    Identified .jpg and .nef files are appended to the photos_roots list.
+    Identified .jpg, .jpeg and .nef files are appended to the photos_roots list.
    
     :param photos_path: path to photos
     :type photos_path: str
 
-    :return: A list with all paths to .jpg or .nef photos
+    :return: A list with all paths to .jpg, .jpeg  or .nef photos
     :rtype: list
     |
     """
@@ -89,7 +89,7 @@ def path_photos(photos_roots:list):
     |
     """
     if not photos_roots:
-        raise Exception("The provided path does not contain any files with .jpg or .nef extension!")#TODO Log it
+        raise Exception("The provided path does not contain any files with .jpg, .jpeg  or .nef extension!")#TODO Log it
     else:#TODO Log it
         print('I found photos in: ')
         print(*photos_roots, sep = "\n")
@@ -221,12 +221,12 @@ def input_path_validation(photos_path:str)->list:
     """Validates if the provided input path:
     | 1) exists 
     | 2) contains files 
-    | 3)contains .jpg or .nef photos
+    | 3)contains .jpg, .jpeg or .nef photos
 
     :param photos_path: path to photos
     :type photos_path: str
 
-    :return: A list with all paths to .jpg or .nef photos
+    :return: A list with all paths to .jpg, .jpeg or .nef photos
     :rtype: list
     |
     """
