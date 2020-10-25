@@ -3,6 +3,7 @@ This file hosts the graphical user interface code"""
 
 import tkinter as tk
 from tkinter import filedialog
+from photonomist.__main__ import input_path_validation
 
 class Gui:
     """This class is used to "draw" the graphical user interface through which 
@@ -50,6 +51,7 @@ class Gui:
     
     def __input_path_file_explorer(self):
         self.__input_path_button_value =  filedialog.askdirectory(initialdir = "/",title = "Select file")
+        input_path_validation(self.__input_path_button_value)
         self.__input_path_value.set(self.__input_path_button_value)    
 
 
