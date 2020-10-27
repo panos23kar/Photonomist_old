@@ -55,7 +55,12 @@ class Gui:
         self.__input_path_value.set(self.__input_path_button_value)
     
     def check_input_path(self, kati1, kati2, kati3):#TODO why I need the extra values!What is sent by the .trace
-        input_path_validation(self.__input_path_value.get())
+        try:
+            input_path_validation(self.__input_path_value.get())
+        except Exception as e:
+            #print(str(e))
+            self.__input_path_label = tk.Label(self.__gui, text=str(e))
+            self.__input_path_label.place(x=20, y=40)
 
 if __name__ == "__main__":
     Gui()
