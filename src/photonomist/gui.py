@@ -56,12 +56,19 @@ class Gui:
     
     def check_input_path(self, kati1, kati2, kati3):#TODO why I need the extra values!What is sent by the .trace
         try:
+            self.__inv_input_file_text
+        except:
+            print('mpika')
+            self.__inv_input_file_text = tk.StringVar()
+            self.__inv_input_file_label = tk.Label(self.__gui, textvariable=self.__inv_input_file_text, foreground="red")
+            self.__inv_input_file_label.place(x=20, y=43)
+            
+        try:
             input_path_validation(self.__input_path_value.get())
         except Exception as e:
-            #print(str(e))
-            self.__input_path_label = tk.Label(self.__gui, text=str(e))
-            self.__input_path_label.configure(foreground="red")
-            self.__input_path_label.place(x=20, y=43)
+            self.__inv_input_file_text.set(str(e))
+        else:
+            self.__inv_input_file_text.set("")
 
 if __name__ == "__main__":
     Gui()
