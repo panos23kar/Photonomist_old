@@ -60,7 +60,8 @@ class Gui:
         except Exception as e:
             #print(str(e))
             self.__input_path_label = tk.Label(self.__gui, text=str(e))
-            self.__input_path_label.place(x=20, y=40)
+            self.__input_path_label.configure(foreground="red")
+            self.__input_path_label.place(x=20, y=43)
 
 if __name__ == "__main__":
     Gui()
