@@ -19,8 +19,7 @@ class Gui:
         self.__widgets = {}
         self.__gui = tk.Tk()
         self.__main_window()
-        self.__input_path()
-        self.__export_path()
+        self.__user_paths()
 
         self.__start_gui()
     
@@ -36,65 +35,45 @@ class Gui:
         Starts the graphical user interface
         """
         self.__gui.mainloop()
-    
-    def __input_path(self):
-        """
-        It hosts input label, input path and input button"""
-
-        self.__input_path_label = tk.Label(self.__gui, text="Input path:")
-        self.__input_path_label.place(x=20, y=20)
-
-        self.__input_path_value = tk.StringVar()
-        self.__input_path_value.trace("w", self.__check_input_path)
-
-        self.__input_path_entry = tk.Entry(self.__gui, textvariable = self.__input_path_value)
-        self.__input_path_entry.place(x=90, y=22, width= 300)
-
-        #self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...", command = self.__input_path_file_explorer)
-        self.__input_path_file_explorer_button  = tk.Button(self.__gui, text="...", command =partial(self.__file_explorer,"input"))
-        self.__input_path_file_explorer_button.place(x=395, y=20, height=21)
-    
-    def __input_path_file_explorer(self):
-        self.__input_path_button_value =  filedialog.askdirectory(initialdir = "/",title = "Select file")
-        self.__input_path_value.set(self.__input_path_button_value)
-    
-    def __check_input_path(self, kati1, kati2, kati3):#TODO why I need the extra values!What is sent by the .trace
-        try:
-            self.__inv_input_file_text
-        except:
-            self.__inv_input_file_text = tk.StringVar()
-            self.__inv_input_file_label = tk.Label(self.__gui, textvariable=self.__inv_input_file_text, foreground="red")
-            self.__inv_input_file_label.place(x=20, y=43)
+      
+    # def __check_input_path(self, kati1, kati2, kati3):#TODO why I need the extra values!What is sent by the .trace
+    #     try:
+    #         self.__inv_input_file_text
+    #     except:
+    #         self.__inv_input_file_text = tk.StringVar()
+    #         self.__inv_input_file_label = tk.Label(self.__gui, textvariable=self.__inv_input_file_text, foreground="red")
+    #         self.__inv_input_file_label.place(x=20, y=43)
             
-        try:
-            input_path_validation(self.__input_path_value.get())
-        except Exception as e:
-            self.__inv_input_file_text.set(str(e))
-        else:
-            self.__inv_input_file_text.set("")
-    
-    def __export_path(self):
-        """
-        It hosts the label, stringvar, entry and file explorer button for the export path"""
+    #     try:
+    #         input_path_validation(self.__input_path_value.get())
+    #     except Exception as e:
+    #         self.__inv_input_file_text.set(str(e))
+    #     else:
+    #         self.__inv_input_file_text.set("")
 
-        self.__export_path_label = tk.Label(self.__gui, text="Export path:")
-        self.__export_path_label.place(x=20, y=220)
+    def __user_paths(self):
+        """It hosts the label, stringvar, entry and file explorer button for the export path"""
 
-        self.__export_path_value = tk.StringVar()
-        #self.__export_path_value.trace("w", self.__check_export_path)
+        for mode in (("input", 20, 22),
+                     ("export", 220, 222)):
+            #Labels widget
+            self.__widgets[mode[0] + "_path_label"] = tk.Label(self.__gui, text= mode[0].capitalize() + " path:")
+            self.__widgets[mode[0] + "_path_label"].place(x=20, y=mode[1])
 
-        self.__export_path_entry = tk.Entry(self.__gui, textvariable = self.__export_path_value)
-        self.__export_path_entry.place(x=90, y=222, width= 300)
+            #String variable widget which dynamically changes the value of the Entry widget
+            self.__widgets[mode[0] + "_path_value"] = tk.StringVar()
 
-        self.__export_path_file_explorer_button  = tk.Button(self.__gui, text="...", command = partial(self.__file_explorer,"input"))
-        self.__export_path_file_explorer_button.place(x=395, y=220, height=21)
+            #Entries widget
+            self.__widgets[mode[0] + "_path_entry"] = tk.Entry(self.__gui, textvariable = self.__widgets[mode[0] + "_path_value"])
+            self.__widgets[mode[0] + "_path_entry"].place(x=90, y=mode[2], width= 300)
+
+            #Button widget
+            self.__widgets[mode[0] + "_path_button"] = tk.Button(self.__gui, text="...", command = partial(self.__file_explorer, mode[0]))
+            self.__widgets[mode[0] + "_path_button"].place(x=395, y=mode[1], height=21)
     
     def __file_explorer(self, mode):
         self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
-        #self.__export_path_button_value =  filedialog.askdirectory(initialdir = "/",title = "Select file")
-        self.__export_path_value.set(self.__widgets[mode+ "_path_button_value"])
+        self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
     
-    
-
 if __name__ == "__main__":
     Gui()
