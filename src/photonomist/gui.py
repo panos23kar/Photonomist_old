@@ -4,7 +4,7 @@ This file hosts the graphical user interface code"""
 import tkinter as tk
 from tkinter import filedialog
 from functools import partial
-from photonomist.__main__ import input_path_validation
+from photonomist.__main__ import input_path_validation, export_path_validation
 
 class Gui:
     """This class is used to "draw" the graphical user interface through which 
@@ -17,6 +17,7 @@ class Gui:
         |
         """
         self.__widgets = {}
+        self.__photos_roots = ""
         self.__gui = tk.Tk()
         self.__main_window()
         self.__user_paths()
@@ -91,8 +92,20 @@ class Gui:
         self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
     
     def __run_app(self):
-        self.__widgets["input_invalid_path_value"].set("bla"*20)
-        self.__widgets["export_invalid_path_value"].set("bla"*20)
+
+        try:
+            self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
+        except Exception as e:
+            self.__widgets["input_invalid_path_value"].set(str(e))
+        else:
+            self.__widgets["input_invalid_path_value"].set("")
+
+        try:
+            export_path_validation(self.__widgets["export_path_value"].get(), self.__widgets["input_path_value"].get(), self.__photos_roots)
+        except Exception as e:
+            self.__widgets["export_invalid_path_value"].set(str(e))
+        else:
+            self.__widgets["export_invalid_path_value"].set("")
 
     
 if __name__ == "__main__":
