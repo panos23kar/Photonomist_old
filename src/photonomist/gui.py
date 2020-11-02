@@ -20,6 +20,7 @@ class Gui:
         self.__gui = tk.Tk()
         self.__main_window()
         self.__user_paths()
+        self.__run_app()
 
         self.__start_gui()
     
@@ -28,7 +29,7 @@ class Gui:
         Specifies the title and dimensions of main window
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("460x300")
+        self.__gui.geometry("460x200")
     
     def __start_gui(self):
         """
@@ -55,7 +56,7 @@ class Gui:
         """It hosts the label, stringvar, entry and file explorer button for the export path"""
 
         for mode in (("input", 20, 22),
-                     ("export", 220, 222)):
+                     ("export", 100, 102)):
             #Labels widget
             self.__widgets[mode[0] + "_path_label"] = tk.Label(self.__gui, text= mode[0].capitalize() + " path:")
             self.__widgets[mode[0] + "_path_label"].place(x=20, y=mode[1])
@@ -74,6 +75,12 @@ class Gui:
     def __file_explorer(self, mode):
         self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
         self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
+    
+    def __run_app(self):
+        #Run Button widget
+        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!")
+        self.__run_button.place(x=310, y=150, height=21)
+
     
 if __name__ == "__main__":
     Gui()
