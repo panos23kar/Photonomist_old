@@ -24,19 +24,20 @@ class Gui:
         self.__start_gui()
     
     def __main_window(self):
-        """
-        Specifies the title and dimensions of main window
+        """Specifies the title and dimensions of main window, and places the run button in the main window.
+        |
         """
         self.__gui.title("Photonomist")
         self.__gui.geometry("460x200")
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app)
-        self.__run_button.place(x=310, y=150, height=21)
+        self.__run_button.place(x=310, y=160, height=21)
     
     def __start_gui(self):
         """
         Starts the graphical user interface
+        |
         """
         self.__gui.mainloop()
       
@@ -56,7 +57,9 @@ class Gui:
     #         self.__inv_input_file_text.set("")
 
     def __user_paths(self):
-        """It hosts the label, stringvar, entry and file explorer button for the export path"""
+        """It hosts the label, stringvar, entry and file explorer button for the export path
+        |
+        """
 
         for mode in (("input", 20, 22),
                      ("export", 100, 102)):
@@ -74,13 +77,22 @@ class Gui:
             #Button widget
             self.__widgets[mode[0] + "_path_button"] = tk.Button(self.__gui, text="...", command = partial(self.__file_explorer, mode[0]))
             self.__widgets[mode[0] + "_path_button"].place(x=395, y=mode[1], height=21)
+
+
+            #String variable widget which dynamically changes in case of invalid path
+            self.__widgets[mode[0] + "_invalid_path_value"] = tk.StringVar()
+
+            #Label widget for invalid paths
+            self.__inv_input_file_label = tk.Label(self.__gui, textvariable=self.__widgets[mode[0] + "_invalid_path_value"], foreground="red")
+            self.__inv_input_file_label.place(x=20, y=mode[1]+27)
     
     def __file_explorer(self, mode):
         self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
         self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
     
     def __run_app(self):
-        pass
+        self.__widgets["input_invalid_path_value"].set("bla"*20)
+        self.__widgets["export_invalid_path_value"].set("bla"*20)
 
     
 if __name__ == "__main__":
