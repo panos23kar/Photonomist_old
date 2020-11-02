@@ -20,7 +20,6 @@ class Gui:
         self.__gui = tk.Tk()
         self.__main_window()
         self.__user_paths()
-        self.__run_app()
 
         self.__start_gui()
     
@@ -30,6 +29,10 @@ class Gui:
         """
         self.__gui.title("Photonomist")
         self.__gui.geometry("460x200")
+
+        #Run Button widget
+        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app)
+        self.__run_button.place(x=310, y=150, height=21)
     
     def __start_gui(self):
         """
@@ -77,9 +80,7 @@ class Gui:
         self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
     
     def __run_app(self):
-        #Run Button widget
-        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!")
-        self.__run_button.place(x=310, y=150, height=21)
+        pass
 
     
 if __name__ == "__main__":
