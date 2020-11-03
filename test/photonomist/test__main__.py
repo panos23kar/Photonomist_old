@@ -10,7 +10,7 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation, tidy_photos
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'test\data\blablabla'), 
@@ -65,7 +65,7 @@ def test_extracts_photo_roots():
     """Test src\\photonomist\\__main__ > traverse_photos_path
     """
     sample_path =  r'test\data\testing_folder_with_photos'
-    assert len(traverse_photos_path(sample_path)) == 5
+    assert len(traverse_photos_path(sample_path)) == 7
 
 def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
@@ -88,7 +88,7 @@ def test_photos_total_size():
     """
     sample_photo_roots = traverse_photos_path(r'test\data\testing_folder_with_photos')
     photos_total_size = photos_size(sample_photo_roots)
-    assert photos_total_size == 53316894
+    assert photos_total_size == 94832410
 
 def test_enough_free_disk_space(capsys):
     """Test src\\photonomist\\__main__ > disk_space
@@ -188,7 +188,7 @@ def test_input_path_validation_traverse_photos_path():
     """ Test for src\\photonomist\\__main__ > input_path_validation
     """
     sample_path =  r'test\data\testing_folder_with_photos'
-    assert len(input_path_validation(sample_path)) == 5
+    assert len(input_path_validation(sample_path)) == 7
 
 def test_export_path_validation_path_exists():
     """ Test for src\\photonomist\\__main__ > export_path_validation
@@ -198,6 +198,25 @@ def test_export_path_validation_path_exists():
     path_roots = ["blablabla"]
     with pytest.raises(FileNotFoundError, match="The provided path was not found!"):
         export_path_validation(export_path, input_path, path_roots)
+
+@pytest.fixture()
+def move_photos_del_folders():
+    photo_roots = traverse_photos_path(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla")
+    yield photo_roots
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\blabla\DSC_0262.NEF")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people\DSC_1402.JPG", r"test\data\testing_folder_with_photos\bla\blabla\blablabla\DSC_1402.JPG")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
+    os.remove(r"test\data\testing_folder_with_photos\move_folder\not_transferred.txt")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_move_all_photos_of_all_folders(move_photos_del_folders):
+    """ Test for src\\photonomist\\__main__ > tidy_photos
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    tidy_photos(export_path, move_photos_del_folders)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
+    assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
 
 # Make the script executable.
 if __name__ == "__main__":

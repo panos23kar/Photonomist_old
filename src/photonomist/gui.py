@@ -4,7 +4,7 @@ This file hosts the graphical user interface code"""
 import tkinter as tk
 from tkinter import filedialog
 from functools import partial
-from photonomist.__main__ import input_path_validation, export_path_validation
+from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos
 
 class Gui:
     """This class is used to "draw" the graphical user interface through which 
@@ -41,21 +41,6 @@ class Gui:
         |
         """
         self.__gui.mainloop()
-      
-    # def __check_input_path(self, kati1, kati2, kati3):#TODO why I need the extra values!What is sent by the .trace
-    #     try:
-    #         self.__inv_input_file_text
-    #     except:
-    #         self.__inv_input_file_text = tk.StringVar()
-    #         self.__inv_input_file_label = tk.Label(self.__gui, textvariable=self.__inv_input_file_text, foreground="red")
-    #         self.__inv_input_file_label.place(x=20, y=43)
-            
-    #     try:
-    #         input_path_validation(self.__input_path_value.get())
-    #     except Exception as e:
-    #         self.__inv_input_file_text.set(str(e))
-    #     else:
-    #         self.__inv_input_file_text.set("")
 
     def __user_paths(self):
         """It hosts the label, stringvar, entry and file explorer button for the export path
@@ -100,12 +85,14 @@ class Gui:
         else:
             self.__widgets["input_invalid_path_value"].set("")
 
+
         try:
             export_path_validation(self.__widgets["export_path_value"].get(), self.__widgets["input_path_value"].get(), self.__photos_roots)
         except Exception as e:
             self.__widgets["export_invalid_path_value"].set(str(e))
         else:
             self.__widgets["export_invalid_path_value"].set("")
+            #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
 
     
 if __name__ == "__main__":

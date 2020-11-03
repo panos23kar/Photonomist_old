@@ -258,6 +258,20 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
+def tidy_photos(export_path:str, photos_roots:list):
+    """Initiates the transfer process for each photo
+
+    :param export_path: path to the directory where the photo folder structure will be created
+    :type export_path: str
+    :param photos_roots: list with all roots that contain photos
+    :type path: list
+    |
+    """
+
+    # Iterate over list of photos
+    for photo_path in photos_roots:
+        transfer_photo(photo_path, export_path)
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -272,9 +286,8 @@ def main():
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     export_path_validation(export_path, photos_path, photos_roots)
 
-    # Iterate over list of photos
-    for photo_path in photos_roots:
-        transfer_photo(photo_path, export_path)
+    # Moves photos
+    tidy_photos(export_path, photos_roots)
  
 # Make the script executable.
 if __name__ == "__main__":
