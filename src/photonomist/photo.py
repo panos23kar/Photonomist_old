@@ -98,5 +98,6 @@ class Photo:
 
 
 if __name__ == "__main__":
-    photo_path = Photo(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
-    my_photo = Photo(photo_path).get_date()
+    pass
+    #photo_path = Photo(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    #my_photo = Photo(photo_path).get_date()

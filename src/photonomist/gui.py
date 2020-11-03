@@ -29,7 +29,7 @@ class Gui:
         |
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("460x200")
+        self.__gui.geometry("460x600")
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app)
@@ -93,7 +93,36 @@ class Gui:
         else:
             self.__widgets["export_invalid_path_value"].set("")
             #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
+        
+        # var1 = IntVar()
+        # Checkbutton(master, text="male", variable=var1).grid(row=1, sticky=W)
+        # var2 = IntVar()
+        # Checkbutton(master, text="female", variable=var2).grid(row=2, sticky=W)
+        
+        my_list = [
+            "blab",
+            "blablabla",
+            "blabla",
+            "blablablabla",
+            "blab",
+            "blablabla",
+            "blabla",
+            "blablablabla",
+            "blab",
+            "blablabla",
+            "blabla",
+            "blablablabla",
+        ]
 
-    
+        my_dict = {}
+        counter = 0
+        my_y = 200
+        for kati in my_list:
+            my_dict[kati+str(counter)] = tk.IntVar()
+            tk.Checkbutton(self.__gui, text=kati, variable=counter).place(x=20, y=my_y)
+            counter +=1 
+            my_y +=25
+
+
 if __name__ == "__main__":
     Gui()
