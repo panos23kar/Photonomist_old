@@ -5,7 +5,7 @@
     |
 """
 import os, shutil
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(path:str)->str:
@@ -70,8 +70,11 @@ def traverse_photos_path(photos_path:str)->list:
     :rtype: list
     |
     """
-    # I could have uused a tuple and overwrite at each iteration
+    # I could have used a tuple and overwrite at each iteration
     photos_roots = []
+
+    #Photos folder to create the exclusion list when using the gui
+    photos_folder = set()
 
     # traverse root directory, and list directories as dirs and files as files. List comp was less readable
     for root, dirs, files in os.walk(photos_path):
