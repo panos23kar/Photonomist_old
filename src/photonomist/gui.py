@@ -84,6 +84,18 @@ class Gui:
             self.__widgets["input_invalid_path_value"].set(str(e))
         else:
             self.__widgets["input_invalid_path_value"].set("")
+        
+        photos_folders = set( self.__photos_roots.values())
+        # for folder in photos_folders:
+        #     print(folder)
+        my_dict = {}
+        counter = 0
+        my_y = 200
+        for kati in photos_folders:
+            my_dict[kati+str(counter)] = tk.IntVar()
+            tk.Checkbutton(self.__gui, text=kati, variable=kati).place(x=20, y=my_y)
+            counter +=1 
+            my_y +=25
 
 
         try:
@@ -113,16 +125,6 @@ class Gui:
             "blabla",
             "blablablabla",
         ]
-
-        my_dict = {}
-        counter = 0
-        my_y = 200
-        for kati in my_list:
-            my_dict[kati+str(counter)] = tk.IntVar()
-            tk.Checkbutton(self.__gui, text=kati, variable=counter).place(x=20, y=my_y)
-            counter +=1 
-            my_y +=25
-
 
 if __name__ == "__main__":
     Gui()
