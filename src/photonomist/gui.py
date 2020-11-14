@@ -81,6 +81,7 @@ class Gui:
         self.__validate_input_path()
 
         self.__found_photos_window = tk.Toplevel(self.__gui)
+        self.__found_photos_window.grab_set()
         self.__number_of_photos = len(self.__photos_roots.keys())
 
         #Number of photos Label
