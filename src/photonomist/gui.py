@@ -79,19 +79,27 @@ class Gui:
 
     def __find_input_photos(self):
         self.__validate_input_path()
-        self.__found_photos_window = tk.Toplevel(self.__gui)
 
+        self.__found_photos_window = tk.Toplevel(self.__gui)
+        self.__number_of_photos = len(self.__photos_roots.keys())
+
+        #Number of photos Label
+        self.__widgets["Numb_photos_label"] = tk.Label(self.__found_photos_window, text="Hmmm!!! I found " + str(self.__number_of_photos) + "!!\n\nUncheck the folders that you don't want me to touch!!", anchor="e", justify="left")
+        self.__widgets["Numb_photos_label"].place(x=3, y=10)
+
+
+        #Testing
         photos_folders = set(self.__photos_roots.values())
 
         my_dict_check_var = {}
         my_dict_check_text = {}
         counter = 0
-        my_y = 0
+        my_y =70
 
         for kati in photos_folders:
             my_dict_check_var[kati+str(counter)] = tk.IntVar()
             my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__found_photos_window, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
-            my_dict_check_text[kati+str(counter)].place(x=20, y=my_y)
+            my_dict_check_text[kati+str(counter)].place(x=10, y=my_y)
             counter +=1 
             my_y +=25
             
