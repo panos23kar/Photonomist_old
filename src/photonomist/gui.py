@@ -33,7 +33,7 @@ class Gui:
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app)
-        self.__run_button.place(x=310, y=160, height=21)
+        self.__run_button.place(x=310, y=200, height=21)
     
     def __start_gui(self):
         """
@@ -48,7 +48,7 @@ class Gui:
         """
 
         for mode in (("input", 20, 22),
-                     ("export", 100, 102)):
+                     ("export", 150, 152)):
             #Labels widget
             self.__widgets[mode[0] + "_path_label"] = tk.Label(self.__gui, text= mode[0].capitalize() + " path:")
             self.__widgets[mode[0] + "_path_label"].place(x=20, y=mode[1])
@@ -71,6 +71,12 @@ class Gui:
             #Label widget for invalid paths
             self.__inv_input_file_label = tk.Label(self.__gui, textvariable=self.__widgets[mode[0] + "_invalid_path_value"], foreground="red")
             self.__inv_input_file_label.place(x=20, y=mode[1]+27)
+            
+            if mode[0] == "input":
+                #Button widget
+                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos")
+                self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
+
     
     def __file_explorer(self, mode):
         self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
@@ -85,17 +91,24 @@ class Gui:
         else:
             self.__widgets["input_invalid_path_value"].set("")
         
-        photos_folders = set( self.__photos_roots.values())
-        # for folder in photos_folders:
-        #     print(folder)
-        my_dict = {}
+        photos_folders = set(self.__photos_roots.values())
+
+        my_dict_check_var = {}
+        my_dict_check_text = {}
         counter = 0
         my_y = 200
+
         for kati in photos_folders:
-            my_dict[kati+str(counter)] = tk.IntVar()
-            tk.Checkbutton(self.__gui, text=kati, variable=kati).place(x=20, y=my_y)
+            my_dict_check_var[kati+str(counter)] = tk.IntVar()
+            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__gui, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
+            my_dict_check_text[kati+str(counter)].place(x=20, y=my_y)
             counter +=1 
             my_y +=25
+        
+        for key,value in my_dict_check_var.items():
+            print("folder_var", key, value.get())
+            if value.get() == 1:
+                print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
 
 
         try:
@@ -105,26 +118,6 @@ class Gui:
         else:
             self.__widgets["export_invalid_path_value"].set("")
             #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
-        
-        # var1 = IntVar()
-        # Checkbutton(master, text="male", variable=var1).grid(row=1, sticky=W)
-        # var2 = IntVar()
-        # Checkbutton(master, text="female", variable=var2).grid(row=2, sticky=W)
-        
-        my_list = [
-            "blab",
-            "blablabla",
-            "blabla",
-            "blablablabla",
-            "blab",
-            "blablabla",
-            "blabla",
-            "blablablabla",
-            "blab",
-            "blablabla",
-            "blabla",
-            "blablablabla",
-        ]
 
 if __name__ == "__main__":
     Gui()
