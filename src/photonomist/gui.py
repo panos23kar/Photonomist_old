@@ -77,6 +77,28 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__find_input_photos)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
 
+    def __find_input_photos(self):
+        self.__validate_input_path()
+        self.__found_photos_window = tk.Toplevel(self.__gui)
+
+        photos_folders = set(self.__photos_roots.values())
+
+        my_dict_check_var = {}
+        my_dict_check_text = {}
+        counter = 0
+        my_y = 0
+
+        for kati in photos_folders:
+            my_dict_check_var[kati+str(counter)] = tk.IntVar()
+            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__found_photos_window, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
+            my_dict_check_text[kati+str(counter)].place(x=20, y=my_y)
+            counter +=1 
+            my_y +=25
+            
+        for key,value in my_dict_check_var.items():
+            print("folder_var", key, value.get())
+            if value.get() == 1:
+                print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
     
     def __validate_input_path(self):
         try:
@@ -93,24 +115,6 @@ class Gui:
     def __run_app(self):
         self.__validate_input_path()
         
-        photos_folders = set(self.__photos_roots.values())
-
-        my_dict_check_var = {}
-        my_dict_check_text = {}
-        counter = 0
-        my_y = 200
-
-        for kati in photos_folders:
-            my_dict_check_var[kati+str(counter)] = tk.IntVar()
-            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__gui, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
-            my_dict_check_text[kati+str(counter)].place(x=20, y=my_y)
-            counter +=1 
-            my_y +=25
-        
-        for key,value in my_dict_check_var.items():
-            print("folder_var", key, value.get())
-            if value.get() == 1:
-                print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
 
 
         try:
