@@ -74,22 +74,24 @@ class Gui:
             
             if mode[0] == "input":
                 #Button widget
-                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos")
+                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__find_input_photos)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
 
     
-    def __file_explorer(self, mode):
-        self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
-        self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
-    
-    def __run_app(self):
-
+    def __validate_input_path(self):
         try:
             self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
         except Exception as e:
             self.__widgets["input_invalid_path_value"].set(str(e))
         else:
             self.__widgets["input_invalid_path_value"].set("")
+
+    def __file_explorer(self, mode):
+        self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
+        self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
+    
+    def __run_app(self):
+        self.__validate_input_path()
         
         photos_folders = set(self.__photos_roots.values())
 
