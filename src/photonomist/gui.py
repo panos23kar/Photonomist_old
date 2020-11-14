@@ -76,17 +76,35 @@ class Gui:
                 #Button widget
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__find_input_photos)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
+    
+    def onFrameConfigure(self):
+        '''Reset the scroll region to encompass the inner frame'''
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def __find_input_photos(self):
         self.__validate_input_path()
 
         self.__found_photos_window = tk.Toplevel(self.__gui)
+        self.__found_photos_window.title("Photos Folders")
         self.__found_photos_window.grab_set()
+        #Scrollbar
+
         self.__number_of_photos = len(self.__photos_roots.keys())
 
+        self.canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
+        frame = tk.Frame(self.canvas, background="#ffffff")
+        vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.canvas.yview)
+        self.canvas.configure(yscrollcommand=vsb.set)
+
+        vsb.pack(side="right", fill="y")
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self.canvas.create_window((1,1), window=frame, anchor="n")
+
+        frame.bind("<Configure>", lambda event, canvas=self.canvas: self.onFrameConfigure())
+        
         #Number of photos Label
-        self.__widgets["Numb_photos_label"] = tk.Label(self.__found_photos_window, text="Hmmm!!! I found " + str(self.__number_of_photos) + "!!\n\nUncheck the folders that you don't want me to touch!!", anchor="e", justify="left")
-        self.__widgets["Numb_photos_label"].place(x=3, y=10)
+        self.__widgets["Numb_photos_label"] = tk.Label(frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "!!\n\nUncheck the folders that you don't want me to touch!!", anchor="e", justify="left")
+        self.__widgets["Numb_photos_label"].grid(row=0,column=0)
 
 
         #Testing
@@ -94,15 +112,13 @@ class Gui:
 
         my_dict_check_var = {}
         my_dict_check_text = {}
-        counter = 0
-        my_y =70
+        counter = 1
 
         for kati in photos_folders:
             my_dict_check_var[kati+str(counter)] = tk.IntVar()
-            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__found_photos_window, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
-            my_dict_check_text[kati+str(counter)].place(x=10, y=my_y)
+            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
+            my_dict_check_text[kati+str(counter)].grid(row=counter,column=0)
             counter +=1 
-            my_y +=25
             
         for key,value in my_dict_check_var.items():
             print("folder_var", key, value.get())
