@@ -82,15 +82,15 @@ class Gui:
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def __find_input_photos(self):
-        self.__validate_input_path()
+        self.__validate_input_path() 
 
         self.__found_photos_window = tk.Toplevel(self.__gui)
         self.__found_photos_window.title("Photos Folders")
         self.__found_photos_window.grab_set()
-        #Scrollbar
 
         self.__number_of_photos = len(self.__photos_roots.keys())
 
+        # Canvas, frame, scrollbar to make window scrollable #TODO rename canvas and frame
         self.canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
         frame = tk.Frame(self.canvas, background="#ffffff")
         vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.canvas.yview)
