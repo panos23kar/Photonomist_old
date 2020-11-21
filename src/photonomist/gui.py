@@ -92,7 +92,7 @@ class Gui:
 
         # Canvas, frame, scrollbar to make window scrollable #TODO rename canvas and frame
         self.canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
-        frame = tk.Frame(self.canvas, background="#ffffff")
+        frame = tk.Frame(self.canvas, background="grey95")
         vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=vsb.set)
 
