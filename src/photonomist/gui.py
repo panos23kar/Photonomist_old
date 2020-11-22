@@ -111,24 +111,17 @@ class Gui:
         #Testing
         photos_folders = set(self.__photos_roots.values())
 
-        my_dict_check_var = {}
-        my_dict_check_text = {}
+        self.__my_dict_check_var = {}
+        self.__my_dict_check_text = {}
         counter = 1
 
         for kati in photos_folders:
-            my_dict_check_var[kati+str(counter)] = tk.IntVar(value=1)
-            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
-            my_dict_check_text[kati+str(counter)].pack(anchor="w")
+            self.__my_dict_check_var[kati+str(counter)] = tk.IntVar(value=1)
+            self.__my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=self.__my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
+            self.__my_dict_check_text[kati+str(counter)].pack(anchor="w")
             counter +=1 
             
-        # for key,value in my_dict_check_var.items():
-        #     print("folder_var", key, value.get())
-        #     if value.get() == 1:
-        #         print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
-        
-        # self.__found_photos_window.geometry("")
-
-        self.__exclude_window_button = tk.Button(frame, text="Good2Go")
+        self.__exclude_window_button = tk.Button(frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
     def _on_mousewheel(self, event):
@@ -136,6 +129,13 @@ class Gui:
         """ It performs the scrolling up and down when a user uses his mouse wheel
         https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
         self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+    
+    def __excluded_paths(self):
+        """Check if i can get the excluded paths form exclude window"""#TODO-->...
+        for key,_ in self.__my_dict_check_text.items():
+            #print("name= ", key, "state= ", self.__my_dict_check_var[key.replace('\\\\','\\')].get())
+            if  self.__my_dict_check_var[key.replace('\\\\','\\')].get() == 0:
+                print(key)
     
     def __validate_input_path(self):
         try:
