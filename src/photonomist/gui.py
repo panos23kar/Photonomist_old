@@ -95,6 +95,7 @@ class Gui:
         frame = tk.Frame(self.canvas, background="grey95", )
         vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=vsb.set)
+        self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
         vsb.pack(side="right", fill="y")
         self.canvas.pack(side="left", fill="both", expand=True)
@@ -127,6 +128,12 @@ class Gui:
         
         self.__found_photos_window.geometry("")
     
+    def _on_mousewheel(self, event):
+        #TODO --> ....
+        """ It performs the scrolling up and down when a user uses his mouse wheel
+        https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
+        self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+    
     def __validate_input_path(self):
         try:
             self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
@@ -142,8 +149,6 @@ class Gui:
     def __run_app(self):
         self.__validate_input_path()
         
-
-
         try:
             export_path_validation(self.__widgets["export_path_value"].get(), self.__widgets["input_path_value"].get(), self.__photos_roots)
         except Exception as e:
