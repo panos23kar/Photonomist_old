@@ -121,12 +121,15 @@ class Gui:
             my_dict_check_text[kati+str(counter)].pack(anchor="w")
             counter +=1 
             
-        for key,value in my_dict_check_var.items():
-            print("folder_var", key, value.get())
-            if value.get() == 1:
-                print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
+        # for key,value in my_dict_check_var.items():
+        #     print("folder_var", key, value.get())
+        #     if value.get() == 1:
+        #         print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
         
-        self.__found_photos_window.geometry("")
+        # self.__found_photos_window.geometry("")
+
+        self.__exclude_window_button = tk.Button(frame, text="Good2Go")
+        self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
     def _on_mousewheel(self, event):
         #TODO --> ....
