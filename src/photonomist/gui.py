@@ -91,8 +91,8 @@ class Gui:
         self.__number_of_photos = len(self.__photos_roots.keys())
 
         # Canvas, frame, scrollbar to make window scrollable #TODO rename canvas and frame
-        self.canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
-        frame = tk.Frame(self.canvas, background="grey95")
+        self.canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff", width=600)
+        frame = tk.Frame(self.canvas, background="grey95", )
         vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=vsb.set)
 
@@ -103,8 +103,9 @@ class Gui:
         frame.bind("<Configure>", lambda event, canvas=self.canvas: self.onFrameConfigure())
         
         #Number of photos Label
-        self.__widgets["Numb_photos_label"] = tk.Label(frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "!!\n\nUncheck the folders that you don't want me to touch!!", anchor="e", justify="left")
-        self.__widgets["Numb_photos_label"].grid(row=0,column=0)
+        self.__widgets["Numb_photos_label"] = tk.Label(frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
+        #self.__widgets["Numb_photos_label"].grid(row=0,column=0)
+        self.__widgets["Numb_photos_label"].pack(anchor="w")
 
 
         #Testing
@@ -116,14 +117,17 @@ class Gui:
 
         for kati in photos_folders:
             my_dict_check_var[kati+str(counter)] = tk.IntVar()
-            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0 )
-            my_dict_check_text[kati+str(counter)].grid(row=counter,column=0)
+            my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
+            #my_dict_check_text[kati+str(counter)].grid(row=counter,column=0)
+            my_dict_check_text[kati+str(counter)].pack(anchor="w")
             counter +=1 
             
         for key,value in my_dict_check_var.items():
             print("folder_var", key, value.get())
             if value.get() == 1:
                 print("edwanil",my_dict_check_text[my_dict_check_text].cget("text"))
+        
+        self.__found_photos_window.geometry("")
     
     def __validate_input_path(self):
         try:
