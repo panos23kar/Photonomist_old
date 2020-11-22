@@ -103,8 +103,7 @@ class Gui:
         frame.bind("<Configure>", lambda event, canvas=self.canvas: self.onFrameConfigure())
         
         #Number of photos Label
-        self.__widgets["Numb_photos_label"] = tk.Label(frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
-        #self.__widgets["Numb_photos_label"].grid(row=0,column=0)
+        self.__widgets["Numb_photos_label"] = tk.Label(frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
 
@@ -116,9 +115,8 @@ class Gui:
         counter = 1
 
         for kati in photos_folders:
-            my_dict_check_var[kati+str(counter)] = tk.IntVar()
+            my_dict_check_var[kati+str(counter)] = tk.IntVar(value=1)
             my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
-            #my_dict_check_text[kati+str(counter)].grid(row=counter,column=0)
             my_dict_check_text[kati+str(counter)].pack(anchor="w")
             counter +=1 
             
