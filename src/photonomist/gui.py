@@ -74,13 +74,14 @@ class Gui:
             
             if mode[0] == "input":
                 #Button widget
-                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__find_input_photos)
+                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__exclude_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
     
-        def __validate_input_path(self):
+    def __validate_input_path(self):
         try:
             self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
         except Exception as e:
+            self.__photos_roots = ""
             self.__widgets["input_invalid_path_value"].set(str(e))
         else:
             self.__widgets["input_invalid_path_value"].set("")
@@ -102,8 +103,17 @@ class Gui:
 
     #------------------------------ Exclude Window-------------------------------------#
     
-    def __find_input_photos(self):
-        self.__validate_input_path() 
+    def __exclude_window(self):
+        try:
+            self.__validate_input_path()
+            if not self.__photos_roots:
+                raise Exception
+        except:
+            pass
+        else:
+            self.__exclude_window_layout()
+    
+    def __exclude_window_layout(self):
 
         self.__found_photos_window = tk.Toplevel(self.__gui)
         self.__found_photos_window.title("Photos Folders")
