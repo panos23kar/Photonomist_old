@@ -115,26 +115,29 @@ class Gui:
     
     def __exclude_window_layout(self):
 
+        # Exclude window cconfiguration
         self.__found_photos_window = tk.Toplevel(self.__gui)
         self.__found_photos_window.title("Photos Folders")
+        ## Exclude window gets the 'full' focus of the app
         self.__found_photos_window.grab_set()
 
-        self.__number_of_photos = len(self.__photos_roots.keys())
-
-        # Canvas, frame, scrollbar to make window scrollable
+        ##Canvas for Exclude window (it is need for scrolling (scrollbar) functionality)
         self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
-        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
-        self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
-        self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
         self.__excl_w_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
-
-        self.__excl_w_scrollbar.pack(side="right", fill="y")
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
+
+        ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
+        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
+        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.onFrameConfigure())
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
-        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.onFrameConfigure())
+        ##Scrollbar for Exclude window
+        self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
+        self.__excl_w_scrollbar.pack(side="right", fill="y")
+        self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
         
-        #Number of photos Label
+        #Number of photos Label for Exclude window
+        self.__number_of_photos = len(self.__photos_roots.keys())
         self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
@@ -161,7 +164,7 @@ class Gui:
     
     def _on_mousewheel(self, event):
         #TODO --> ....
-        """ It performs the scrolling up and down when a user uses his mouse wheel
+        """ It listens for mouse's wheel scrolling. 
         https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
         self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
     
@@ -179,8 +182,6 @@ class Gui:
                         #del self.__photos_roots[key.replace('\\\\','\\')]
                         continue
         print("-"*40)
-        # for kati, kati_allo in self.__photos_roots.items():
-        #     print(kati_allo)
 
 
 if __name__ == "__main__":
