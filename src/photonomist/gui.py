@@ -171,5 +171,16 @@ class Gui:
             self.__widgets["export_invalid_path_value"].set("")
             #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
 
+class ExcludeWindow(Gui):
+    """This class is used to "draw" the window with the checkboxes-paths that contain photos
+
+    |
+    """
+    def __init__(self):
+        """Constructor method
+        |
+        """
+        super().__init__()
+
 if __name__ == "__main__":
     Gui()
