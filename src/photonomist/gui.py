@@ -131,11 +131,22 @@ class Gui:
         self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
     
     def __excluded_paths(self):
-        """Check if i can get the excluded paths form exclude window"""#TODO-->...
+        """Check if i can get the excluded paths form exclude window"""#TODO-->... you might need to change the roots
         for key,_ in self.__my_dict_check_text.items():
             #print("name= ", key, "state= ", self.__my_dict_check_var[key.replace('\\\\','\\')].get())
             if  self.__my_dict_check_var[key.replace('\\\\','\\')].get() == 0:
-                print(key)
+                print("-"*40)
+                for key_two, value in self.__photos_roots.items():
+                    
+                    if value in key[:len(value)]:
+                        print("-"*40)
+                        print('value== ', value, 'key==', key)
+                        #del self.__photos_roots[key.replace('\\\\','\\')]
+                        continue
+        print("-"*40)
+        # for kati, kati_allo in self.__photos_roots.items():
+        #     print(kati_allo)
+
     
     def __validate_input_path(self):
         try:
