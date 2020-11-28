@@ -124,11 +124,11 @@ class Gui:
         # Canvas, frame, scrollbar to make window scrollable
         self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
         self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
-        vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
-        self.__excl_w_canvas.configure(yscrollcommand=vsb.set)
+        self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
+        self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
         self.__excl_w_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
-        vsb.pack(side="right", fill="y")
+        self.__excl_w_scrollbar.pack(side="right", fill="y")
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
