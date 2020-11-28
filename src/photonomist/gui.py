@@ -121,21 +121,21 @@ class Gui:
 
         self.__number_of_photos = len(self.__photos_roots.keys())
 
-        # Canvas, frame, scrollbar to make window scrollable #TODO rename canvas and frame
-        self.canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff", width=600)
-        frame = tk.Frame(self.canvas, background="grey95", )
-        vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.canvas.yview)
-        self.canvas.configure(yscrollcommand=vsb.set)
-        self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+        # Canvas, frame, scrollbar to make window scrollable
+        self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
+        self__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
+        vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
+        self.__excl_w_canvas.configure(yscrollcommand=vsb.set)
+        self.__excl_w_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
         vsb.pack(side="right", fill="y")
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.canvas.create_window((1,1), window=frame, anchor="n")
+        self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
+        self.__excl_w_canvas.create_window((1,1), window=self__excl_w_frame, anchor="n")
 
-        frame.bind("<Configure>", lambda event, canvas=self.canvas: self.onFrameConfigure())
+        self__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.onFrameConfigure())
         
         #Number of photos Label
-        self.__widgets["Numb_photos_label"] = tk.Label(frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
+        self.__widgets["Numb_photos_label"] = tk.Label(self__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
 
@@ -148,22 +148,22 @@ class Gui:
 
         for kati in photos_folders:
             self.__my_dict_check_var[kati+str(counter)] = tk.IntVar(value=1)
-            self.__my_dict_check_text[kati+str(counter)] = tk.Checkbutton(frame, text=kati, variable=self.__my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
+            self.__my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self__excl_w_frame, text=kati, variable=self.__my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
             self.__my_dict_check_text[kati+str(counter)].pack(anchor="w")
             counter +=1 
             
-        self.__exclude_window_button = tk.Button(frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
+        self.__exclude_window_button = tk.Button(self__excl_w_frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
     def onFrameConfigure(self):
         '''Reset the scroll region to encompass the inner frame'''
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self.__excl_w_canvas.configure(scrollregion=self.__excl_w_canvas.bbox("all"))
     
     def _on_mousewheel(self, event):
         #TODO --> ....
         """ It performs the scrolling up and down when a user uses his mouse wheel
         https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
-        self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
     
     def __excluded_paths(self):
         """Check if i can get the excluded paths form exclude window"""#TODO-->... you might need to change the roots
