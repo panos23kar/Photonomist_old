@@ -77,10 +77,31 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__find_input_photos)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
     
-    def onFrameConfigure(self):
-        '''Reset the scroll region to encompass the inner frame'''
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        def __validate_input_path(self):
+        try:
+            self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
+        except Exception as e:
+            self.__widgets["input_invalid_path_value"].set(str(e))
+        else:
+            self.__widgets["input_invalid_path_value"].set("")
 
+    def __file_explorer(self, mode):
+        self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
+        self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
+    
+    def __run_app(self):
+        self.__validate_input_path()
+        
+        try:
+            export_path_validation(self.__widgets["export_path_value"].get(), self.__widgets["input_path_value"].get(), self.__photos_roots)
+        except Exception as e:
+            self.__widgets["export_invalid_path_value"].set(str(e))
+        else:
+            self.__widgets["export_invalid_path_value"].set("")
+            #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
+
+    #------------------------------ Exclude Window-------------------------------------#
+    
     def __find_input_photos(self):
         self.__validate_input_path() 
 
@@ -124,6 +145,10 @@ class Gui:
         self.__exclude_window_button = tk.Button(frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
+    def onFrameConfigure(self):
+        '''Reset the scroll region to encompass the inner frame'''
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+    
     def _on_mousewheel(self, event):
         #TODO --> ....
         """ It performs the scrolling up and down when a user uses his mouse wheel
@@ -147,29 +172,6 @@ class Gui:
         # for kati, kati_allo in self.__photos_roots.items():
         #     print(kati_allo)
 
-    
-    def __validate_input_path(self):
-        try:
-            self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
-        except Exception as e:
-            self.__widgets["input_invalid_path_value"].set(str(e))
-        else:
-            self.__widgets["input_invalid_path_value"].set("")
-
-    def __file_explorer(self, mode):
-        self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
-        self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
-    
-    def __run_app(self):
-        self.__validate_input_path()
-        
-        try:
-            export_path_validation(self.__widgets["export_path_value"].get(), self.__widgets["input_path_value"].get(), self.__photos_roots)
-        except Exception as e:
-            self.__widgets["export_invalid_path_value"].set(str(e))
-        else:
-            self.__widgets["export_invalid_path_value"].set("")
-            #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
 
 if __name__ == "__main__":
     Gui()
