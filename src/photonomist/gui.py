@@ -123,19 +123,19 @@ class Gui:
 
         # Canvas, frame, scrollbar to make window scrollable
         self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
-        self__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
+        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
         vsb = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
         self.__excl_w_canvas.configure(yscrollcommand=vsb.set)
         self.__excl_w_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
         vsb.pack(side="right", fill="y")
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
-        self.__excl_w_canvas.create_window((1,1), window=self__excl_w_frame, anchor="n")
+        self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
-        self__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.onFrameConfigure())
+        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.onFrameConfigure())
         
         #Number of photos Label
-        self.__widgets["Numb_photos_label"] = tk.Label(self__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
+        self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
 
@@ -148,11 +148,11 @@ class Gui:
 
         for kati in photos_folders:
             self.__my_dict_check_var[kati+str(counter)] = tk.IntVar(value=1)
-            self.__my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self__excl_w_frame, text=kati, variable=self.__my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
+            self.__my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__excl_w_frame, text=kati, variable=self.__my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
             self.__my_dict_check_text[kati+str(counter)].pack(anchor="w")
             counter +=1 
             
-        self.__exclude_window_button = tk.Button(self__excl_w_frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
+        self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
     def onFrameConfigure(self):
