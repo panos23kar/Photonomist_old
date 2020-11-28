@@ -74,7 +74,7 @@ class Gui:
             
             if mode[0] == "input":
                 #Button widget
-                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__exclude_window)
+                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
     
     def __validate_input_path(self):
@@ -103,7 +103,7 @@ class Gui:
 
     #------------------------------ Exclude Window-------------------------------------#
     
-    def __exclude_window(self):
+    def __excl_window(self):
         try:
             self.__validate_input_path()
             if not self.__photos_roots:
@@ -111,9 +111,9 @@ class Gui:
         except:
             pass
         else:
-            self.__exclude_window_layout()
+            self.__excl_w_layout()
     
-    def __exclude_window_layout(self):
+    def __excl_w_layout(self):
 
         # Exclude window cconfiguration
         self.__found_photos_window = tk.Toplevel(self.__gui)
@@ -123,56 +123,65 @@ class Gui:
 
         ##Canvas for Exclude window (it is need for scrolling (scrollbar) functionality)
         self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
-        self.__excl_w_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+        self.__excl_w_canvas.bind_all("<MouseWheel>", self.__on_mousewheel)
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
 
         ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
         self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", )
-        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.onFrameConfigure())
+        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
         ##Scrollbar for Exclude window
         self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
         self.__excl_w_scrollbar.pack(side="right", fill="y")
         self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
-        
+
+        self.__excl_w_number_photos()
+        self.__excl_w_checkboxes()
+        self.__excl_w_resize_canvas()
+
+
+    def __on_frame_configure(self):
+        '''Reset the scroll region to encompass the inner frame'''
+        self.__excl_w_canvas.configure(scrollregion=self.__excl_w_canvas.bbox("all"))
+    
+    def __on_mousewheel(self, event):
+        """ It listens for mouse's wheel scrolling. 
+        https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
+        self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+
+    def __excl_w_number_photos(self):
         #Number of photos Label for Exclude window
         self.__number_of_photos = len(self.__photos_roots.keys())
         self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
+    def __excl_w_checkboxes(self):
+        self.__photos_folders = set(self.__photos_roots.values())
 
-        #Testing
-        photos_folders = set(self.__photos_roots.values())
+        self.__excl_w_checkbox_variables = {}
+        self.__excl_w_checkboxes_dict = {}
+        self.photo_folder_counter = 1
 
-        self.__my_dict_check_var = {}
-        self.__my_dict_check_text = {}
-        counter = 1
-
-        for kati in photos_folders:
-            self.__my_dict_check_var[kati+str(counter)] = tk.IntVar(value=1)
-            self.__my_dict_check_text[kati+str(counter)] = tk.Checkbutton(self.__excl_w_frame, text=kati, variable=self.__my_dict_check_var[kati+str(counter)], onvalue = 1,  offvalue = 0)
-            self.__my_dict_check_text[kati+str(counter)].pack(anchor="w")
-            counter +=1 
+        for photo_folder in self.__photos_folders:
+            self.__excl_w_checkbox_variables[photo_folder+str(self.photo_folder_counter)] = tk.IntVar(value=1)
+            self.__excl_w_checkboxes_dict[photo_folder+str(self.photo_folder_counter)] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder, variable=self.__excl_w_checkbox_variables[photo_folder+str(self.photo_folder_counter)], onvalue = 1,  offvalue = 0)
+            self.__excl_w_checkboxes_dict[photo_folder+str(self.photo_folder_counter)].pack(anchor="w")
+            self.photo_folder_counter +=1 
             
         self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
-    def onFrameConfigure(self):
-        '''Reset the scroll region to encompass the inner frame'''
-        self.__excl_w_canvas.configure(scrollregion=self.__excl_w_canvas.bbox("all"))
-    
-    def _on_mousewheel(self, event):
-        #TODO --> ....
-        """ It listens for mouse's wheel scrolling. 
-        https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
-        self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-    
+    def __excl_w_resize_canvas(self):
+        self.__excl_w_frame.update()
+        self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
+
+
     def __excluded_paths(self):
         """Check if i can get the excluded paths form exclude window"""#TODO-->... you might need to change the roots
-        for key,_ in self.__my_dict_check_text.items():
-            #print("name= ", key, "state= ", self.__my_dict_check_var[key.replace('\\\\','\\')].get())
-            if  self.__my_dict_check_var[key.replace('\\\\','\\')].get() == 0:
+        for key,_ in self.__excl_w_checkboxes_dict.items():
+            #print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
+            if  self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get() == 0:
                 print("-"*40)
                 for key_two, value in self.__photos_roots.items():
                     
