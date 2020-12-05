@@ -89,6 +89,8 @@ class Gui:
     def __file_explorer(self, mode):
         self.__widgets[mode+ "_path_button_value"] = filedialog.askdirectory(initialdir = "/",title = "Select file")
         self.__widgets[mode+ "_path_value"].set(self.__widgets[mode+ "_path_button_value"])
+        if mode == "input":
+            self.__run_button["state"] = "disabled"
     
     def __run_app(self):
         self.__validate_input_path()
@@ -185,6 +187,7 @@ class Gui:
                 if key in self.__photos_roots:
                     print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
                     del self.__photos_roots[key]
+        self.__run_button["state"] = "normal"
 
 if __name__ == "__main__":
     Gui()
