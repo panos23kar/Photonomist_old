@@ -153,10 +153,10 @@ class Gui:
     def __excl_w_number_photos(self):
         #Number of photos Label for Exclude window
         self.__number_of_photos = 0
-        for photo_list in self.__photos_roots:
-            for photo in photo_list:
-                self.__number_of_photos +=1
-        self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
+        for photo_list in self.__photos_roots.values():
+            self.__number_of_photos += len(photo_list)
+        
+        self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + " photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
     def __excl_w_checkboxes(self):
