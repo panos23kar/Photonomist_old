@@ -156,8 +156,8 @@ class Gui:
         for photo_list in self.__photos_roots.values():
             self.__number_of_photos += len(photo_list)
         
-        self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + " photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
-        self.__widgets["Numb_photos_label"].pack(anchor="w")
+        self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="I found " + str(self.__number_of_photos) + " photos in the folders below!\nUncheck the folders that you don't want me to touch!\n", justify="center")
+        self.__widgets["Numb_photos_label"].pack(anchor="center")
 
     def __excl_w_checkboxes(self):
         self.__photos_folders = set(self.__photos_roots.keys())
