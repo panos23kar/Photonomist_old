@@ -192,7 +192,11 @@ def test_input_path_validation_traverse_photos_path():
     """ Test for src\\photonomist\\__main__ > input_path_validation
     """
     sample_path =  r'test\data\testing_folder_with_photos'
-    assert len(input_path_validation(sample_path)) == 7
+    num_of_photos = 0
+    for photo_list in traverse_photos_path(sample_path).values():
+        print(photo_list)
+        num_of_photos += len(photo_list)
+    assert num_of_photos == 7
 
 def test_export_path_validation_path_exists():
     """ Test for src\\photonomist\\__main__ > export_path_validation

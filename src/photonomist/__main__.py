@@ -227,8 +227,8 @@ def input_path_validation(photos_path:str)->list:
     :param photos_path: path to photos
     :type photos_path: str
 
-    :return: A list with all paths to .jpg, .jpeg or .nef photos
-    :rtype: list
+    :return: A dictionary with key a path with photos and value a list of .jpg, .jpeg  or .nef photos
+    :rtype: dict
     |
     """
     path_exists(photos_path)
