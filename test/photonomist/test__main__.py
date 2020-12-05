@@ -65,7 +65,11 @@ def test_extracts_photo_roots():
     """Test src\\photonomist\\__main__ > traverse_photos_path
     """
     sample_path =  r'test\data\testing_folder_with_photos'
-    assert len(traverse_photos_path(sample_path)) == 7
+    num_of_photos = 0
+    for photo_list in traverse_photos_path(sample_path).values():
+        print(photo_list)
+        num_of_photos += len(photo_list)
+    assert num_of_photos == 7
 
 def test_path_does_not_contain_jpg_neff_files():
     """Test src\\photonomist\\__main__ > path_photos
