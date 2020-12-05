@@ -32,7 +32,7 @@ class Gui:
         self.__gui.geometry("460x600")
 
         #Run Button widget
-        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app)
+        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
         self.__run_button.place(x=310, y=200, height=21)
     
     def __start_gui(self):
