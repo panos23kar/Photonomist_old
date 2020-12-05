@@ -81,11 +81,11 @@ def traverse_photos_path(photos_path:str)->list:
     
     return photos_roots
 
-def path_photos(photos_roots:list):
+def path_photos(photos_roots:dict):
     """Prints the photo paths. If there aren't any, it raises an error.
 
-    :param photos_roots: list with all roots that contain photos
-    :type path: list
+    :param photos_roots: a dict with all the paths that contain photos
+    :type photos_roots: dict
     |
     """
     if not photos_roots:
@@ -94,11 +94,11 @@ def path_photos(photos_roots:list):
         print('I found photos in: ')
         print(*photos_roots, sep = "\n")
 
-def photos_size(photos_roots:list)->int:
+def photos_size(photos_roots:dict)->int:
     """Calculates the size (in bytes) of all photos found in the provided path.
 
-    :param photos_roots: a list with all the roots that point to photos
-    :type photos_roots: list
+    :param photos_roots: a dict with all the paths that contain photos
+    :type photos_roots: dict
 
     :return: The total size (in bytes) of photos
     :rtype: int
@@ -107,8 +107,9 @@ def photos_size(photos_roots:list)->int:
     # It is an extra loop. I could have generated the total size in traverse_photo_path function
     # With the extra function is more readdable and testable
     total_size = 0
-    for photo_root in photos_roots:
-        total_size += os.stat(photo_root).st_size
+    for photo_list in photos_roots.values():
+         for photo in photo_list:
+             total_size += os.stat(photo).st_size
     return total_size
 
 def paths_same_disk(photos_path:str, export_path:str)->bool:
@@ -238,7 +239,7 @@ def input_path_validation(photos_path:str)->list:
     path_photos(photos_roots)
     return photos_roots
 
-def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
+def export_path_validation(export_path:str, photos_path:str, photos_roots:dict):
     """Validates if the export path:
     | 1) exists 
     | 2) there is enough disk space
@@ -247,8 +248,8 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
     :type export_path: str
     :param photos_path: path to photos
     :type photos_path: str
-    :param photos_roots: list with all roots that contain photos
-    :type path: list
+    :param photos_roots: a dict with all the paths that contain photos
+    :type photos_roots: dict
     |
     """
     path_exists(export_path)
@@ -258,13 +259,13 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:list):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-def tidy_photos(export_path:str, photos_roots:list):
+def tidy_photos(export_path:str, photos_roots:dict):
     """Initiates the transfer process for each photo
 
     :param export_path: path to the directory where the photo folder structure will be created
     :type export_path: str
-    :param photos_roots: list with all roots that contain photos
-    :type path: list
+    :param photos_roots: a dict with all the paths that contain photos
+    :type photos_roots: dict
     |
     """
 
