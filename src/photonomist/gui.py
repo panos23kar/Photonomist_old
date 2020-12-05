@@ -152,24 +152,25 @@ class Gui:
 
     def __excl_w_number_photos(self):
         #Number of photos Label for Exclude window
-        self.__number_of_photos = len(self.__photos_roots.keys())
+        self.__number_of_photos = 0
+        for photo_list in self.__photos_roots:
+            for photo in photo_list:
+                self.__number_of_photos +=1
         self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="Hmmm!!! I found " + str(self.__number_of_photos) + "photos!!\n\nUncheck the folders that you don't want me to touch!!", anchor="w", justify="left")
         self.__widgets["Numb_photos_label"].pack(anchor="w")
 
     def __excl_w_checkboxes(self):
-        self.__photos_folders = set(self.__photos_roots.values())
+        self.__photos_folders = set(self.__photos_roots.keys())
 
         self.__excl_w_checkbox_variables = {}
         self.__excl_w_checkboxes_dict = {}
-        self.photo_folder_counter = 1
 
         for photo_folder in self.__photos_folders:
-            self.__excl_w_checkbox_variables[photo_folder+str(self.photo_folder_counter)] = tk.IntVar(value=1)
-            self.__excl_w_checkboxes_dict[photo_folder+str(self.photo_folder_counter)] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder, variable=self.__excl_w_checkbox_variables[photo_folder+str(self.photo_folder_counter)], onvalue = 1,  offvalue = 0)
-            self.__excl_w_checkboxes_dict[photo_folder+str(self.photo_folder_counter)].pack(anchor="w")
-            self.photo_folder_counter +=1 
+            self.__excl_w_checkbox_variables[photo_folder] = tk.IntVar(value=1)
+            self.__excl_w_checkboxes_dict[photo_folder] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder, variable=self.__excl_w_checkbox_variables[photo_folder], onvalue = 1,  offvalue = 0)
+            self.__excl_w_checkboxes_dict[photo_folder].pack(anchor="w")
             
-        self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__excluded_paths) #TODO --> Needs to be connected with a function
+        self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__exclude_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
     def __excl_w_resize_canvas(self):
@@ -177,21 +178,13 @@ class Gui:
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
 
 
-    def __excluded_paths(self):
-        """Check if i can get the excluded paths form exclude window"""#TODO-->... you might need to change the roots
+    def __exclude_paths(self):
+        """Check if I can get the excluded paths form exclude window"""
         for key,_ in self.__excl_w_checkboxes_dict.items():
-            print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
             if  self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get() == 0:
-                print("-"*40)
-                for key_two, value in self.__photos_roots.items():
-                    
-                    if value in key[:len(value)]:
-                        print("-"*40)
-                        print('value== ', value, 'key==', key)
-                        #del self.__photos_roots[key.replace('\\\\','\\')]
-                        continue
-        print("-"*40)
-
+                if key in self.__photos_roots:
+                    print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
+                    del self.__photos_roots[key]
 
 if __name__ == "__main__":
     Gui()
