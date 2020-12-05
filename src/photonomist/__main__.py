@@ -67,7 +67,7 @@ def traverse_photos_path(photos_path:str)->list:
     :param photos_path: path to photos
     :type photos_path: str
 
-    :return: A dictionary with key a path with photos and value a list of  .jpg, .jpeg  or .nef photos
+    :return: A dictionary with key a path with photos and value a list of .jpg, .jpeg  or .nef photos
     :rtype: dict
     |
     """
@@ -270,8 +270,9 @@ def tidy_photos(export_path:str, photos_roots:dict):
     """
 
     # Iterate over list of photos
-    for photo_path in photos_roots:
-        transfer_photo(photo_path, export_path)
+    for photo_list in photos_roots.values():
+        for photo in photo_list:
+            transfer_photo(photo, export_path)
 
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
