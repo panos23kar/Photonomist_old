@@ -180,7 +180,7 @@ class Gui:
     def __excluded_paths(self):
         """Check if i can get the excluded paths form exclude window"""#TODO-->... you might need to change the roots
         for key,_ in self.__excl_w_checkboxes_dict.items():
-            #print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
+            print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
             if  self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get() == 0:
                 print("-"*40)
                 for key_two, value in self.__photos_roots.items():
