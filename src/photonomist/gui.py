@@ -101,8 +101,8 @@ class Gui:
             self.__widgets["export_invalid_path_value"].set(str(e))
         else:
             self.__widgets["export_invalid_path_value"].set("")
-            #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots)
-
+            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots)
+            
     #------------------------------ Exclude Window-------------------------------------#
     
     def __excl_window(self):
@@ -185,8 +185,8 @@ class Gui:
         for key,_ in self.__excl_w_checkboxes_dict.items():
             if  self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get() == 0:
                 if key in self.__photos_roots:
-                    print("name= ", key, "state= ", self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get())
                     del self.__photos_roots[key]
+        self.__excl_photos_roots = self.__photos_roots.copy() # I had strange issues when I sent the photos_roots dict without copying
         self.__run_button["state"] = "normal"
 
 if __name__ == "__main__":
