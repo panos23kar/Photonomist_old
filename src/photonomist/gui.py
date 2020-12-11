@@ -29,7 +29,7 @@ class Gui:
         |
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("460x600")
+        self.__gui.geometry("440x250")
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
