@@ -90,17 +90,19 @@ class Photo:
         """
         new_path = os.path.join(new_folder_path, self.__str__())        
         try:
-            counter = 1
-            while os.path.exists(new_path):
-                filename, file_extension = os.path.splitext(new_path)
-                if counter >= 2:
-                    reg = r'\([1-9][0-9]*\)'
-                    matches_list = [(m.start(0), m.end(0)) for m in re.finditer(reg, new_path)]
-                    new_path = new_path[:matches_list[-1][0]] + f"({counter})" + file_extension
-                else:
-                    new_path = filename + f"({counter})" + file_extension
-                counter += 1
-            shutil.move(self.path, new_path)
+            if self.path != new_path:
+                counter = 1
+                while os.path.exists(new_path):
+                    
+                    filename, file_extension = os.path.splitext(new_path)
+                    if counter >= 2:
+                        reg = r'\([1-9][0-9]*\)'
+                        matches_list = [(m.start(0), m.end(0)) for m in re.finditer(reg, new_path)]
+                        new_path = new_path[:matches_list[-1][0]] + f"({counter})" + file_extension
+                    else:
+                        new_path = filename + f"({counter})" + file_extension
+                    counter += 1
+                shutil.move(self.path, new_path)
         except Exception as e:
             print(e)
             os.makedirs(new_folder_path)
