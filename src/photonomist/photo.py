@@ -80,8 +80,20 @@ class Photo:
         else:
             return None
 
+    def find_parentheses_numbers(self, new_path:str):
+        """Finds all set of parentheses which contain a number
 
-    def construct_new_photo_path(self, filepath, counter, extension):
+        :param new_path: the path to the destination folder together with photo's name
+        :type new_path: str
+
+        :return: a list of tupes with the start and finish indices of parentheses with numbers 
+        :rtype: list
+        |
+        """
+        return [(m.start(0), m.end(0)) for m in re.finditer(r'\([1-9][0-9]*\)', new_path)]
+
+
+    def construct_new_photo_path(self, filepath:str, counter:int, extension:str):
         """Appends a set of parentheses with a number indicating how many times the specified photo exists.
 
         :param filepath: the path to the destination folder with photo's name
@@ -114,7 +126,7 @@ class Photo:
         while os.path.exists(new_path):
             filepath, file_extension = os.path.splitext(new_path)
             if counter >= 2:
-                matches_list = [(m.start(0), m.end(0)) for m in re.finditer(r'\([1-9][0-9]*\)', new_path)]
+                matches_list = self.find_parentheses_numbers(new_path)
                 new_path = self.construct_new_photo_path(new_path[:matches_list[-1][0]], counter, file_extension)
             else:
                 new_path = self.construct_new_photo_path(filepath, counter, file_extension)
@@ -122,7 +134,7 @@ class Photo:
         return new_path
     
     def move_to_folder(self, new_folder_path:str):
-        """Moves the photo to another directory.
+        """If a photo's path is different than the destination path, moves the photo to the destination folder.
         If directory doesn't exist it creates one.
 
         :param new_folder_path: the path to directory
