@@ -79,6 +79,27 @@ class Photo:
             return date
         else:
             return None
+        
+    def check_same_name(self, new_path:str):
+        """Checks if the photo which is being transfered already exists in the destination folder.
+
+        :param new_path: the path to the destination folder together with photo's name
+        :type new_path: str
+
+        :return: the path to the destination folder together with photo's name and a set of parentheses with a number (if this photo already exists)
+        :rtype: str
+        |
+        """
+        counter = 1
+        while os.path.exists(new_path):
+            filepath, file_extension = os.path.splitext(new_path)
+            if counter >= 2:
+                matches_list = [(m.start(0), m.end(0)) for m in re.finditer(r'\([1-9][0-9]*\)', new_path)]
+                new_path = self.construct_new_photo_path(new_path[:matches_list[-1][0]], counter, file_extension)
+            else:
+                new_path = self.construct_new_photo_path(filepath, counter, file_extension)
+            counter += 1
+        return new_path
     
     def move_to_folder(self, new_folder_path:str):
         """Moves the photo to another directory.
@@ -91,20 +112,9 @@ class Photo:
         new_path = os.path.join(new_folder_path, self.__str__())        
         try:
             if self.path != new_path:
-                counter = 1
-                while os.path.exists(new_path):
-                    
-                    filename, file_extension = os.path.splitext(new_path)
-                    if counter >= 2:
-                        reg = r'\([1-9][0-9]*\)'
-                        matches_list = [(m.start(0), m.end(0)) for m in re.finditer(reg, new_path)]
-                        new_path = new_path[:matches_list[-1][0]] + f"({counter})" + file_extension
-                    else:
-                        new_path = filename + f"({counter})" + file_extension
-                    counter += 1
+                self.check_same_name(new_path)
                 shutil.move(self.path, new_path)
-        except Exception as e:
-            print(e)
+        except:
             os.makedirs(new_folder_path)
             shutil.move(self.path, new_path)
         finally:
