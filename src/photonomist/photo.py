@@ -2,6 +2,7 @@
 """
 import exifread
 import os, shutil
+import re 
 
 class Photo:
     """This class is used to represent a photo.
@@ -89,8 +90,19 @@ class Photo:
         """
         new_path = os.path.join(new_folder_path, self.__str__())        
         try:
+            counter = 1
+            while os.path.exists(new_path):
+                filename, file_extension = os.path.splitext(new_path)
+                if counter >= 2:
+                    reg = r'\([1-9][0-9]*\)'
+                    matches_list = [(m.start(0), m.end(0)) for m in re.finditer(reg, new_path)]
+                    new_path = new_path[:matches_list[-1][0]] + f"({counter})" + file_extension
+                else:
+                    new_path = filename + f"({counter})" + file_extension
+                counter += 1
             shutil.move(self.path, new_path)
-        except:
+        except Exception as e:
+            print(e)
             os.makedirs(new_folder_path)
             shutil.move(self.path, new_path)
         finally:
@@ -98,6 +110,8 @@ class Photo:
 
 
 if __name__ == "__main__":
-    pass
+    #pass
     #photo_path = Photo(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    photo_path = Photo(r"C:\Users\potis\Pictures\photonomist\0_test\20160815_005049.jpg")
     #my_photo = Photo(photo_path).get_date()
+    photo_path.move_to_folder(r"C:\Users\potis\Pictures\photonomist\0_test\2016_08_15_place_reason_people")
