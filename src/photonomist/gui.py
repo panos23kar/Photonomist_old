@@ -188,6 +188,9 @@ class Gui:
                     del self.__photos_roots[key]
         self.__excl_photos_roots = self.__photos_roots.copy() # I had strange issues when I sent the photos_roots dict without copying
         self.__run_button["state"] = "normal"
+        # Close Toplevel window
+        self.__found_photos_window.destroy()
+        self.__found_photos_window.update()
 
 if __name__ == "__main__":
     Gui()
