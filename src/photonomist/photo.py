@@ -79,7 +79,27 @@ class Photo:
             return date
         else:
             return None
-        
+
+
+    def construct_new_photo_path(self, filepath, counter, extension):
+        """Appends a set of parentheses with a number indicating how many times the specified photo exists.
+
+        :param filepath: the path to the destination folder with photo's name
+        :type filepath: str
+
+        :param counter: a number indicating the number of occurrences of the photo in the destination folder
+        :type counter: int
+
+        :param extension: file extension of the photo
+        :type extension: str
+
+        :return: the path to the destination folder together with photo's name and a set of parentheses with a number
+        :rtype: str
+        |
+        """
+        return filepath + f"({counter})" + extension
+
+
     def check_same_name(self, new_path:str):
         """Checks if the photo which is being transfered already exists in the destination folder.
 
