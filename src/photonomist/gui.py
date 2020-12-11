@@ -178,6 +178,8 @@ class Gui:
     def __excl_w_resize_canvas(self):
         self.__excl_w_frame.update()
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
+        self.__excl_w_canvas.configure(height=self.__excl_w_frame.winfo_height())
+
 
 
     def __exclude_paths(self):
