@@ -107,6 +107,19 @@ def test_add_parentheses_and_counter_to_photo_name(my_photo, filepath, counter, 
     """
     assert my_photo.construct_new_photo_path(filepath, counter, extension) == expected
 
+@pytest.mark.parametrize("parentheses_text, expected", [
+    ("random_string_without_parentheses", []),
+    ("random_string_with(5)_number_parentheses_in_the_middle", [(18,21)]),
+    ("random_string_with_number_parentheses_in_the_end(1)", [(48,51)]),
+    ("random_string_with_string_parentheses_in_the_end(one)", []),
+    ("random_string_with_multiple_(0)number(1)_parentheses(2)_in(3)_the(4)_end(5)", [(37, 40), (52, 55), (58, 61), (65, 68), (72, 75)]),
+])
+def test_add_parentheses_and_counter_to_photo_name(my_photo, parentheses_text, expected):
+    """Test src\\photonomist\\photo.Photo> find_parentheses_numbers
+    Parametrized to test different strings with and without parentheses
+    """
+    assert my_photo.find_parentheses_numbers(parentheses_text) == expected
+
 # Make the script executable.
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
