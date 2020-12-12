@@ -78,6 +78,7 @@ def test_path_does_not_contain_jpg_neff_files():
     with pytest.raises(Exception, match="The provided path does not contain any files with .jpg, .jpeg  or .nef extension!"):
         path_photos(sample_photo_roots)
 
+@pytest.mark.skip(reason="commented it out")
 def test_path_contains_files_extensions_jpg_nef(capsys):
     """Test src\\photonomist\\__main__ > path_photos
     """

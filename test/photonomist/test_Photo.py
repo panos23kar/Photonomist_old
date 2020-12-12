@@ -96,6 +96,17 @@ def test_object_name_is_photo_name(my_photo, capsys):
     captured = capsys.readouterr()
     assert captured.out == "DSC_0262.NEF"
 
+@pytest.mark.parametrize("filepath, counter, extension, expected", [
+    (r"a\random\photo", 2, ".jpg", "a\\random\\photo(2).jpg"),
+    (r"another\random\photo", 0, ".nef", "another\\random\\photo(0).nef"),
+    (r"a\random\photo", 1234321, ".jpg", "a\\random\\photo(1234321).jpg"),
+])
+def test_add_parentheses_and_counter_to_photo_name(my_photo, filepath, counter, extension, expected):
+    """Test src\\photonomist\\photo.Photo> construct_new_photo_path
+    Parametrized to test different filepaths, counters and extensions
+    """
+    assert my_photo.construct_new_photo_path(filepath, counter, extension) == expected
+
 # Make the script executable.
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
