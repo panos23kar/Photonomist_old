@@ -114,7 +114,7 @@ def test_add_parentheses_and_counter_to_photo_name(my_photo, filepath, counter, 
     ("random_string_with_string_parentheses_in_the_end(one)", []),
     ("random_string_with_multiple_(0)number(1)_parentheses(2)_in(3)_the(4)_end(5)", [(37, 40), (52, 55), (58, 61), (65, 68), (72, 75)]),
 ])
-def test_add_parentheses_and_counter_to_photo_name(my_photo, parentheses_text, expected):
+def test_identifies_set_of_parentheses_which_contain_numbers(my_photo, parentheses_text, expected):
     """Test src\\photonomist\\photo.Photo> find_parentheses_numbers
     Parametrized to test different strings with and without parentheses
     """
