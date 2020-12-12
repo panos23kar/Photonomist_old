@@ -144,7 +144,7 @@ class Photo:
         new_path = os.path.join(new_folder_path, self.__str__())        
         try:
             if self.path != new_path:
-                self.check_same_name(new_path)
+                new_path = self.check_same_name(new_path)
                 shutil.move(self.path, new_path)
         except:
             os.makedirs(new_folder_path)
