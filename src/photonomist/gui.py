@@ -243,6 +243,11 @@ class Gui:
         self.__info_w_labels["github_link"].place(x=10, y=60)
         self.__info_w_labels["github_link"].bind("<Button-1>", lambda e: self.__open_url("https://github.com/panos23kar/Photonomist/blob/master/README.rst"))
 
+        # Email
+        self.__info_w_labels["email"] = tk.Label(self.__info_window, text="photonomist.23@gmail.com", fg="blue", cursor="hand2")
+        self.__info_w_labels["email"].place(x=10, y=80)
+        self.__info_w_labels["email"].bind("<Button-1>", lambda e: self.__open_url("https://photonomist.23@gmail.com"))
+
         #     def __info_app(self):
         #         messagebox.showinfo("Info", """Photonomist aims at helping photo-lovers (or simply photo-owners :D) with tidying their photos.
 
