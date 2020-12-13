@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
+import webbrowser
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos
 
 class Gui:
@@ -37,19 +38,6 @@ class Gui:
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
         self.__run_button.place(x=310, y=200, height=21)
     
-    def __info_app(self):
-        messagebox.showinfo("Info", """Photonomist aims at helping photo-lovers (or simply photo-owners :D) with tidying their photos.
-
-Given a path that contains photos, photonomist will extract the dates of your photos, create directories and group photos according to their dates.
-
-
-It took its name from the words:
-Photo..     --> Photography (art of captruring the light//Greek root: (Φως) Φωτογραφία)
--------------------------------------------------------------------------------
-..nomist    --> Taxonomist (person who groups entities into categories//Greek root: Ταξινομία ή Ταξινόμηση)
-""")
-
-
     def __quit(self):
         if messagebox.askyesno("", "Are you sure you want to quit Photonomist?"):
             self.__gui.destroy()
@@ -229,6 +217,56 @@ Photo..     --> Photography (art of captruring the light//Greek root: (Φως) �
         # Close Toplevel window
         self.__found_photos_window.destroy()
         self.__found_photos_window.update()
+    
+    #------------------------------ Info Window-------------------------------------#
+
+    def __info_app(self):
+
+        # Info window cconfiguration
+        self.__info_window = tk.Toplevel(self.__gui)
+        self.__info_window.title("Photonomist Info")
+        self.__info_window.geometry("440x250")
+        ## Exclude window gets the 'full' focus of the app
+        self.__info_window.grab_set()
+
+        # Info Windows labels
+        self.__info_w_labels = {}
+        #Labels widget
+        self.__info_w_labels["photonomist_title"] = tk.Label(self.__info_window, text= "Photonomist", font="Helvetica 16 bold italic")
+        self.__info_w_labels["photonomist_title"].place(x=10, y=10)
+
+        self.__info_w_labels["aim"] = tk.Label(self.__info_window, text= "Photonomist aims at helping photo-lovers (or simply photo-owners :D) with tidying their photos.")
+        self.__info_w_labels["aim"].place(x=10, y=40)
+
+        # Github Link
+        self.__info_w_labels["github_link"] = tk.Label(self.__info_window, text="More Info", fg="blue", cursor="hand2")
+        self.__info_w_labels["github_link"].place(x=10, y=60)
+        self.__info_w_labels["github_link"].bind("<Button-1>", lambda e: self.__open_url("https://github.com/panos23kar/Photonomist/blob/master/README.rst"))
+
+        #     def __info_app(self):
+        #         messagebox.showinfo("Info", """Photonomist aims at helping photo-lovers (or simply photo-owners :D) with tidying their photos.
+
+        # Given a path that contains photos, photonomist will extract the dates of your photos, create directories and group photos according to their dates.
+
+
+        # It took its name from the words:
+        # Photo..     --> Photography (art of captruring the light//Greek root: (Φως) Φωτογραφία)
+        # -------------------------------------------------------------------------------
+        # ..nomist    --> Taxonomist (person who groups entities into categories//Greek root: Ταξινομία ή Ταξινόμηση)
+        # """)
+    
+    def __open_url(self, url):
+        webbrowser.open_new(url)
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     Gui()
