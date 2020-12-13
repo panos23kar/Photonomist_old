@@ -38,7 +38,16 @@ class Gui:
         self.__run_button.place(x=310, y=200, height=21)
     
     def __info_app(self):
-        messagebox.showinfo("App", "The application\nthat does nothing")
+        messagebox.showinfo("Info", """Photonomist aims at helping photo-lovers (or simply photo-owners :D) with tidying their photos.
+
+Given a path that contains photos, photonomist will extract the dates of your photos, create directories and group photos according to their dates.
+
+
+It took its name from the words:
+Photo..     --> Photography (art of captruring the light//Greek root: (Φως) Φωτογραφία)
+-------------------------------------------------------------------------------
+..nomist    --> Taxonomist (person who groups entities into categories//Greek root: Ταξινομία ή Ταξινόμηση)
+""")
 
 
     def __quit(self):
@@ -60,7 +69,7 @@ class Gui:
         self.__sub_menu_file.add_separator()
         self.__sub_menu_file.add_command(label="Quit", underline=0, command=self.__quit)
         #SubMenu About
-        self.__main_menu.add_command(label="About...", command=self.__info_app, underline=1)
+        self.__main_menu.add_command(label="Info...", command=self.__info_app, underline=1)
     
     def __start_gui(self):
         """
