@@ -68,7 +68,7 @@ Photo..     --> Photography (art of captruring the light//Greek root: (Φως) �
         # separator is here!
         self.__sub_menu_file.add_separator()
         self.__sub_menu_file.add_command(label="Quit", underline=0, command=self.__quit)
-        #SubMenu About
+        #SubMenu Info
         self.__main_menu.add_command(label="Info...", command=self.__info_app, underline=1)
     
     def __start_gui(self):
