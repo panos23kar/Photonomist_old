@@ -62,12 +62,12 @@ def path_items(path:str):
 
 def traverse_photos_path(photos_path:str)->list:
     """Recursively traverses all the directories under the provided path.
-    Identified .jpg, .jpeg and .nef files are appended to the photos_roots dictionary.
+    Identified .jpg, .jpeg .nef and .cr2 files are appended to the photos_roots dictionary.
    
     :param photos_path: path to photos
     :type photos_path: str
 
-    :return: A dictionary with key a path with photos and value a list of .jpg, .jpeg  or .nef photos
+    :return: A dictionary with key a path with photos and value a list of .jpg, .jpeg, .nef or .cr2 photos
     :rtype: dict
     |
     """
@@ -76,7 +76,7 @@ def traverse_photos_path(photos_path:str)->list:
     # traverse root directory, and list directories as dirs and files as files. List comp was less readable
     for root, dirs, files in os.walk(photos_path):
         for _file in files:
-            if _file.lower().endswith('jpg') or _file.lower().endswith('nef') or _file.lower().endswith('jpeg'):
+            if _file.lower().endswith('jpg') or _file.lower().endswith('nef') or _file.lower().endswith('jpeg') or _file.lower().endswith('cr2'):
                 photos_roots[root].append(root + '\\' + _file)
     
     return photos_roots
@@ -89,7 +89,7 @@ def path_photos(photos_roots:dict):
     |
     """
     if not photos_roots:
-        raise Exception("The provided path does not contain any files with .jpg, .jpeg  or .nef extension!")#TODO Log it
+        raise Exception("The provided path does not contain any files with .jpg, .jpeg, .nef or .cr2 extension!")#TODO Log it
     else:#TODO Log it
         print('I found photos in: ')
         #print(*photos_roots, sep = "\n")
@@ -222,12 +222,12 @@ def input_path_validation(photos_path:str)->list:
     """Validates if the provided input path:
     | 1) exists 
     | 2) contains files 
-    | 3)contains .jpg, .jpeg or .nef photos
+    | 3)contains .jpg, .jpeg, .nef or .cr2 photos
 
     :param photos_path: path to photos
     :type photos_path: str
 
-    :return: A dictionary with key a path with photos and value a list of .jpg, .jpeg  or .nef photos
+    :return: A dictionary with key a path with photos and value a list of .jpg, .jpeg, .nef or .cr2 photos
     :rtype: dict
     |
     """
