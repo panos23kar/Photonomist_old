@@ -3,6 +3,7 @@ This file hosts the graphical user interface code"""
 
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 from functools import partial
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos
 
@@ -20,9 +21,10 @@ class Gui:
         self.__photos_roots = ""
         self.__gui = tk.Tk()
         self.__main_window()
+        self.__menu()
         self.__user_paths()
 
-        self.__start_gui()
+        self.__start_gui() 
     
     def __main_window(self):
         """Specifies the title and dimensions of main window, and places the run button in the main window.
@@ -34,6 +36,31 @@ class Gui:
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
         self.__run_button.place(x=310, y=200, height=21)
+    
+    def __info_app(self):
+        messagebox.showinfo("App", "The application\nthat does nothing")
+
+
+    def __quit(self):
+        if messagebox.askyesno("", "Are you sure you want to quit the App?"):
+            self.__gui.destroy()
+    
+    def __menu(self):
+        """Menu on the top of the window
+        |
+        """
+        #Main menu
+        self.__main_menu = tk.Menu(self.__gui)
+        self.__gui.config(menu=self.__main_menu)
+        #SubMenu
+        #SubMenu File
+        self.__sub_menu_file = tk.Menu(self.__main_menu, tearoff=0)
+        self.__main_menu.add_cascade(label="File", menu=self.__sub_menu_file, underline=0)
+        # separator is here!
+        self.__sub_menu_file.add_separator()
+        self.__sub_menu_file.add_command(label="Quit", underline=0, command=self.__quit)
+        #SubMenu About
+        self.__main_menu.add_command(label="About...", command=self.__info_app, underline=1)
     
     def __start_gui(self):
         """
