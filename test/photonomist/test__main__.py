@@ -69,9 +69,9 @@ def test_extracts_photo_roots():
     for photo_list in traverse_photos_path(sample_path).values():
         print(photo_list)
         num_of_photos += len(photo_list)
-    assert num_of_photos == 7
+    assert num_of_photos == 9
 
-def test_path_does_not_contain_jpg_neff_files():
+def test_path_does_not_contain_jpg_jpeg_nef_cr2_files():
     """Test src\\photonomist\\__main__ > path_photos
     """
     sample_photo_roots = traverse_photos_path(r'test\data\testing_empty_folder')
@@ -79,7 +79,7 @@ def test_path_does_not_contain_jpg_neff_files():
         path_photos(sample_photo_roots)
 
 @pytest.mark.skip(reason="commented it out")
-def test_path_contains_files_extensions_jpg_nef(capsys):
+def test_path_contains_files_extensions_jpg_nef_cr2(capsys):
     """Test src\\photonomist\\__main__ > path_photos
     """
     sample_photo_roots = traverse_photos_path(r'test\data\testing_folder_with_photos')
@@ -87,13 +87,14 @@ def test_path_contains_files_extensions_jpg_nef(capsys):
     captured = capsys.readouterr()
     assert r'test\data\testing_folder_with_photos\bla\blanef\blablanef\blablablanef' in captured.out
     assert r'test\data\testing_folder_with_photos\bla\blabla\blablabla' in captured.out
+    assert r'C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blablacr2' in captured.out
 
 def test_photos_total_size():
     """Test src\\photonomist\\__main__ > photos_size
     """
     sample_photo_roots = traverse_photos_path(r'test\data\testing_folder_with_photos')
     photos_total_size = photos_size(sample_photo_roots)
-    assert photos_total_size == 94832410
+    assert photos_total_size == 140855708
 
 def test_enough_free_disk_space(capsys):
     """Test src\\photonomist\\__main__ > disk_space
@@ -161,6 +162,21 @@ def test_transfer_photo_to_another_folder_if_it_has_valid_date(move_photo_del_fo
     transfer_photo(move_photo_del_folder, export_path)
     assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
 
+@pytest.fixture()
+def move_canon_photo_del_folder():
+    move_canon_photo_del_folder = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blablacr2\IMG_5494.CR2"
+    yield move_canon_photo_del_folder
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people\IMG_5494.CR2", r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blablacr2\IMG_5494.CR2")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_transfer_canon_photo_to_another_folder_if_it_has_valid_date(move_canon_photo_del_folder):
+    """Test src\\photonomist\\__main__ > transfer_photo (canon raw photo)
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    transfer_photo(move_canon_photo_del_folder, export_path)
+    assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
+
 def test_if_export_and_input_paths_point_to_the_same_disk():
     """Test src\\photonomist\\__main__ > paths_same_disk
     """
@@ -197,7 +213,7 @@ def test_input_path_validation_traverse_photos_path():
     for photo_list in traverse_photos_path(sample_path).values():
         print(photo_list)
         num_of_photos += len(photo_list)
-    assert num_of_photos == 7
+    assert num_of_photos == 9
 
 def test_export_path_validation_path_exists():
     """ Test for src\\photonomist\\__main__ > export_path_validation
@@ -214,8 +230,10 @@ def move_photos_del_folders():
     yield photo_roots
     shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\blabla\DSC_0262.NEF")
     shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people\DSC_1402.JPG", r"test\data\testing_folder_with_photos\bla\blabla\blablabla\DSC_1402.JPG")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people\IMG_5494.CR2", r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla\IMG_5494.CR2")
     os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
     os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
     os.remove(r"test\data\testing_folder_with_photos\move_folder\not_transferred.txt")
     os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
 
@@ -226,6 +244,7 @@ def test_move_all_photos_of_all_folders(move_photos_del_folders):
     tidy_photos(export_path, move_photos_del_folders)
     assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
     assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
+    assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
 
 # Make the script executable.
 if __name__ == "__main__":
