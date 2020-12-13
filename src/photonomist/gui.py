@@ -51,7 +51,7 @@ Photo..     --> Photography (art of captruring the light//Greek root: (Φως) �
 
 
     def __quit(self):
-        if messagebox.askyesno("", "Are you sure you want to quit the App?"):
+        if messagebox.askyesno("", "Are you sure you want to quit Photonomist?"):
             self.__gui.destroy()
     
     def __menu(self):

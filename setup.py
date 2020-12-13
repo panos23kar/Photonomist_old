@@ -12,7 +12,7 @@ _config = {
     "name": "photonomist",
     "url": "",
     "author": "Panagiotis Karydakis",
-    "author_email": "panos23kar@gmail.com",
+    "author_email": "photonomist.23r@gmail.com",
     "package_dir": {"": "src"},
     "packages": find_packages("src"),
     "entry_points": {
