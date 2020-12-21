@@ -4,7 +4,7 @@
         python -m photonomist
     |
 """
-import os, shutil
+import os, shutil, subprocess
 import collections
 from .photo import Photo
 
@@ -281,6 +281,7 @@ def open_export_folder(export_path:str):
     :type export_path: str
     |
     """
+    subprocess.Popen(f'explorer "{export_path}"')
 
 
 def main():
