@@ -281,8 +281,8 @@ def open_export_folder(export_path:str):
     :type export_path: str
     |
     """
+    export_path = export_path.replace("/", "\\")
     subprocess.Popen(f'explorer "{export_path}"')
-
 
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity

@@ -6,7 +6,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
 import webbrowser
-from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos
+from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
 
 class Gui:
     """This class is used to "draw" the graphical user interface through which 
@@ -126,6 +126,8 @@ class Gui:
         else:
             self.__widgets["export_invalid_path_value"].set("")
             tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots)
+            print(self.__widgets["export_path_value"].get())
+            open_export_folder(self.__widgets["export_path_value"].get())
             
     #------------------------------ Exclude Window-------------------------------------#
     
