@@ -274,6 +274,15 @@ def tidy_photos(export_path:str, photos_roots:dict):
         for photo in photo_list:
             transfer_photo(photo, export_path)
 
+def open_export_folder(export_path:str):
+    """Opens the export path on file explorer to inform the users that the process is done
+
+    :param export_path: path to the directory where the photo folder structure will be created
+    :type export_path: str
+    |
+    """
+
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -290,7 +299,10 @@ def main():
 
     # Moves photos
     tidy_photos(export_path, photos_roots)
- 
+
+    # Open export path on file explorer
+    open_export_folder(export_path)
+     
 # Make the script executable.
 if __name__ == "__main__":
     raise SystemExit(main())
