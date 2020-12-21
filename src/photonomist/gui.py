@@ -126,7 +126,6 @@ class Gui:
         else:
             self.__widgets["export_invalid_path_value"].set("")
             tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots)
-            print(self.__widgets["export_path_value"].get())
             open_export_folder(self.__widgets["export_path_value"].get())
             
     #------------------------------ Exclude Window-------------------------------------#
