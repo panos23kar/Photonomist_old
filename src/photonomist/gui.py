@@ -139,7 +139,9 @@ class Gui:
         except:
             pass
         else:
-            self.__excl_w_layout()
+            #self.__excl_w_layout()
+            #trial loading window
+            self.__start_load_w_thread(self, self.__excl_w_layout)
     
     def __excl_w_layout(self):
 
@@ -269,6 +271,26 @@ class Gui:
         webbrowser.open_new(url)
     
     #----------------------- Loading Window -----------------------------
+
+    def __start_load_w_thread(self, func2run):
+        self.__load_widnow_thread = Thread(target=func2run)
+        self.__load_widnow_thread.start()
+
+        self.__check_thread()
+    
+    def __check_thread(self):
+
+        if not self.__load_widnow_thread.is_alive():
+            pass
+        else:
+            l['text'] = str(counter)
+            counter += 0.1
+
+            # check again after 100ms
+            root.after(100, check_thread) 
+
+
+
 
 
 
