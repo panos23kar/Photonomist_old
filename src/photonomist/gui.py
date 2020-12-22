@@ -6,6 +6,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
 import webbrowser
+from threading import Thread
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
 
 class Gui:
@@ -266,6 +267,8 @@ class Gui:
    
     def __open_url(self, url):
         webbrowser.open_new(url)
+    
+    #----------------------- Loading Window -----------------------------
 
 
 
