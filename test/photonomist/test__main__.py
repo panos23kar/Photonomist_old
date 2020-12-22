@@ -10,7 +10,7 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation, tidy_photos
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation, tidy_photos, replace_backslashes
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'test\data\blablabla'), 
@@ -245,6 +245,19 @@ def test_move_all_photos_of_all_folders(move_photos_del_folders):
     assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
     assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
     assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
+
+@pytest.mark.parametrize("random_slashes_path, expected", [
+    ("this/is/a/random/path/with/backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
+    ("this/is\\a\\random/path/with/backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
+    ("this\\is/a/random/path/with\\backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
+    ("this\\is\\a\\random\\path\\without\\backslashes", "this\\is\\a\\random\\path\\without\\backslashes"),
+    ("thisisarandompathwithbackslashes", "thisisarandompathwithbackslashes"),
+])
+def test_a_path_does_not_have_backslashes(random_slashes_path, expected):
+    """ Test for src\\photonomist\\__main__ > replace_backslashes
+    Parametrized to test different paths with and without backslashes
+    """
+    assert replace_backslashes(random_slashes_path) == expected
 
 # Make the script executable.
 if __name__ == "__main__":

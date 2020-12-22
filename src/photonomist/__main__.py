@@ -274,6 +274,18 @@ def tidy_photos(export_path:str, photos_roots:dict):
         for photo in photo_list:
             transfer_photo(photo, export_path)
 
+def replace_backslashes(path:str):
+    """Replaces the backslashes of string-paths with double forward slashes
+
+    :param path: a random path that might contain backslashes
+    :type path: str
+
+    :return: A string-path with forward slashes 
+    :rtype: str
+    |
+    """
+    return path.replace("/", "\\")
+
 def open_export_folder(export_path:str):
     """Opens the export path on file explorer to inform the users that the process is done
 
@@ -281,8 +293,9 @@ def open_export_folder(export_path:str):
     :type export_path: str
     |
     """
-    export_path = export_path.replace("/", "\\")
-    subprocess.Popen(f'explorer "{export_path}"')
+    # export_path = replace_backslashes(export_path)
+    # subprocess.Popen(f'explorer "{export_path}"')
+    subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
