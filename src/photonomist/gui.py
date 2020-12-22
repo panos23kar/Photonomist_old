@@ -6,7 +6,11 @@ from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
 import webbrowser
+# Loading Window
 from threading import Thread
+from PIL import ImageTk
+from PIL import Image
+
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
 
 class Gui:
@@ -287,7 +291,20 @@ class Gui:
             counter += 0.1
 
             # check again after 100ms
-            root.after(100, check_thread) 
+            root.after(100, check_thread)
+    
+    def __draw_loading_camera(filename):
+        image = Image.open(filename)
+        angle = 0
+        while True:
+            tkimage = ImageTk.PhotoImage(image.rotate(angle))
+            canvas_obj = canvas.create_image(
+                250, 250, image=tkimage)
+            root.after(30,update)
+            yield
+            canvas.delete(canvas_obj)
+            angle -= 10
+            angle %= 360
 
 
 
