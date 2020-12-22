@@ -145,9 +145,13 @@ class Gui:
         else:
             #self.__excl_w_layout()
             #trial loading window
-            self.__start_load_w_thread(self, self.__excl_w_layout)
+            print("eftase edw")
+            self.__start_load_w_thread(self.__excl_w_layout)
     
     def __excl_w_layout(self):
+        print("eftase edw2")
+        import time
+        time.sleep(5)
 
         # Exclude window cconfiguration
         self.__found_photos_window = tk.Toplevel(self.__gui)
@@ -277,35 +281,57 @@ class Gui:
     #----------------------- Loading Window -----------------------------
 
     def __start_load_w_thread(self, func2run):
+        print("eftase edw1", func2run)
         self.__load_widnow_thread = Thread(target=func2run)
         self.__load_widnow_thread.start()
 
         self.__check_thread()
     
     def __check_thread(self):
+        print("eftase edw3")
 
         if not self.__load_widnow_thread.is_alive():
             pass
         else:
-            l['text'] = str(counter)
-            counter += 0.1
+            self.__load_w_layout()
+            self.__update_load_w = self.__draw_loading_camera().__next__
+            self.__load_w_canvas.after(100, self.__update_load_w)
+            # l['text'] = str(counter)
+            # counter += 0.1
 
-            # check again after 100ms
-            root.after(100, check_thread)
+            # # check again after 100ms
+            # root.after(100, check_thread)
+            
     
-    def __draw_loading_camera(filename):
-        image = Image.open(filename)
+    def __draw_loading_camera(self):
+        print("eftase edw5")
+        image = Image.open(self.__filename)
         angle = 0
         while True:
             tkimage = ImageTk.PhotoImage(image.rotate(angle))
-            canvas_obj = canvas.create_image(
+            canvas_obj = self.__load_w_canvas.create_image(
                 250, 250, image=tkimage)
-            root.after(30,update)
+            self.__loading_window.after(30,self.__update_load_w)
             yield
-            canvas.delete(canvas_obj)
+            self.__load_w_canvas.delete(canvas_obj)
             angle -= 10
             angle %= 360
+    
+    def __load_w_layout(self):
+        print("eftase edw4")
 
+        # Na fugei apo edw!!
+        self.__filename = r"C:\Users\potis\Downloads\output-onlinepngtools.png"
+
+        # Load window cconfiguration
+        self.__loading_window = tk.Toplevel(self.__gui)
+        self.__loading_window.title("I'm working on it!!")
+        ## Load window gets the 'full' focus of the app
+        self.__loading_window.grab_set()
+
+        ##Canvas for Load window (it is need for scrolling (scrollbar) functionality)
+        self.__load_w_canvas = tk.Canvas(self.__loading_window,  width=500, height=500)
+        self.__load_w_canvas.pack()
 
 
 
