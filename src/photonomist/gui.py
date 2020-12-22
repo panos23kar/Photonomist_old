@@ -10,6 +10,7 @@ import webbrowser
 from threading import Thread
 from PIL import ImageTk
 from PIL import Image
+import time
 
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
 
@@ -150,7 +151,6 @@ class Gui:
     
     def __excl_w_layout(self):
         print("eftase edw2")
-        import time
         time.sleep(5)
 
         # Exclude window cconfiguration
@@ -286,28 +286,29 @@ class Gui:
         self.__load_widnow_thread.start()
 
         self.__check_thread()
+        #self.__loading_window.after(50, self.__check_thread)
     
     def __check_thread(self):
         print("eftase edw3")
 
         if not self.__load_widnow_thread.is_alive():
-            pass
+            # Close Toplevel window
+            print("eftase edw7")
+            self.__loading_window.destroy()
+            self.__loading_window.update()
+
         else:
+            print("eftase edw5")
             self.__load_w_layout()
             self.__update_load_w = self.__draw_loading_camera().__next__
-            self.__load_w_canvas.after(100, self.__update_load_w)
-            # l['text'] = str(counter)
-            # counter += 0.1
-
-            # # check again after 100ms
-            # root.after(100, check_thread)
-            
+            self.__load_w_canvas.after(100, self.__update_load_w)            
     
     def __draw_loading_camera(self):
-        print("eftase edw5")
+        print("eftase edw6")
         image = Image.open(self.__filename)
         angle = 0
-        while True:
+        #while True:
+        while self.__load_widnow_thread.is_alive():
             tkimage = ImageTk.PhotoImage(image.rotate(angle))
             canvas_obj = self.__load_w_canvas.create_image(
                 250, 250, image=tkimage)
@@ -316,6 +317,10 @@ class Gui:
             self.__load_w_canvas.delete(canvas_obj)
             angle -= 10
             angle %= 360
+        
+        print("eftase edw7")
+        self.__loading_window.destroy()
+        self.__loading_window.update()
     
     def __load_w_layout(self):
         print("eftase edw4")
