@@ -41,7 +41,8 @@ class Gui:
         self.__gui.geometry("440x250")
 
         #Run Button widget
-        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
+        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
+        
         self.__run_button.place(x=310, y=200, height=21)
     
     def __quit(self):
@@ -123,6 +124,7 @@ class Gui:
             self.__run_button["state"] = "disabled"
     
     def __run_app(self):
+        time.sleep(5)
         self.__validate_input_path()
         
         try:
