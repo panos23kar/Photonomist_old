@@ -6,6 +6,11 @@ from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
 import webbrowser
+# Loading Window
+from threading import Thread
+from PIL import ImageTk
+from PIL import Image
+
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
 
 class Gui:
@@ -35,7 +40,8 @@ class Gui:
         self.__gui.geometry("440x250")
 
         #Run Button widget
-        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
+        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
+        
         self.__run_button.place(x=310, y=200, height=21)
     
     def __quit(self):
@@ -138,7 +144,8 @@ class Gui:
         except:
             pass
         else:
-            self.__excl_w_layout()
+            # Triggers oading window
+            self.__start_load_w_thread(self.__excl_w_layout)
     
     def __excl_w_layout(self):
 
@@ -266,6 +273,61 @@ class Gui:
    
     def __open_url(self, url):
         webbrowser.open_new(url)
+    
+    #----------------------- Loading Window -----------------------------
+
+    def __start_load_w_thread(self, func2run):
+        self.__load_widnow_thread = Thread(target=func2run)
+        self.__load_widnow_thread.start()
+
+        self.__check_thread()
+        #self.__loading_window.after(50, self.__check_thread)
+    
+    def __check_thread(self):
+
+        if not self.__load_widnow_thread.is_alive():
+            # Close Toplevel window
+            self.__loading_window.destroy()
+            self.__loading_window.update()
+
+        else:
+            self.__load_w_layout()
+            self.__update_load_w = self.__draw_loading_camera().__next__
+            self.__load_w_canvas.after(100, self.__update_load_w)            
+    
+    def __draw_loading_camera(self):
+        image = Image.open(self.__filename)
+        angle = 0
+        #while True:
+        while self.__load_widnow_thread.is_alive():
+            tkimage = ImageTk.PhotoImage(image.rotate(angle))
+            canvas_obj = self.__load_w_canvas.create_image(
+                250, 250, image=tkimage)
+            self.__loading_window.after(30,self.__update_load_w)
+            yield
+            self.__load_w_canvas.delete(canvas_obj)
+            angle -= 10
+            angle %= 360
+        
+        self.__loading_window.destroy()
+        self.__loading_window.update()
+    
+    def __load_w_layout(self):
+
+        # Na fugei apo edw!!
+        self.__filename = r"src\photonomist\static\camera.png"
+
+        # Load window cconfiguration
+        self.__loading_window = tk.Toplevel(self.__gui)
+        self.__loading_window.title("I'm working on it!!")
+        ## Load window gets the 'full' focus of the app
+        self.__loading_window.grab_set()
+
+        ##Canvas for Load window (it is need for scrolling (scrollbar) functionality)
+        self.__load_w_canvas = tk.Canvas(self.__loading_window,  width=500, height=500)
+        self.__load_w_canvas.pack()
+
+
 
 
 
