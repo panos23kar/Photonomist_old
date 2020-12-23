@@ -315,7 +315,7 @@ class Gui:
     def __load_w_layout(self):
 
         # Na fugei apo edw!!
-        self.__filename = r"C:\Users\potis\Downloads\output-onlinepngtools.png"
+        self.__filename = r"src\photonomist\static\camera.png"
 
         # Load window cconfiguration
         self.__loading_window = tk.Toplevel(self.__gui)
