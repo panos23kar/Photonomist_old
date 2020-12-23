@@ -10,7 +10,6 @@ import webbrowser
 from threading import Thread
 from PIL import ImageTk
 from PIL import Image
-import time
 
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
 
@@ -124,7 +123,6 @@ class Gui:
             self.__run_button["state"] = "disabled"
     
     def __run_app(self):
-        time.sleep(5)
         self.__validate_input_path()
         
         try:
@@ -146,14 +144,10 @@ class Gui:
         except:
             pass
         else:
-            #self.__excl_w_layout()
-            #trial loading window
-            print("eftase edw")
+            # Triggers oading window
             self.__start_load_w_thread(self.__excl_w_layout)
     
     def __excl_w_layout(self):
-        print("eftase edw2")
-        time.sleep(5)
 
         # Exclude window cconfiguration
         self.__found_photos_window = tk.Toplevel(self.__gui)
@@ -283,7 +277,6 @@ class Gui:
     #----------------------- Loading Window -----------------------------
 
     def __start_load_w_thread(self, func2run):
-        print("eftase edw1", func2run)
         self.__load_widnow_thread = Thread(target=func2run)
         self.__load_widnow_thread.start()
 
@@ -291,22 +284,18 @@ class Gui:
         #self.__loading_window.after(50, self.__check_thread)
     
     def __check_thread(self):
-        print("eftase edw3")
 
         if not self.__load_widnow_thread.is_alive():
             # Close Toplevel window
-            print("eftase edw7")
             self.__loading_window.destroy()
             self.__loading_window.update()
 
         else:
-            print("eftase edw5")
             self.__load_w_layout()
             self.__update_load_w = self.__draw_loading_camera().__next__
             self.__load_w_canvas.after(100, self.__update_load_w)            
     
     def __draw_loading_camera(self):
-        print("eftase edw6")
         image = Image.open(self.__filename)
         angle = 0
         #while True:
@@ -320,12 +309,10 @@ class Gui:
             angle -= 10
             angle %= 360
         
-        print("eftase edw7")
         self.__loading_window.destroy()
         self.__loading_window.update()
     
     def __load_w_layout(self):
-        print("eftase edw4")
 
         # Na fugei apo edw!!
         self.__filename = r"C:\Users\potis\Downloads\output-onlinepngtools.png"
