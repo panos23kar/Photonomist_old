@@ -193,25 +193,38 @@ class Gui:
         self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="I found " + str(self.__number_of_photos) + " photos in the folders below!\nUncheck the folders that you don't want me to touch!\n", justify="center")
         self.__widgets["Numb_photos_label"].pack(anchor="center")
 
+
     def __excl_w_checkboxes(self):
         self.__photos_folders = set(self.__photos_roots.keys())
 
         self.__excl_w_checkbox_variables = {}
         self.__excl_w_checkboxes_dict = {}
+        self.__excl_w_checkboxes_arrow_label = {}
 
+        self.y_coord_link = 55
         for photo_folder in self.__photos_folders:
             self.__excl_w_checkbox_variables[photo_folder] = tk.IntVar(value=1)
             self.__excl_w_checkboxes_dict[photo_folder] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder, variable=self.__excl_w_checkbox_variables[photo_folder], onvalue = 1,  offvalue = 0)
             self.__excl_w_checkboxes_dict[photo_folder].pack(anchor="w")
+
+            #link close to photo folder paths to open the folders in file explorer
+            self.__excl_w_checkboxes_arrow_label[photo_folder] = tk.Label(self.__excl_w_frame, text="link", font="Helvetica 8 bold", fg="blue", cursor="hand2")
+            self.__excl_w_checkboxes_arrow_label[photo_folder].place(x=len(photo_folder)*6.2, y=self.y_coord_link)
+            self.__excl_w_checkboxes_arrow_label[photo_folder].bind("<Button-1>", lambda e, photo_folder=photo_folder:self.__open_folder(photo_folder))
+            self.y_coord_link +=25
             
         self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__exclude_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
+
+    def __open_folder(self, photo_folder):
+        open_export_folder(photo_folder)
+
+
     def __excl_w_resize_canvas(self):
         self.__excl_w_frame.update()
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
         self.__excl_w_canvas.configure(height=self.__excl_w_frame.winfo_height())
-
 
 
     def __exclude_paths(self):
