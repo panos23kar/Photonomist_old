@@ -156,12 +156,12 @@ class Gui:
         self.__found_photos_window.grab_set()
 
         ##Canvas for Exclude window (it is need for scrolling (scrollbar) functionality)
-        self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0, background="#ffffff")
+        self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0)#, background="#ffffff"
         self.__excl_w_canvas.bind_all("<MouseWheel>", self.__on_mousewheel)
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
 
         ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
-        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=25)
+        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="red") # ,background="grey95", padx=25
         self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
@@ -250,10 +250,19 @@ class Gui:
 
 
     def __excl_w_resize_canvas(self):
+
         self.__excl_w_frame.update()
+
+
+        print("Im here",self.__excl_w_frame.winfo_width())
+        self.__excl_w_frame.configure(width=self.__excl_w_frame.winfo_width() + 30)
+        print("Now im here",self.__excl_w_frame.winfo_width())
+
+
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
         self.__excl_w_canvas.configure(height=self.__excl_w_frame.winfo_height())
-
+        
+    
 
     def __exclude_paths(self):
         """Check if I can get the excluded paths form exclude window"""
