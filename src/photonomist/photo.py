@@ -66,7 +66,7 @@ class Photo:
                 if (len(str(self.__tags[tag_key]))>0) and (key_no_tag not in self.metadata):
                     self.metadata[key_no_tag] = self.__tags[tag_key]
 
-    def get_date(self)->str:
+    def get_date(self, year=False, month=True)->str:
         """Returns the date of a photo from the metadata dictionary. 
         As date considered the value of the "DateTimeOriginal" tag. 
         
@@ -76,9 +76,14 @@ class Photo:
         """
         if self.metadata and "DateTimeOriginal" in self.metadata:
             date = str(self.metadata["DateTimeOriginal"]).split()[0]
+            if month:
+                date = self.date_month(date)
             return date
         else:
             return None
+    
+    def date_month(self, date:str)->str:
+        return date[:-3]
 
     def find_parentheses_numbers(self, new_path:str):
         """Finds all set of parentheses which contain a number
@@ -156,6 +161,6 @@ class Photo:
 if __name__ == "__main__":
     #pass
     #photo_path = Photo(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
-    photo_path = Photo(r"C:\Users\potis\Pictures\photonomist\0_test\20160815_005049.jpg")
-    #my_photo = Photo(photo_path).get_date()
-    photo_path.move_to_folder(r"C:\Users\potis\Pictures\photonomist\0_test\2016_08_15_place_reason_people")
+    #photo_path = Photo(r"C:\Users\potis\Pictures\photonomist\0_test\20160815_005049.jpg")
+    my_photo = Photo(r"C:\Users\potis\Pictures\photonomist\0_test\20160815_005049.jpg").get_date()
+    #photo_path.move_to_folder(r"C:\Users\potis\Pictures\photonomist\0_test\2016_08_15_place_reason_people")
