@@ -89,6 +89,8 @@ class Gui:
             #Entries widget
             self.__widgets[mode[0] + "_path_entry"] = tk.Entry(self.__gui, textvariable = self.__widgets[mode[0] + "_path_value"])
             self.__widgets[mode[0] + "_path_entry"].place(x=90, y=mode[2], width= 300)
+            if mode[0] == "input":
+                self.__widgets[mode[0] + "_path_value"].trace("w", self.__check_input_entry)
 
             #Button widget
             self.__widgets[mode[0] + "_path_button"] = tk.Button(self.__gui, text="...", command = partial(self.__file_explorer, mode[0]))
@@ -107,6 +109,10 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
     
+    def __check_input_entry(self, *args):
+        self.__run_button["state"] = "disabled"
+
+
     def __validate_input_path(self):
         try:
             self.__photos_roots = input_path_validation(self.__widgets["input_path_value"].get())
