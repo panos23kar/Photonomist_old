@@ -66,7 +66,7 @@ class Photo:
                 if (len(str(self.__tags[tag_key]))>0) and (key_no_tag not in self.metadata):
                     self.metadata[key_no_tag] = self.__tags[tag_key]
 
-    def get_date(self, year=True, month=False)->str:
+    def get_date(self, year=False, month=False)->str:
         """Returns the date of a photo from the metadata dictionary. 
         As date considered the value of the "DateTimeOriginal" tag. 
         
