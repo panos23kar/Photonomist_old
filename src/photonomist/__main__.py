@@ -139,7 +139,7 @@ def disk_space(export_path:str, photos_total_size:int):
     else:
         raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
-def photo_dir_name(date:str)->str:
+def photo_dir_name(date:str, year=False, month=False)->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
     | **Name pattern**: *year_month_day_place_reason_people*
@@ -157,8 +157,15 @@ def photo_dir_name(date:str)->str:
     :rtype: str
     |
     """
-    year, month, day = date.split(':')
-    return f"{year}_{month}_{day}_place_reason_people"
+    if month:
+        year, month = date.split(':')
+        return f"{year}_{month}_place_reason_people"
+    elif year:
+        year = date.split(':')
+        return f"{year}_place_reason_people"
+    else:
+        year, month, day = date.split(':')
+        return f"{year}_{month}_{day}_place_reason_people"
 
 def dir_name_exists(dir_name:str, export_path:str)->bool:
     """Checks if a folder's name already contains the date of a photo
