@@ -146,7 +146,7 @@ class Gui:
         else:
             # Triggers oading window
             self.__start_load_w_thread(self.__excl_w_layout)
-    
+
     def __excl_w_layout(self):
 
         # Exclude window cconfiguration
@@ -161,7 +161,7 @@ class Gui:
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
 
         ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
-        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="red") # ,background="grey95", padx=25
+        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=25)
         self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
@@ -217,7 +217,7 @@ class Gui:
         self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__exclude_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
     
-    def __calculate_x_coord(self, num_of_chars):
+    def __calculate_x_coord(self, num_of_chars):#TODO-> quick and dirty. chnage it
         if num_of_chars <  20:
             return int(num_of_chars * 6.8 )
         elif num_of_chars <  30:
@@ -255,14 +255,14 @@ class Gui:
 
 
         print("Im here",self.__excl_w_frame.winfo_width())
-        self.__excl_w_frame.configure(width=self.__excl_w_frame.winfo_width() + 30)
+        #self.__excl_w_frame.configure(width=self.__excl_w_frame.winfo_width() + 30)
         print("Now im here",self.__excl_w_frame.winfo_width())
 
 
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
         self.__excl_w_canvas.configure(height=self.__excl_w_frame.winfo_height())
         
-    
+
 
     def __exclude_paths(self):
         """Check if I can get the excluded paths form exclude window"""
@@ -376,18 +376,6 @@ class Gui:
         ##Canvas for Load window (it is need for scrolling (scrollbar) functionality)
         self.__load_w_canvas = tk.Canvas(self.__loading_window,  width=500, height=500)
         self.__load_w_canvas.pack()
-
-
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     Gui()
