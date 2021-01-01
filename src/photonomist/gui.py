@@ -170,7 +170,7 @@ class Gui:
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
 
         ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
-        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=25)
+        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=40)
         self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
