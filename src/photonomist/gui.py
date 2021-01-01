@@ -111,7 +111,7 @@ class Gui:
     
     def __check_input_entry(self, *args):
         self.__run_button["state"] = "disabled"
-        self.__change_widget_color(self.__widgets["inputfind_photos_button"], "red")
+        self.__change_widget_color(self.__widgets["inputfind_photos_button"], "lightpink")
     
     def __change_widget_color(self, widget, color):
         widget.config(background=color)
