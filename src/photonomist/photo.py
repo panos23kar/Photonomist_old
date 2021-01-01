@@ -66,7 +66,7 @@ class Photo:
                 if (len(str(self.__tags[tag_key]))>0) and (key_no_tag not in self.metadata):
                     self.metadata[key_no_tag] = self.__tags[tag_key]
 
-    def get_date(self, year=False, month=True)->str:
+    def get_date(self, year=True, month=False)->str:
         """Returns the date of a photo from the metadata dictionary. 
         As date considered the value of the "DateTimeOriginal" tag. 
         
@@ -78,12 +78,17 @@ class Photo:
             date = str(self.metadata["DateTimeOriginal"]).split()[0]
             if month:
                 date = self.date_month(date)
+            elif year:
+                date = self.date_year(date)
             return date
         else:
             return None
     
     def date_month(self, date:str)->str:
         return date[:-3]
+    
+    def date_year(self, date:str)->str:
+        return date[:-6]
 
     def find_parentheses_numbers(self, new_path:str):
         """Finds all set of parentheses which contain a number
