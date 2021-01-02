@@ -314,6 +314,21 @@ def group_by_(option):
 def group_by_message():
     print("\nDear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!")
 
+def group_option():
+    group_by_message()
+
+    # Day
+    if group_by_("day"):
+        month, year = False, False
+    # Month
+    elif group_by_("month"):
+        month, year = True, False
+    # Year
+    else:
+        month, year = False, True
+    
+    return year, month
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -328,17 +343,8 @@ def main():
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     export_path_validation(export_path, photos_path, photos_roots)
 
-    # Group by:
-    group_by_message()
-    # Day
-    if group_by_("day"):
-        month, year = False, False
-    # Month
-    elif group_by_("month"):
-        month, year = True, False
-    # Year
-    else:
-        month, year = False, True
+    # Group criteria
+    year, month = group_option()
 
     # Moves photos
     tidy_photos(export_path, photos_roots, year=year, month=month)
