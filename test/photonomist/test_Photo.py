@@ -73,6 +73,35 @@ def test_date_return_none_if_no_metadata():
     my_photo = Photo(photo_path)
     assert None == my_photo.get_date()
 
+@pytest.mark.parametrize("year, month, expected", [
+    (False, True, "2019:12"),
+    (True, False, "2019"),
+    (True, True, "2019:12"),
+    (False, False, "2019:12:14"),
+])
+def test_return_date_with_year_month_keywords(my_photo, year, month, expected):
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    assert my_photo.get_date(year=year, month=month) == expected
+
+@pytest.mark.parametrize("year, expected", [
+    (True, "2019"),
+    (False,"2019:12:14"),
+])
+def test_return_date_with_year_keyword(my_photo, year, expected):
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    assert my_photo.get_date(year=year) == expected
+
+@pytest.mark.parametrize("month, expected", [
+    (True, "2019:12"),
+    (False,"2019:12:14"),
+])
+def test_return_date_with_month_keyword(my_photo, month, expected):
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    assert my_photo.get_date(month=month) == expected
+
 @pytest.fixture()
 def move_photo_del_folder():
     photo_path = r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
