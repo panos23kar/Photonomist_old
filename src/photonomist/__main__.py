@@ -74,7 +74,7 @@ def traverse_photos_path(photos_path:str)->list:
     photos_roots = collections.defaultdict(list)
 
     # traverse root directory, and list directories as dirs and files as files. List comp was less readable
-    for root, dirs, files in os.walk(photos_path):
+    for root, _ , files in os.walk(photos_path):
         for _file in files:
             if _file.lower().endswith('jpg') or _file.lower().endswith('nef') or _file.lower().endswith('jpeg') or _file.lower().endswith('cr2'):
                 photos_roots[root].append(root + '\\' + _file)
@@ -133,7 +133,7 @@ def disk_space(export_path:str, photos_total_size:int):
     :type photos_total_size: int
     |
     """
-    total, used, free = shutil.disk_usage(export_path)
+    _ , _, free = shutil.disk_usage(export_path)
     if free > photos_total_size:
         print('You have enough free disk space!')
     else:
