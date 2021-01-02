@@ -108,6 +108,24 @@ class Gui:
                 #Button widget
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
+            
+            #Grouping Radio Buttons trial
+            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=16)
+            self.__widgets["grouping_frame"].place(x=100, y=100)
+
+            var = tk.StringVar()
+
+            mild = tk.Radiobutton(self.__widgets["grouping_frame"], text='Mild', variable=var)
+            mild.config(indicatoron=0, bd=4, width=12, value='Mild')
+            mild.grid(row=0, column=0)
+
+            medium = tk.Radiobutton(self.__widgets["grouping_frame"], text='Medium', variable=var)
+            medium.config(indicatoron=0, bd=4, width=12, value='Medium')
+            medium.grid(row=0, column=1)
+
+            hot = tk.Radiobutton(self.__widgets["grouping_frame"], text='Hot', variable=var)
+            hot.config(indicatoron=0, bd=4, width=12, value='Hot')
+            hot.grid(row=0, column=2)
     
     def __check_input_entry(self, *args):
         self.__run_button["state"] = "disabled"
