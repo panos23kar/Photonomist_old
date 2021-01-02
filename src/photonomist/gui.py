@@ -110,7 +110,7 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
             #Grouping Radio Buttons trial
-            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=8)
+            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2, background="red")
             self.__widgets["grouping_frame"].place(x=80, y=90)
 
             self.__widgets["grouping_str_var"] = tk.StringVar()
