@@ -110,22 +110,27 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
             #Grouping Radio Buttons trial
-            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2, background="red")
+            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2)
             self.__widgets["grouping_frame"].place(x=80, y=90)
+
+            #Label
+            self.__widgets["grouping_label"] = tk.Label(self.__widgets["grouping_frame"], text= "I 'll group your photos by..")
+            self.__widgets["grouping_label"].grid(row=0, column=0, columnspan=3)
 
             self.__widgets["grouping_str_var"] = tk.StringVar()
 
             self.__widgets["grouping_day"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Day', variable=self.__widgets["grouping_str_var"])
             self.__widgets["grouping_day"].config(indicatoron=0, bd=2, width=8, value='day')
-            self.__widgets["grouping_day"].grid(row=0, column=0)
+            self.__widgets["grouping_day"].grid(row=1, column=0)
+            self.__widgets["grouping_str_var"].set("day")
 
             self.__widgets["grouping_month"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Month', variable=self.__widgets["grouping_str_var"])
             self.__widgets["grouping_month"].config(indicatoron=0, bd=2, width=8, value='month')
-            self.__widgets["grouping_month"].grid(row=0, column=1)
+            self.__widgets["grouping_month"].grid(row=1, column=1)
 
             self.__widgets["grouping_year"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
             self.__widgets["grouping_year"].config(indicatoron=0, bd=2, width=8, value='year')
-            self.__widgets["grouping_year"].grid(row=0, column=2)
+            self.__widgets["grouping_year"].grid(row=1, column=2)
     
     def __check_input_entry(self, *args):
         self.__run_button["state"] = "disabled"
