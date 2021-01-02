@@ -191,6 +191,36 @@ def test_transfer_photo_to_another_folder_if_it_has_valid_date(move_photo_del_fo
     assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
 
 @pytest.fixture()
+def move_photo_del_folder_month_keyword():
+    move_photo_del_folder_month_keyword = r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    yield move_photo_del_folder_month_keyword
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_transfer_photo_to_another_folder_if_it_has_valid_date_month_keyword(move_photo_del_folder_month_keyword):
+    """Test src\\photonomist\\__main__ > transfer_photo
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    transfer_photo(move_photo_del_folder_month_keyword, export_path, year=False, month=True)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+
+@pytest.fixture()
+def move_photo_del_folder_year_keyword():
+    move_photo_del_folder_year_keyword = r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    yield move_photo_del_folder_year_keyword
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_transfer_photo_to_another_folder_if_it_has_valid_date_year_keyword(move_photo_del_folder_year_keyword):
+    """Test src\\photonomist\\__main__ > transfer_photo
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    transfer_photo(move_photo_del_folder_year_keyword, export_path, year=True, month=False)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+
+@pytest.fixture()
 def move_canon_photo_del_folder():
     move_canon_photo_del_folder = r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blablacr2\IMG_5494.CR2"
     yield move_canon_photo_del_folder
