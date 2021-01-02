@@ -161,7 +161,7 @@ def photo_dir_name(date:str, year=False, month=False)->str:
         year, month = date.split(':')
         return f"{year}_{month}_place_reason_people"
     elif year:
-        year = date.split(':')
+        year = date
         return f"{year}_place_reason_people"
     else:
         year, month, day = date.split(':')
@@ -279,7 +279,7 @@ def tidy_photos(export_path:str, photos_roots:dict, year=False, month=False):
     # Iterate over list of photos
     for photo_list in photos_roots.values():
         for photo in photo_list:
-            transfer_photo(photo, export_path, month=month)
+            transfer_photo(photo, export_path, year=year, month=month)
 
 def replace_backslashes(path:str):
     """Replaces the backslashes of string-paths with double forward slashes
@@ -304,12 +304,15 @@ def open_export_folder(export_path:str):
     # subprocess.Popen(f'explorer "{export_path}"')
     subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
-def group_by_month():
-    month_value = (input("Do you want me to group your photos by month? [y/n] (default Yes): "))
-    if month_value.lower().rstrip() != "n" and month_value.lower().rstrip()!="no" and month_value.lower().rstrip() !="false" and month_value.rstrip()!="0":
+def group_by_(option):
+    message = "Do you want me to group your photos by {option}? [y/n] (default Yes): ".format(option=option)
+    user_desire = (input(message))
+    if user_desire.lower().rstrip() != "n" and user_desire.lower().rstrip()!="no" and user_desire.lower().rstrip() !="false" and user_desire.rstrip()!="0":
         return True
     return False
 
+def group_by_message():
+    print("\nDear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!")
 
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
@@ -325,11 +328,20 @@ def main():
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     export_path_validation(export_path, photos_path, photos_roots)
 
-    # Group by month
-    month = group_by_month()
+    # Group by:
+    group_by_message()
+    # Day
+    if group_by_("day"):
+        month, year = False, False
+    # Month
+    elif group_by_("month"):
+        month, year = True, False
+    # Year
+    else:
+        month, year = False, True
 
     # Moves photos
-    tidy_photos(export_path, photos_roots, month=month)
+    tidy_photos(export_path, photos_roots, year=year, month=month)
 
     # Open export path on file explorer
     open_export_folder(export_path)
