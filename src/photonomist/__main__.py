@@ -317,6 +317,13 @@ def open_export_folder(export_path:str):
     subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
 def group_by_(option):
+    """Forms the message and register user's option with regards to the grouping desire 
+
+    :param option: option according to which the photos will be grouped
+    :type option: str
+    
+    |
+    """
     message = "Do you want me to group your photos by {option}? [y/n] (default Yes): ".format(option=option)
     user_desire = (input(message))
     if user_desire.lower().rstrip() != "n" and user_desire.lower().rstrip()!="no" and user_desire.lower().rstrip() !="false" and user_desire.rstrip()!="0":
@@ -324,9 +331,20 @@ def group_by_(option):
     return False
 
 def group_by_message():
+    """It prints a message which explains the grouping options of the user.
+
+    |
+    """
     print("\nDear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!")
 
 def group_option():
+    """It 's called by the main function. It logs the informative group by message.
+    It asks the user if she wants to group her photo by day, month or year.
+
+    :return: A tuple with the boolean values for year and month 
+    :rtype: tuple
+    |
+    """
     group_by_message()
 
     # Day
