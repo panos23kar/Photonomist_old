@@ -204,7 +204,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
-def transfer_photo(photo_path:str, export_path:str, year=year, month=month):
+def transfer_photo(photo_path:str, export_path:str, year=False, month=False):
     """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
@@ -329,7 +329,7 @@ def main():
     month = group_by_month()
 
     # Moves photos
-    tidy_photos(export_path, photos_roots)
+    tidy_photos(export_path, photos_roots, month=month)
 
     # Open export path on file explorer
     open_export_folder(export_path)
