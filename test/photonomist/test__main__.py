@@ -304,6 +304,49 @@ def test_move_all_photos_of_all_folders(move_photos_del_folders):
     assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
     assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
 
+@pytest.fixture()
+def move_photos_del_folders_month():
+    photo_roots = traverse_photos_path(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla")
+    yield photo_roots
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\blabla\DSC_0262.NEF")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_04_place_reason_people\DSC_1402.JPG", r"test\data\testing_folder_with_photos\bla\blabla\blablabla\DSC_1402.JPG")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_10_place_reason_people\IMG_5494.CR2", r"test\data\testing_folder_with_photos\bla\blabla\IMG_5494.CR2")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_place_reason_people")
+    os.remove(r"test\data\testing_folder_with_photos\move_folder\not_transferred.txt")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_move_all_photos_of_all_folders_month(move_photos_del_folders_month):
+    """ Test for src\\photonomist\\__main__ > tidy_photos
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    tidy_photos(export_path, move_photos_del_folders_month, year=False, month=True)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+    assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_place_reason_people")
+    assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_place_reason_people")
+
+@pytest.fixture()
+def move_photos_del_folders_year():
+    photo_roots = traverse_photos_path(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla")
+    yield photo_roots
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\blabla\DSC_0262.NEF")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people\DSC_1402.JPG", r"test\data\testing_folder_with_photos\bla\blabla\blablabla\DSC_1402.JPG")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people\IMG_5494.CR2", r"test\data\testing_folder_with_photos\bla\blabla\IMG_5494.CR2")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people")
+    os.remove(r"test\data\testing_folder_with_photos\move_folder\not_transferred.txt")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_move_all_photos_of_all_folders_year(move_photos_del_folders_year):
+    """ Test for src\\photonomist\\__main__ > tidy_photos
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    tidy_photos(export_path, move_photos_del_folders_year, year=True, month=False)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+    assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people")
+    assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people")
+
 @pytest.mark.parametrize("random_slashes_path, expected", [
     ("this/is/a/random/path/with/backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
     ("this/is\\a\\random/path/with/backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
