@@ -110,7 +110,7 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
             #Grouping Radio Buttons trial
-            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=16)
+            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=8)
             self.__widgets["grouping_frame"].place(x=100, y=100)
 
             self.__widgets["grouping_str_var"] = tk.StringVar()
@@ -119,9 +119,9 @@ class Gui:
             self.__widgets["grouping_day"].config(indicatoron=0, bd=2, width=8, value='day')
             self.__widgets["grouping_day"].grid(row=0, column=0)
 
-            medium = tk.Radiobutton(self.__widgets["grouping_frame"], text='Month', variable=self.__widgets["grouping_str_var"])
-            medium.config(indicatoron=0, bd=4, width=12, value='Medium')
-            medium.grid(row=0, column=1)
+            self.__widgets["grouping_month"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Month', variable=self.__widgets["grouping_str_var"])
+            self.__widgets["grouping_month"].config(indicatoron=0, bd=2, width=8, value='month')
+            self.__widgets["grouping_month"].grid(row=0, column=1)
 
             hot = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
             hot.config(indicatoron=0, bd=4, width=12, value='Hot')
