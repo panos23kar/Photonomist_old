@@ -154,6 +154,15 @@ class Gui:
         if mode == "input":
             self.__run_button["state"] = "disabled"
     
+    def __group_option(self):
+        user_option = self.__widgets["grouping_str_var"].get()
+        if user_option == "month":
+            return False, True
+        elif user_option == "year":
+            return True, False
+        else:
+            return False, False
+
     def __run_app(self):
         self.__validate_input_path()
         
@@ -163,7 +172,8 @@ class Gui:
             self.__widgets["export_invalid_path_value"].set(str(e))
         else:
             self.__widgets["export_invalid_path_value"].set("")
-            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots)
+            year, month = self.__group_option()
+            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots, year=year, month=month)
             open_export_folder(self.__widgets["export_path_value"].get())
             
     #------------------------------ Exclude Window-------------------------------------#
