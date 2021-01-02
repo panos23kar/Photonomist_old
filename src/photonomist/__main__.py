@@ -266,7 +266,7 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:dict):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-def tidy_photos(export_path:str, photos_roots:dict):
+def tidy_photos(export_path:str, photos_roots:dict, year=False, month=False):
     """Initiates the transfer process for each photo
 
     :param export_path: path to the directory where the photo folder structure will be created
