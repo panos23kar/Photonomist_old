@@ -149,6 +149,28 @@ def test_identifies_set_of_parentheses_which_contain_numbers(my_photo, parenthes
     """
     assert my_photo.find_parentheses_numbers(parentheses_text) == expected
 
+@pytest.mark.parametrize("date, expected", [
+    ("2019:12:14", "2019:12"),
+    ("1990:07:23", "1990:07"),
+    ("2021:01:02", "2021:01"),
+    (":-)_panagiotis", ":-)_panagio"),
+])
+def test_date_month_returns_only_year_month(my_photo, date, expected):
+    """Test src\\photonomist\\photo.Photo> date_month
+    """
+    assert my_photo.date_month(date) == expected
+
+@pytest.mark.parametrize("date, expected", [
+    ("2019:12:14", "2019"),
+    ("1990:07:23", "1990"),
+    ("2021:01:02", "2021"),
+    (":-)_panagiotis", ":-)_pana"),
+])
+def test_date_year_returns_only_year(my_photo, date, expected):
+    """Test src\\photonomist\\photo.Photo> date_year
+    """
+    assert my_photo.date_year(date) == expected
+    
 # Make the script executable.
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
