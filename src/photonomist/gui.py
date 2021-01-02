@@ -37,12 +37,12 @@ class Gui:
         |
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("440x250")
+        self.__gui.geometry("440x300")
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
         
-        self.__run_button.place(x=310, y=200, height=21)
+        self.__run_button.place(x=310, y=250, height=21)
     
     def __quit(self):
         if messagebox.askyesno("", "Are you sure you want to quit Photonomist?"):
@@ -78,7 +78,7 @@ class Gui:
         """
 
         for mode in (("input", 20, 22),
-                     ("export", 150, 152)):
+                     ("export", 140, 142)):
             #Labels widget
             self.__widgets[mode[0] + "_path_label"] = tk.Label(self.__gui, text= mode[0].capitalize() + " path:")
             self.__widgets[mode[0] + "_path_label"].place(x=20, y=mode[1])
@@ -110,12 +110,12 @@ class Gui:
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
             #Grouping Radio Buttons trial
-            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2)
-            self.__widgets["grouping_frame"].place(x=80, y=90)
+            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2,)# background="red"
+            self.__widgets["grouping_frame"].place(x=20, y=190)
 
             #Label
             self.__widgets["grouping_label"] = tk.Label(self.__widgets["grouping_frame"], text= "I 'll group your photos by..")
-            self.__widgets["grouping_label"].grid(row=0, column=0, columnspan=3)
+            self.__widgets["grouping_label"].grid(row=0, column=0, columnspan=3, sticky="w", pady=5)
 
             self.__widgets["grouping_str_var"] = tk.StringVar()
 
