@@ -10,7 +10,11 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation, tidy_photos, replace_backslashes
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string,\
+     path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name,\
+          dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk,\
+               input_path_validation, export_path_validation, tidy_photos, replace_backslashes,\
+                   group_by_message
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'test\data\blablabla'), 
@@ -359,6 +363,13 @@ def test_a_path_does_not_have_backslashes(random_slashes_path, expected):
     Parametrized to test different paths with and without backslashes
     """
     assert replace_backslashes(random_slashes_path) == expected
+
+def test_informative_print_message_for_grouping_options(capsys):
+    """ Test for src\\photonomist\\__main__ > group_by_message
+    """
+    group_by_message()
+    captured = capsys.readouterr()
+    assert 'Dear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!' in captured.out
 
 # Make the script executable.
 if __name__ == "__main__":
