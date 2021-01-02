@@ -113,11 +113,15 @@ def test_not_enough_free_disk_space(capsys):
     with pytest.raises(Exception, match="You need at least 5000000001073741824 free bytes but you only have"):
         disk_space(sample_path, photos_total_size)
 
-def test_create_photo_folder_name():
+@pytest.mark.parametrize("date, year, month, expected", [
+    ("2016", True, False, "2016_place_reason_people"),
+    ("2016:12:17", False, False, "2016_12_17_place_reason_people"),
+    ("2016:12", False, True, "2016_12_place_reason_people"),
+])
+def test_create_photo_folder_name(date, year, month, expected):
     """Test src\\photonomist\\__main__ > photo_dir_name
     """
-    date = "2016:12:17"
-    assert "2016_12_17_place_reason_people" == photo_dir_name(date)
+    assert expected == photo_dir_name(date, year=year, month=month)
 
 def test_photo_folder_exist_in_export_path():
     """Test src\\photonomist\\__main__ > dir_name_exists
