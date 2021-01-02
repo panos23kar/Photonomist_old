@@ -113,17 +113,17 @@ class Gui:
             self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=16)
             self.__widgets["grouping_frame"].place(x=100, y=100)
 
-            var = tk.StringVar()
+            self.__widgets["grouping_str_var"] = tk.StringVar()
 
-            mild = tk.Radiobutton(self.__widgets["grouping_frame"], text='Mild', variable=var)
+            mild = tk.Radiobutton(self.__widgets["grouping_frame"], text='Day', variable=self.__widgets["grouping_str_var"])
             mild.config(indicatoron=0, bd=4, width=12, value='Mild')
             mild.grid(row=0, column=0)
 
-            medium = tk.Radiobutton(self.__widgets["grouping_frame"], text='Medium', variable=var)
+            medium = tk.Radiobutton(self.__widgets["grouping_frame"], text='Month', variable=self.__widgets["grouping_str_var"])
             medium.config(indicatoron=0, bd=4, width=12, value='Medium')
             medium.grid(row=0, column=1)
 
-            hot = tk.Radiobutton(self.__widgets["grouping_frame"], text='Hot', variable=var)
+            hot = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
             hot.config(indicatoron=0, bd=4, width=12, value='Hot')
             hot.grid(row=0, column=2)
     
