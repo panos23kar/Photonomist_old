@@ -14,7 +14,7 @@ from photonomist.__main__ import path_exists, path_items, clean_path, path_strin
      path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name,\
           dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk,\
                input_path_validation, export_path_validation, tidy_photos, replace_backslashes,\
-                   group_by_message, group_by_
+                   group_by_message, group_by_, group_option
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'test\data\blablabla'), 
@@ -390,6 +390,14 @@ def test_group_by_returns_true_or_false_on_user_value(monkeypatch, user_input, e
     """
     monkeypatch.setattr('builtins.input', lambda _: user_input)
     assert group_by_(user_input) == expected
+
+def test_group_option_prints_group_message(capsys, monkeypatch):
+    """ Test for src\\photonomist\\__main__ > group_option
+    """
+    monkeypatch.setattr('builtins.input', lambda _: "kati")
+    group_option()
+    captured = capsys.readouterr()
+    assert 'Dear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!' in captured.out
 
 # Make the script executable.
 if __name__ == "__main__":
