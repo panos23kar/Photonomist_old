@@ -66,10 +66,14 @@ class Photo:
                 if (len(str(self.__tags[tag_key]))>0) and (key_no_tag not in self.metadata):
                     self.metadata[key_no_tag] = self.__tags[tag_key]
 
-    def get_date(self, year=False, month=False)->str:
+    def get_date(self, year:bool=False, month:bool=False)->str:
         """Returns the date of a photo from the metadata dictionary. 
         As date considered the value of the "DateTimeOriginal" tag. 
         
+        :param year: indicates if the photos will be grouped by year
+        :type year: boolean
+        :param month: indicates if the photos will be grouped by month
+        :type month: boolean    
         :return: date of photo
         :rtype: str
         |
