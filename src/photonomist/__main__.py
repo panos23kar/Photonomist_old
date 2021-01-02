@@ -279,7 +279,7 @@ def tidy_photos(export_path:str, photos_roots:dict, year=False, month=False):
     # Iterate over list of photos
     for photo_list in photos_roots.values():
         for photo in photo_list:
-            transfer_photo(photo, export_path)
+            transfer_photo(photo, export_path, month=month)
 
 def replace_backslashes(path:str):
     """Replaces the backslashes of string-paths with double forward slashes
