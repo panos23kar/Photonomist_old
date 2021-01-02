@@ -37,12 +37,12 @@ class Gui:
         |
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("440x250")
+        self.__gui.geometry("440x300")
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
         
-        self.__run_button.place(x=310, y=200, height=21)
+        self.__run_button.place(x=310, y=250, height=21)
     
     def __quit(self):
         if messagebox.askyesno("", "Are you sure you want to quit Photonomist?"):
@@ -78,7 +78,7 @@ class Gui:
         """
 
         for mode in (("input", 20, 22),
-                     ("export", 150, 152)):
+                     ("export", 140, 142)):
             #Labels widget
             self.__widgets[mode[0] + "_path_label"] = tk.Label(self.__gui, text= mode[0].capitalize() + " path:")
             self.__widgets[mode[0] + "_path_label"].place(x=20, y=mode[1])
@@ -108,6 +108,29 @@ class Gui:
                 #Button widget
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
+            
+            #Grouping Radio Buttons trial
+            self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2,)# background="red"
+            self.__widgets["grouping_frame"].place(x=20, y=190)
+
+            #Label
+            self.__widgets["grouping_label"] = tk.Label(self.__widgets["grouping_frame"], text= "I 'll group your photos by..")
+            self.__widgets["grouping_label"].grid(row=0, column=0, columnspan=3, sticky="w", pady=5)
+
+            self.__widgets["grouping_str_var"] = tk.StringVar()
+
+            self.__widgets["grouping_day"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Day', variable=self.__widgets["grouping_str_var"])
+            self.__widgets["grouping_day"].config(indicatoron=0, bd=2, width=8, value='day')
+            self.__widgets["grouping_day"].grid(row=1, column=0)
+            self.__widgets["grouping_str_var"].set("day")
+
+            self.__widgets["grouping_month"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Month', variable=self.__widgets["grouping_str_var"])
+            self.__widgets["grouping_month"].config(indicatoron=0, bd=2, width=8, value='month')
+            self.__widgets["grouping_month"].grid(row=1, column=1)
+
+            self.__widgets["grouping_year"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
+            self.__widgets["grouping_year"].config(indicatoron=0, bd=2, width=8, value='year')
+            self.__widgets["grouping_year"].grid(row=1, column=2)
     
     def __check_input_entry(self, *args):
         self.__run_button["state"] = "disabled"
@@ -131,6 +154,15 @@ class Gui:
         if mode == "input":
             self.__run_button["state"] = "disabled"
     
+    def __group_option(self):
+        user_option = self.__widgets["grouping_str_var"].get()
+        if user_option == "month":
+            return False, True
+        elif user_option == "year":
+            return True, False
+        else:
+            return False, False
+
     def __run_app(self):
         self.__validate_input_path()
         
@@ -140,7 +172,8 @@ class Gui:
             self.__widgets["export_invalid_path_value"].set(str(e))
         else:
             self.__widgets["export_invalid_path_value"].set("")
-            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots)
+            year, month = self.__group_option()
+            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots, year=year, month=month)
             open_export_folder(self.__widgets["export_path_value"].get())
             
     #------------------------------ Exclude Window-------------------------------------#

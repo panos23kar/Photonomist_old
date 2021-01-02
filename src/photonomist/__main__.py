@@ -74,7 +74,7 @@ def traverse_photos_path(photos_path:str)->list:
     photos_roots = collections.defaultdict(list)
 
     # traverse root directory, and list directories as dirs and files as files. List comp was less readable
-    for root, dirs, files in os.walk(photos_path):
+    for root, _ , files in os.walk(photos_path):
         for _file in files:
             if _file.lower().endswith('jpg') or _file.lower().endswith('nef') or _file.lower().endswith('jpeg') or _file.lower().endswith('cr2'):
                 photos_roots[root].append(root + '\\' + _file)
@@ -133,13 +133,13 @@ def disk_space(export_path:str, photos_total_size:int):
     :type photos_total_size: int
     |
     """
-    total, used, free = shutil.disk_usage(export_path)
+    _ , _, free = shutil.disk_usage(export_path)
     if free > photos_total_size:
         print('You have enough free disk space!')
     else:
         raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
-def photo_dir_name(date:str)->str:
+def photo_dir_name(date:str, year:bool=False, month:bool=False)->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
     | **Name pattern**: *year_month_day_place_reason_people*
@@ -153,12 +153,23 @@ def photo_dir_name(date:str)->str:
     
     :param date: the date which will be used to populate the first three elements of the folder name
     :type date: str
+    :param year: indicates if the photos will be grouped by year
+    :type year: boolean
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
     :return: the wonna be directory name
     :rtype: str
     |
     """
-    year, month, day = date.split(':')
-    return f"{year}_{month}_{day}_place_reason_people"
+    if month:
+        year, month = date.split(':')
+        return f"{year}_{month}_place_reason_people"
+    elif year:
+        year = date
+        return f"{year}_place_reason_people"
+    else:
+        year, month, day = date.split(':')
+        return f"{year}_{month}_{day}_place_reason_people"
 
 def dir_name_exists(dir_name:str, export_path:str)->bool:
     """Checks if a folder's name already contains the date of a photo
@@ -197,20 +208,24 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
-def transfer_photo(photo_path:str, export_path:str):
+def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=False):
     """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
     :type photo_path: str
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
+    :param year: indicates if the photos will be grouped by year
+    :type year: boolean
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
     |
     """
     photo = Photo(photo_path)
-    date = photo.get_date()
+    date = photo.get_date(year=year, month=month)
     
     if date:
-        photo_folder_name = photo_dir_name(date)
+        photo_folder_name = photo_dir_name(date, year=year, month=month)
         if not dir_name_exists(photo_folder_name, export_path):
             # I dont simply use a set because the photo_dir might exist from the past
             create_photo_dir(photo_folder_name, export_path)
@@ -259,20 +274,24 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:dict):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-def tidy_photos(export_path:str, photos_roots:dict):
+def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=False):
     """Initiates the transfer process for each photo
 
     :param export_path: path to the directory where the photo folder structure will be created
     :type export_path: str
     :param photos_roots: a dict with all the paths that contain photos
     :type photos_roots: dict
+    :param year: indicates if the photos will be grouped by year
+    :type year: boolean
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
     |
     """
 
     # Iterate over list of photos
     for photo_list in photos_roots.values():
         for photo in photo_list:
-            transfer_photo(photo, export_path)
+            transfer_photo(photo, export_path, year=year, month=month)
 
 def replace_backslashes(path:str):
     """Replaces the backslashes of string-paths with double forward slashes
@@ -297,6 +316,49 @@ def open_export_folder(export_path:str):
     # subprocess.Popen(f'explorer "{export_path}"')
     subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
+def group_by_(option):
+    """Forms the message and register user's option with regards to the grouping desire 
+
+    :param option: option according to which the photos will be grouped
+    :type option: str
+    
+    |
+    """
+    message = "Do you want me to group your photos by {option}? [y/n] (default Yes): ".format(option=option)
+    user_desire = (input(message))
+    if user_desire.lower().rstrip() != "n" and user_desire.lower().rstrip()!="no" and user_desire.lower().rstrip() !="false" and user_desire.rstrip()!="0":
+        return True
+    return False
+
+def group_by_message():
+    """It prints a message which explains the grouping options of the user.
+
+    |
+    """
+    print("\nDear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!")
+
+def group_option():
+    """It 's called by the main function. It logs the informative group by message.
+    It asks the user if she wants to group her photo by day, month or year.
+
+    :return: A tuple with the boolean values for year and month 
+    :rtype: tuple
+    |
+    """
+    group_by_message()
+
+    # Day
+    if group_by_("day"):
+        month, year = False, False
+    # Month
+    elif group_by_("month"):
+        month, year = True, False
+    # Year
+    else:
+        month, year = False, True
+    
+    return year, month
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -311,8 +373,11 @@ def main():
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     export_path_validation(export_path, photos_path, photos_roots)
 
+    # Group criteria
+    year, month = group_option()
+
     # Moves photos
-    tidy_photos(export_path, photos_roots)
+    tidy_photos(export_path, photos_roots, year=year, month=month)
 
     # Open export path on file explorer
     open_export_folder(export_path)

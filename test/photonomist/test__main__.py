@@ -10,7 +10,11 @@ environment or setuptools develop mode to test against the development version.
 """
 import pytest
 import os, shutil
-from photonomist.__main__ import path_exists, path_items, clean_path, path_string, path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name, dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk, input_path_validation, export_path_validation, tidy_photos, replace_backslashes
+from photonomist.__main__ import path_exists, path_items, clean_path, path_string,\
+     path_photos, traverse_photos_path, photos_size, disk_space, photo_dir_name,\
+          dir_name_exists, create_photo_dir, transfer_photo, paths_same_disk,\
+               input_path_validation, export_path_validation, tidy_photos, replace_backslashes,\
+                   group_by_message, group_by_, group_option
 
 @pytest.mark.parametrize("sample_path", [("blablabla"), 
                                          (r'test\data\blablabla'), 
@@ -113,11 +117,39 @@ def test_not_enough_free_disk_space(capsys):
     with pytest.raises(Exception, match="You need at least 5000000001073741824 free bytes but you only have"):
         disk_space(sample_path, photos_total_size)
 
-def test_create_photo_folder_name():
+@pytest.mark.parametrize("date, year, month, expected", [
+    ("2016", True, False, "2016_place_reason_people"),
+    ("2016:12:17", False, False, "2016_12_17_place_reason_people"),
+    ("2016:12", False, True, "2016_12_place_reason_people"),
+])
+def test_create_photo_folder_name(date, year, month, expected):
+    """Test src\\photonomist\\__main__ > photo_dir_name
+    """
+    assert expected == photo_dir_name(date, year=year, month=month)
+
+def test_create_photo_folder_name_no_keyword_arguments():
     """Test src\\photonomist\\__main__ > photo_dir_name
     """
     date = "2016:12:17"
     assert "2016_12_17_place_reason_people" == photo_dir_name(date)
+
+@pytest.mark.parametrize("date, year, expected", [
+    ("2016", True, "2016_place_reason_people"),
+    ("2016:12:17", False, "2016_12_17_place_reason_people"),
+])
+def test_create_photo_folder_name_no_month_keyword(date, year, expected):
+    """Test src\\photonomist\\__main__ > photo_dir_name
+    """
+    assert expected == photo_dir_name(date, year=year)
+
+@pytest.mark.parametrize("date, month, expected", [
+    ("2016:12", True, "2016_12_place_reason_people"),
+    ("2016:12:17", False, "2016_12_17_place_reason_people"),
+])
+def test_create_photo_folder_name_no_year_keyword(date, month, expected):
+    """Test src\\photonomist\\__main__ > photo_dir_name
+    """
+    assert expected == photo_dir_name(date, month=month)
 
 def test_photo_folder_exist_in_export_path():
     """Test src\\photonomist\\__main__ > dir_name_exists
@@ -161,6 +193,36 @@ def test_transfer_photo_to_another_folder_if_it_has_valid_date(move_photo_del_fo
     export_path = r"test\data\testing_folder_with_photos\move_folder"
     transfer_photo(move_photo_del_folder, export_path)
     assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_14_place_reason_people")
+
+@pytest.fixture()
+def move_photo_del_folder_month_keyword():
+    move_photo_del_folder_month_keyword = r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    yield move_photo_del_folder_month_keyword
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_transfer_photo_to_another_folder_if_it_has_valid_date_month_keyword(move_photo_del_folder_month_keyword):
+    """Test src\\photonomist\\__main__ > transfer_photo
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    transfer_photo(move_photo_del_folder_month_keyword, export_path, year=False, month=True)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+
+@pytest.fixture()
+def move_photo_del_folder_year_keyword():
+    move_photo_del_folder_year_keyword = r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
+    yield move_photo_del_folder_year_keyword
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_transfer_photo_to_another_folder_if_it_has_valid_date_year_keyword(move_photo_del_folder_year_keyword):
+    """Test src\\photonomist\\__main__ > transfer_photo
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    transfer_photo(move_photo_del_folder_year_keyword, export_path, year=True, month=False)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
 
 @pytest.fixture()
 def move_canon_photo_del_folder():
@@ -246,6 +308,49 @@ def test_move_all_photos_of_all_folders(move_photos_del_folders):
     assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_24_place_reason_people")
     assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_25_place_reason_people")
 
+@pytest.fixture()
+def move_photos_del_folders_month():
+    photo_roots = traverse_photos_path(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla")
+    yield photo_roots
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\blabla\DSC_0262.NEF")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_04_place_reason_people\DSC_1402.JPG", r"test\data\testing_folder_with_photos\bla\blabla\blablabla\DSC_1402.JPG")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_10_place_reason_people\IMG_5494.CR2", r"test\data\testing_folder_with_photos\bla\blabla\IMG_5494.CR2")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_place_reason_people")
+    os.remove(r"test\data\testing_folder_with_photos\move_folder\not_transferred.txt")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_move_all_photos_of_all_folders_month(move_photos_del_folders_month):
+    """ Test for src\\photonomist\\__main__ > tidy_photos
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    tidy_photos(export_path, move_photos_del_folders_month, year=False, month=True)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_12_place_reason_people")
+    assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_04_place_reason_people")
+    assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_10_place_reason_people")
+
+@pytest.fixture()
+def move_photos_del_folders_year():
+    photo_roots = traverse_photos_path(r"C:\repos\photonomist\test\data\testing_folder_with_photos\bla\blabla")
+    yield photo_roots
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people\DSC_0262.NEF", r"test\data\testing_folder_with_photos\bla\blabla\DSC_0262.NEF")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people\DSC_1402.JPG", r"test\data\testing_folder_with_photos\bla\blabla\blablabla\DSC_1402.JPG")
+    shutil.move(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people\IMG_5494.CR2", r"test\data\testing_folder_with_photos\bla\blabla\IMG_5494.CR2")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people")
+    os.remove(r"test\data\testing_folder_with_photos\move_folder\not_transferred.txt")
+    os.rmdir(r"test\data\testing_folder_with_photos\move_folder")
+
+def test_move_all_photos_of_all_folders_year(move_photos_del_folders_year):
+    """ Test for src\\photonomist\\__main__ > tidy_photos
+    """
+    export_path = r"test\data\testing_folder_with_photos\move_folder"
+    tidy_photos(export_path, move_photos_del_folders_year, year=True, month=False)
+    assert "DSC_0262.NEF" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2019_place_reason_people")
+    assert "DSC_1402.JPG" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people")
+    assert "IMG_5494.CR2" in os.listdir(r"test\data\testing_folder_with_photos\move_folder\2020_place_reason_people")
+
 @pytest.mark.parametrize("random_slashes_path, expected", [
     ("this/is/a/random/path/with/backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
     ("this/is\\a\\random/path/with/backslashes", "this\\is\\a\\random\\path\\with\\backslashes"),
@@ -258,6 +363,41 @@ def test_a_path_does_not_have_backslashes(random_slashes_path, expected):
     Parametrized to test different paths with and without backslashes
     """
     assert replace_backslashes(random_slashes_path) == expected
+
+def test_informative_print_message_for_grouping_options(capsys):
+    """ Test for src\\photonomist\\__main__ > group_by_message
+    """
+    group_by_message()
+    captured = capsys.readouterr()
+    assert 'Dear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!' in captured.out
+
+@pytest.mark.parametrize("user_input, expected", [
+    ("blabla", True),
+    ("", True),
+    ("y", True),
+    ("Yes", True),
+    ("Parakalw polu", True),
+    ("n", False),
+    ("no", False),
+    ("No", False),
+    ("nO", False),
+    ("0", False),
+    ("false", False),
+    ("False", False),
+])
+def test_group_by_returns_true_or_false_on_user_value(monkeypatch, user_input, expected):
+    """ Test for src\\photonomist\\__main__ > group_by_
+    """
+    monkeypatch.setattr('builtins.input', lambda _: user_input)
+    assert group_by_(user_input) == expected
+
+def test_group_option_prints_group_message(capsys, monkeypatch):
+    """ Test for src\\photonomist\\__main__ > group_option
+    """
+    monkeypatch.setattr('builtins.input', lambda _: "kati")
+    group_option()
+    captured = capsys.readouterr()
+    assert 'Dear user,\nYou can group your photos by:\n\t1)Day\n\t2)Month\n\t3)Year\nPlease let me know your option!' in captured.out
 
 # Make the script executable.
 if __name__ == "__main__":

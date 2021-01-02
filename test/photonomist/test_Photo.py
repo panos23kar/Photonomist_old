@@ -73,6 +73,35 @@ def test_date_return_none_if_no_metadata():
     my_photo = Photo(photo_path)
     assert None == my_photo.get_date()
 
+@pytest.mark.parametrize("year, month, expected", [
+    (False, True, "2019:12"),
+    (True, False, "2019"),
+    (True, True, "2019:12"),
+    (False, False, "2019:12:14"),
+])
+def test_return_date_with_year_month_keywords(my_photo, year, month, expected):
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    assert my_photo.get_date(year=year, month=month) == expected
+
+@pytest.mark.parametrize("year, expected", [
+    (True, "2019"),
+    (False,"2019:12:14"),
+])
+def test_return_date_with_year_keyword(my_photo, year, expected):
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    assert my_photo.get_date(year=year) == expected
+
+@pytest.mark.parametrize("month, expected", [
+    (True, "2019:12"),
+    (False,"2019:12:14"),
+])
+def test_return_date_with_month_keyword(my_photo, month, expected):
+    """Test src\\photonomist\\photo.Photo> get_date
+    """
+    assert my_photo.get_date(month=month) == expected
+
 @pytest.fixture()
 def move_photo_del_folder():
     photo_path = r"test\data\testing_folder_with_photos\bla\DSC_0262.NEF"
@@ -120,6 +149,28 @@ def test_identifies_set_of_parentheses_which_contain_numbers(my_photo, parenthes
     """
     assert my_photo.find_parentheses_numbers(parentheses_text) == expected
 
+@pytest.mark.parametrize("date, expected", [
+    ("2019:12:14", "2019:12"),
+    ("1990:07:23", "1990:07"),
+    ("2021:01:02", "2021:01"),
+    (":-)_panagiotis", ":-)_panagio"),
+])
+def test_date_month_returns_only_year_month(my_photo, date, expected):
+    """Test src\\photonomist\\photo.Photo> date_month
+    """
+    assert my_photo.date_month(date) == expected
+
+@pytest.mark.parametrize("date, expected", [
+    ("2019:12:14", "2019"),
+    ("1990:07:23", "1990"),
+    ("2021:01:02", "2021"),
+    (":-)_panagiotis", ":-)_pana"),
+])
+def test_date_year_returns_only_year(my_photo, date, expected):
+    """Test src\\photonomist\\photo.Photo> date_year
+    """
+    assert my_photo.date_year(date) == expected
+    
 # Make the script executable.
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
