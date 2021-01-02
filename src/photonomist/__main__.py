@@ -6,7 +6,7 @@
 """
 import os, shutil, subprocess
 import collections
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(path:str)->str:
@@ -304,6 +304,13 @@ def open_export_folder(export_path:str):
     # subprocess.Popen(f'explorer "{export_path}"')
     subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
+def group_by_month():
+    month_value = (input("Do you want me to group your photos by month? [y/n] (default Yes): "))
+    if month_value.lower().rstrip() != "n" and month_value.lower().rstrip()!="no" and month_value.lower().rstrip() !="false" and month_value.rstrip()!="0":
+        return True
+    return False
+
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -317,6 +324,9 @@ def main():
     # Export path
     export_path = clean_path(path_string(input("Enter the path where your photo-folders will be created: ")))
     export_path_validation(export_path, photos_path, photos_roots)
+
+    # Group by month
+    month = group_by_month()
 
     # Moves photos
     tidy_photos(export_path, photos_roots)
