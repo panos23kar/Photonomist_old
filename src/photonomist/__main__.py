@@ -6,7 +6,7 @@
 """
 import os, shutil, subprocess
 import collections
-from photo import Photo
+from .photo import Photo
 
 
 def path_string(path:str)->str:
@@ -139,7 +139,7 @@ def disk_space(export_path:str, photos_total_size:int):
     else:
         raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
-def photo_dir_name(date:str, year=False, month=False)->str:
+def photo_dir_name(date:str, year:bool=False, month:bool=False)->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
     | **Name pattern**: *year_month_day_place_reason_people*
@@ -153,6 +153,10 @@ def photo_dir_name(date:str, year=False, month=False)->str:
     
     :param date: the date which will be used to populate the first three elements of the folder name
     :type date: str
+    :param year: indicates if the photos will be grouped by year
+    :type year: boolean
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
     :return: the wonna be directory name
     :rtype: str
     |
@@ -204,13 +208,17 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
-def transfer_photo(photo_path:str, export_path:str, year=False, month=False):
+def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=False):
     """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
     :type photo_path: str
     :param export_path: path to the directory where the photo folder will be created
     :type export_path: str
+    :param year: indicates if the photos will be grouped by year
+    :type year: boolean
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
     |
     """
     photo = Photo(photo_path)
@@ -266,13 +274,17 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:dict):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-def tidy_photos(export_path:str, photos_roots:dict, year=False, month=False):
+def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=False):
     """Initiates the transfer process for each photo
 
     :param export_path: path to the directory where the photo folder structure will be created
     :type export_path: str
     :param photos_roots: a dict with all the paths that contain photos
     :type photos_roots: dict
+    :param year: indicates if the photos will be grouped by year
+    :type year: boolean
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
     |
     """
 
