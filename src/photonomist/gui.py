@@ -111,7 +111,7 @@ class Gui:
             
             #Grouping Radio Buttons trial
             self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=8)
-            self.__widgets["grouping_frame"].place(x=100, y=100)
+            self.__widgets["grouping_frame"].place(x=80, y=90)
 
             self.__widgets["grouping_str_var"] = tk.StringVar()
 
@@ -123,9 +123,9 @@ class Gui:
             self.__widgets["grouping_month"].config(indicatoron=0, bd=2, width=8, value='month')
             self.__widgets["grouping_month"].grid(row=0, column=1)
 
-            hot = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
-            hot.config(indicatoron=0, bd=4, width=12, value='Hot')
-            hot.grid(row=0, column=2)
+            self.__widgets["grouping_year"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
+            self.__widgets["grouping_year"].config(indicatoron=0, bd=2, width=8, value='year')
+            self.__widgets["grouping_year"].grid(row=0, column=2)
     
     def __check_input_entry(self, *args):
         self.__run_button["state"] = "disabled"
