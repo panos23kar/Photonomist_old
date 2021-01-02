@@ -115,9 +115,9 @@ class Gui:
 
             self.__widgets["grouping_str_var"] = tk.StringVar()
 
-            mild = tk.Radiobutton(self.__widgets["grouping_frame"], text='Day', variable=self.__widgets["grouping_str_var"])
-            mild.config(indicatoron=0, bd=4, width=12, value='Mild')
-            mild.grid(row=0, column=0)
+            self.__widgets["grouping_day"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Day', variable=self.__widgets["grouping_str_var"])
+            self.__widgets["grouping_day"].config(indicatoron=0, bd=2, width=8, value='day')
+            self.__widgets["grouping_day"].grid(row=0, column=0)
 
             medium = tk.Radiobutton(self.__widgets["grouping_frame"], text='Month', variable=self.__widgets["grouping_str_var"])
             medium.config(indicatoron=0, bd=4, width=12, value='Medium')
