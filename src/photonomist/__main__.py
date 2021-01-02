@@ -204,7 +204,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
-def transfer_photo(photo_path:str, export_path:str):
+def transfer_photo(photo_path:str, export_path:str, year=year, month=month):
     """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
@@ -214,10 +214,10 @@ def transfer_photo(photo_path:str, export_path:str):
     |
     """
     photo = Photo(photo_path)
-    date = photo.get_date()
+    date = photo.get_date(year=year, month=month)
     
     if date:
-        photo_folder_name = photo_dir_name(date)
+        photo_folder_name = photo_dir_name(date, year=year, month=month)
         if not dir_name_exists(photo_folder_name, export_path):
             # I dont simply use a set because the photo_dir might exist from the past
             create_photo_dir(photo_folder_name, export_path)
