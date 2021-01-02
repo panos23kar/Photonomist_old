@@ -72,8 +72,10 @@ class Photo:
         
         :param year: indicates if the photos will be grouped by year
         :type year: boolean
+
         :param month: indicates if the photos will be grouped by month
-        :type month: boolean    
+        :type month: boolean
+
         :return: date of photo
         :rtype: str
         |
@@ -89,9 +91,27 @@ class Photo:
             return None
     
     def date_month(self, date:str)->str:
+        """Removes the day from the date time stamp. It returns the year_month part of the date. 
+        
+        :param date: date of photo
+        :type date: str
+           
+        :return: year_month part of date 
+        :rtype: str
+        |
+        """
         return date[:-3]
     
     def date_year(self, date:str)->str:
+        """Removes the day from the date time stamp. It returns the year part of the date. 
+        
+        :param date: date of photo
+        :type date: str
+           
+        :return: year part of date 
+        :rtype: str
+        |
+        """
         return date[:-6]
 
     def find_parentheses_numbers(self, new_path:str):
