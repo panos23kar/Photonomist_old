@@ -178,6 +178,9 @@ class Gui:
             return True, False
         else:
             return False, False
+    
+    def __create_name_pattern(self):
+        pass
 
     def __run_app(self):
         self.__validate_input_path()
@@ -189,7 +192,8 @@ class Gui:
         else:
             self.__widgets["export_invalid_path_value"].set("")
             year, month = self.__group_option()
-            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots, year=year, month=month)
+            name_pattern = self.__create_name_pattern()
+            tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots, year=year, month=month, name_pattern=name_pattern)
             open_export_folder(self.__widgets["export_path_value"].get())
             
     #------------------------------ Exclude Window-------------------------------------#
