@@ -6,7 +6,7 @@
 """
 import os, shutil, subprocess
 import collections
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(path:str)->str:
@@ -370,7 +370,7 @@ def name_convention():
     :rtype: str
     |
     """
-    name_options = ["place", "reason" + "people"]
+    name_options = ["place", "reason" , "people"]
     name_pattern = ""
     
     for option in name_options:
