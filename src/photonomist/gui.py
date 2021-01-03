@@ -37,12 +37,12 @@ class Gui:
         |
         """
         self.__gui.title("Photonomist")
-        self.__gui.geometry("440x300")
+        self.__gui.geometry("440x420")
 
         #Run Button widget
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
         
-        self.__run_button.place(x=310, y=250, height=21)
+        self.__run_button.place(x=310, y=380, height=21)
     
     def __quit(self):
         if messagebox.askyesno("", "Are you sure you want to quit Photonomist?"):
@@ -113,7 +113,7 @@ class Gui:
             self.__widgets["grouping_frame"] = tk.Frame(self.__gui, bd=2,)# background="red"
             self.__widgets["grouping_frame"].place(x=20, y=190)
 
-            #Label
+            ## Grouping Label
             self.__widgets["grouping_label"] = tk.Label(self.__widgets["grouping_frame"], text= "I 'll group your photos by..")
             self.__widgets["grouping_label"].grid(row=0, column=0, columnspan=3, sticky="w", pady=5)
 
@@ -131,6 +131,22 @@ class Gui:
             self.__widgets["grouping_year"] = tk.Radiobutton(self.__widgets["grouping_frame"], text='Year', variable=self.__widgets["grouping_str_var"])
             self.__widgets["grouping_year"].config(indicatoron=0, bd=2, width=8, value='year')
             self.__widgets["grouping_year"].grid(row=1, column=2)
+
+            # Name Pattern
+            self.__widgets["naming_label"] = tk.Label(self.__gui, text= "Click the labels that you want to add in the name of your photo folders: ")
+            self.__widgets["naming_label"].place(x=20, y=270)
+            ## Place 
+            self.__widgets["place_var"] = tk.IntVar()
+            self.__widgets["place_checkbox"] = tk.Checkbutton(self.__gui, text="_place", variable=self.__widgets["place_var"])
+            self.__widgets["place_checkbox"].place(x=20, y=290)
+            ## Reason
+            self.__widgets["reason_var"] = tk.IntVar()
+            self.__widgets["reason_checkbox"] = tk.Checkbutton(self.__gui, text="_reason", variable=self.__widgets["reason_var"])
+            self.__widgets["reason_checkbox"].place(x=20, y=310)
+            ## People
+            self.__widgets["people_var"] = tk.IntVar()
+            self.__widgets["people_checkbox"] = tk.Checkbutton(self.__gui, text="_people", variable=self.__widgets["people_var"])
+            self.__widgets["people_checkbox"].place(x=20, y=330)
     
     def __check_input_entry(self, *args):
         self.__run_button["state"] = "disabled"
