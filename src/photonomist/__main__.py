@@ -157,6 +157,8 @@ def photo_dir_name(date:str, year:bool=False, month:bool=False, name_pattern:str
     :type year: boolean
     :param month: indicates if the photos will be grouped by month
     :type month: boolean
+    :param name_pattern: A string name pattern after which the photo folders will be named 
+    :type name_pattern: str
     :return: the wonna be directory name
     :rtype: str
     |
@@ -219,6 +221,8 @@ def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=
     :type year: boolean
     :param month: indicates if the photos will be grouped by month
     :type month: boolean
+    :param name_pattern: A string name pattern after which the photo folders will be named 
+    :type name_pattern: str
     |
     """
     photo = Photo(photo_path)
@@ -285,6 +289,8 @@ def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=
     :type year: boolean
     :param month: indicates if the photos will be grouped by month
     :type month: boolean
+    :param name_pattern: A string name pattern after which the photo folders will be named 
+    :type name_pattern: str
     |
     """
 
