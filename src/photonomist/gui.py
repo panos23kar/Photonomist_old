@@ -180,7 +180,12 @@ class Gui:
             return False, False
     
     def __create_name_pattern(self):
-        pass
+        name_pattern = ""
+        for name_label in ["place", "reason", "people"]:
+            if self.__widgets[ name_label + "_var"].get():
+                name_pattern += self.__widgets[ name_label + "_checkbox"].cget("text")
+        print(name_pattern)
+        return name_pattern
 
     def __run_app(self):
         self.__validate_input_path()
