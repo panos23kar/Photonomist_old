@@ -6,7 +6,7 @@
 """
 import os, shutil, subprocess
 import collections
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(path:str)->str:
@@ -380,7 +380,7 @@ def name_convention():
     name_pattern = ""
     
     for option in name_options:
-        message = "Do you want me to append {option} at your name patter? [y/n] (default Yes): ".format(option=option)
+        message = "Do you want me to append --> {option} <-- at your name patter? [y/n] (default Yes): ".format(option=option)
         user_desire = (input(message))
         if filter_user_input(user_desire):
             name_pattern += "_" + option
