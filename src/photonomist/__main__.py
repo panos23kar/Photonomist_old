@@ -366,6 +366,10 @@ def name_convention():
     :rtype: str
     |
     """
+    name_options = ["place", "reason" + "people"]
+    for option in name_options:
+        pass
+
 
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
