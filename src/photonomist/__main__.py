@@ -371,8 +371,16 @@ def name_convention():
     |
     """
     name_options = ["place", "reason" + "people"]
+    name_pattern = ""
+    
     for option in name_options:
-        pass
+        message = "Do you want me to append {option} at your name patter? [y/n] (default Yes): ".format(option=option)
+        user_desire = (input(message))
+        if user_desire:
+            name_pattern += "_" + option
+    
+    return name_pattern
+
 
 
 def main():
