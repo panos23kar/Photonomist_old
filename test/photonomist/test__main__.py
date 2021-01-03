@@ -151,6 +151,20 @@ def test_create_photo_folder_name_no_year_keyword(date, month, expected):
     """
     assert expected == photo_dir_name(date, month=month)
 
+@pytest.mark.parametrize("date, name_pattern, expected", [
+    ("2016:12:17", "_place", "2016_12_17_place"),
+    ("2016:12:17", "_place_reason", "2016_12_17_place_reason"),
+    ("2016:12:17", "_place_people", "2016_12_17_place_people"),
+    ("2016:12:17", "_reason", "2016_12_17_reason"),
+    ("2016:12:17", "_reason_people", "2016_12_17_reason_people"),
+    ("2016:12:17", "_people", "2016_12_17_people"),
+    ("2016:12:17", "", "2016_12_17"),
+])
+def test_create_photo_folder_name_specified_name_pattern(date, name_pattern, expected):
+    """Test src\\photonomist\\__main__ > photo_dir_name
+    """
+    assert expected == photo_dir_name(date, name_pattern=name_pattern)
+
 def test_photo_folder_exist_in_export_path():
     """Test src\\photonomist\\__main__ > dir_name_exists
     """
