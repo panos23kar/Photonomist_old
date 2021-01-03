@@ -163,13 +163,13 @@ def photo_dir_name(date:str, year:bool=False, month:bool=False, name_pattern:str
     """
     if month:
         year, month = date.split(':')
-        return f"{year}_{month}_place_reason_people"
+        return f"{year}_{month}" + name_pattern
     elif year:
         year = date
-        return f"{year}_place_reason_people"
+        return f"{year}" + name_pattern
     else:
         year, month, day = date.split(':')
-        return f"{year}_{month}_{day}_place_reason_people"
+        return f"{year}_{month}_{day}" + name_pattern
 
 def dir_name_exists(dir_name:str, export_path:str)->bool:
     """Checks if a folder's name already contains the date of a photo
