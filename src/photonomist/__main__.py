@@ -359,6 +359,14 @@ def group_option():
     
     return year, month
 
+def name_convention():
+    """It 's called by the main function. It asks the user how she wants to name the photo folders
+
+    :return: A string name pattern after which the photo folders will be named 
+    :rtype: str
+    |
+    """
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -375,6 +383,7 @@ def main():
 
     # Group criteria
     year, month = group_option()
+    name_pattern = name_convention()
 
     # Moves photos
     tidy_photos(export_path, photos_roots, year=year, month=month)
