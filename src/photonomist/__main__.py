@@ -376,7 +376,7 @@ def name_convention():
     for option in name_options:
         message = "Do you want me to append {option} at your name patter? [y/n] (default Yes): ".format(option=option)
         user_desire = (input(message))
-        if user_desire:
+        if filter_user_input(user_desire):
             name_pattern += "_" + option
     
     return name_pattern
