@@ -6,7 +6,7 @@
 """
 import os, shutil, subprocess
 import collections
-from .photo import Photo
+from photo import Photo
 
 
 def path_string(path:str)->str:
@@ -139,7 +139,7 @@ def disk_space(export_path:str, photos_total_size:int):
     else:
         raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
-def photo_dir_name(date:str, year:bool=False, month:bool=False)->str:
+def photo_dir_name(date:str, year:bool=False, month:bool=False, name_pattern:str="_place_reason_people")->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
     | **Name pattern**: *year_month_day_place_reason_people*
@@ -157,19 +157,21 @@ def photo_dir_name(date:str, year:bool=False, month:bool=False)->str:
     :type year: boolean
     :param month: indicates if the photos will be grouped by month
     :type month: boolean
+    :param name_pattern: A string name pattern after which the photo folders will be named 
+    :type name_pattern: str
     :return: the wonna be directory name
     :rtype: str
     |
     """
     if month:
         year, month = date.split(':')
-        return f"{year}_{month}_place_reason_people"
+        return f"{year}_{month}" + name_pattern
     elif year:
         year = date
-        return f"{year}_place_reason_people"
+        return f"{year}" + name_pattern
     else:
         year, month, day = date.split(':')
-        return f"{year}_{month}_{day}_place_reason_people"
+        return f"{year}_{month}_{day}" + name_pattern
 
 def dir_name_exists(dir_name:str, export_path:str)->bool:
     """Checks if a folder's name already contains the date of a photo
@@ -208,7 +210,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
-def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=False):
+def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=False, name_pattern:str="_place_reason_people"):
     """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
@@ -219,13 +221,15 @@ def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=
     :type year: boolean
     :param month: indicates if the photos will be grouped by month
     :type month: boolean
+    :param name_pattern: A string name pattern after which the photo folders will be named 
+    :type name_pattern: str
     |
     """
     photo = Photo(photo_path)
     date = photo.get_date(year=year, month=month)
     
     if date:
-        photo_folder_name = photo_dir_name(date, year=year, month=month)
+        photo_folder_name = photo_dir_name(date, year=year, month=month, name_pattern=name_pattern)
         if not dir_name_exists(photo_folder_name, export_path):
             # I dont simply use a set because the photo_dir might exist from the past
             create_photo_dir(photo_folder_name, export_path)
@@ -274,7 +278,7 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:dict):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=False):
+def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=False, name_pattern:str="_place_reason_people"):
     """Initiates the transfer process for each photo
 
     :param export_path: path to the directory where the photo folder structure will be created
@@ -285,13 +289,15 @@ def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=
     :type year: boolean
     :param month: indicates if the photos will be grouped by month
     :type month: boolean
+    :param name_pattern: A string name pattern after which the photo folders will be named 
+    :type name_pattern: str
     |
     """
 
     # Iterate over list of photos
     for photo_list in photos_roots.values():
         for photo in photo_list:
-            transfer_photo(photo, export_path, year=year, month=month)
+            transfer_photo(photo, export_path, year=year, month=month, name_pattern=name_pattern)
 
 def replace_backslashes(path:str):
     """Replaces the backslashes of string-paths with double forward slashes
@@ -316,6 +322,12 @@ def open_export_folder(export_path:str):
     # subprocess.Popen(f'explorer "{export_path}"')
     subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
+def filter_user_input(user_input):
+    if user_input.lower().rstrip() != "n" and user_input.lower().rstrip()!="no" and user_input.lower().rstrip() !="false" and user_input.rstrip()!="0":
+        return True
+    return False
+    
+
 def group_by_(option):
     """Forms the message and register user's option with regards to the grouping desire 
 
@@ -326,9 +338,7 @@ def group_by_(option):
     """
     message = "Do you want me to group your photos by {option}? [y/n] (default Yes): ".format(option=option)
     user_desire = (input(message))
-    if user_desire.lower().rstrip() != "n" and user_desire.lower().rstrip()!="no" and user_desire.lower().rstrip() !="false" and user_desire.rstrip()!="0":
-        return True
-    return False
+    return filter_user_input(user_desire)
 
 def group_by_message():
     """It prints a message which explains the grouping options of the user.
@@ -359,6 +369,26 @@ def group_option():
     
     return year, month
 
+def name_convention():
+    """It 's called by the main function. It asks the user how she wants to name the photo folders
+
+    :return: A string name pattern after which the photo folders will be named 
+    :rtype: str
+    |
+    """
+    name_options = ["place", "reason" , "people"]
+    name_pattern = ""
+    
+    for option in name_options:
+        message = "Do you want me to append --> {option} <-- at your name patter? [y/n] (default Yes): ".format(option=option)
+        user_desire = (input(message))
+        if filter_user_input(user_desire):
+            name_pattern += "_" + option
+    
+    return name_pattern
+
+
+
 def main():
     """ Executes the application. It is responsible for getting the user's input, asserting its validity
     and initiating the transfer process
@@ -375,9 +405,10 @@ def main():
 
     # Group criteria
     year, month = group_option()
+    name_pattern = name_convention()
 
     # Moves photos
-    tidy_photos(export_path, photos_roots, year=year, month=month)
+    tidy_photos(export_path, photos_roots, year=year, month=month, name_pattern=name_pattern)
 
     # Open export path on file explorer
     open_export_folder(export_path)
