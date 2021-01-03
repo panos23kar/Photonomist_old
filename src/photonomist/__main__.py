@@ -316,6 +316,12 @@ def open_export_folder(export_path:str):
     # subprocess.Popen(f'explorer "{export_path}"')
     subprocess.Popen(f'explorer "{replace_backslashes(export_path)}"')
 
+def filter_user_input(user_input):
+    if user_input.lower().rstrip() != "n" and user_input.lower().rstrip()!="no" and user_input.lower().rstrip() !="false" and user_input.rstrip()!="0":
+        return True
+    return False
+    
+
 def group_by_(option):
     """Forms the message and register user's option with regards to the grouping desire 
 
@@ -326,9 +332,7 @@ def group_by_(option):
     """
     message = "Do you want me to group your photos by {option}? [y/n] (default Yes): ".format(option=option)
     user_desire = (input(message))
-    if user_desire.lower().rstrip() != "n" and user_desire.lower().rstrip()!="no" and user_desire.lower().rstrip() !="false" and user_desire.rstrip()!="0":
-        return True
-    return False
+    return filter_user_input(user_desire)
 
 def group_by_message():
     """It prints a message which explains the grouping options of the user.
