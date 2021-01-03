@@ -139,7 +139,7 @@ def disk_space(export_path:str, photos_total_size:int):
     else:
         raise Exception(f"You need at least {photos_total_size + 1073741824} free bytes but you only have {free} avaialable!")#TODO Log it
 
-def photo_dir_name(date:str, year:bool=False, month:bool=False)->str:
+def photo_dir_name(date:str, year:bool=False, month:bool=False, name_pattern:str=name_pattern)->str:
     """Generates the name of the folder where the photos will be moved according to their dates.
     
     | **Name pattern**: *year_month_day_place_reason_people*
@@ -208,7 +208,7 @@ def write_not_transferred_photos(photo_path:str, export_path:str):
     with open(os.path.join(export_path, "not_transferred.txt"), "a") as myfile:
         myfile.write(photo_path + "\n")
 
-def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=False):
+def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=False, name_pattern:str=name_pattern):
     """Moves a photo to a "date" folder, if a date was extracted.
 
     :param photo_path: path to photo
@@ -225,7 +225,7 @@ def transfer_photo(photo_path:str, export_path:str, year:bool=False, month:bool=
     date = photo.get_date(year=year, month=month)
     
     if date:
-        photo_folder_name = photo_dir_name(date, year=year, month=month)
+        photo_folder_name = photo_dir_name(date, year=year, month=month, name_pattern=name_pattern)
         if not dir_name_exists(photo_folder_name, export_path):
             # I dont simply use a set because the photo_dir might exist from the past
             create_photo_dir(photo_folder_name, export_path)
@@ -274,7 +274,7 @@ def export_path_validation(export_path:str, photos_path:str, photos_roots:dict):
         photos_total_size = photos_size(photos_roots)
         disk_space(export_path, photos_total_size)
 
-def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=False):
+def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=False, , name_pattern:str=name_pattern):
     """Initiates the transfer process for each photo
 
     :param export_path: path to the directory where the photo folder structure will be created
@@ -291,7 +291,7 @@ def tidy_photos(export_path:str, photos_roots:dict, year:bool=False, month:bool=
     # Iterate over list of photos
     for photo_list in photos_roots.values():
         for photo in photo_list:
-            transfer_photo(photo, export_path, year=year, month=month)
+            transfer_photo(photo, export_path, year=year, month=month, , name_pattern=name_pattern)
 
 def replace_backslashes(path:str):
     """Replaces the backslashes of string-paths with double forward slashes
@@ -402,7 +402,7 @@ def main():
     name_pattern = name_convention()
 
     # Moves photos
-    tidy_photos(export_path, photos_roots, year=year, month=month)
+    tidy_photos(export_path, photos_roots, year=year, month=month, name_pattern=name_pattern)
 
     # Open export path on file explorer
     open_export_folder(export_path)
