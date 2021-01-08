@@ -6,6 +6,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
 import webbrowser
+from .info_window import InfoWindow
 # Loading Window
 from threading import Thread
 from PIL import ImageTk
