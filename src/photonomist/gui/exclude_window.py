@@ -1,25 +1,25 @@
 import tkinter as tk
+from photonomist.__main__ import open_export_folder
+from loading_window import LoadingWindow
 
 class ExcludeWidnow ():
-    def __init__(self, main_window, photos_roots):
-        self.__gui = main_window
-        self.__photos_roots = photos_roots
-
+    def __init__(self, main_window):
+        self.__main_window_instance = main_window
     def excl_window(self):
         try:
-            self.__validate_input_path()
-            if not self.__photos_roots:
+            self.__main_window_instance._Gui__validate_input_path()
+            if not self.__main_window_instance._Gui__photos_roots:
                 raise Exception
         except:
             pass
         else:
             # Triggers loading window
-            self.__start_load_w_thread(self.__excl_w_layout)
+            LoadingWindow(self.__main_window_instance._Gui__gui).start_load_w_thread(self.__excl_w_layout)
 
     def __excl_w_layout(self):
 
         # Exclude window cconfiguration
-        self.__found_photos_window = tk.Toplevel(self.__gui)
+        self.__found_photos_window = tk.Toplevel(self.__main_window_instance._Gui__gui)
         self.__found_photos_window.title("Photos Folders")
         ## Exclude window gets the 'full' focus of the app
         self.__found_photos_window.grab_set()
@@ -56,15 +56,15 @@ class ExcludeWidnow ():
     def __excl_w_number_photos(self):
         #Number of photos Label for Exclude window
         self.__number_of_photos = 0
-        for photo_list in self.__photos_roots.values():
+        for photo_list in self.__main_window_instance._Gui__photos_roots.values():
             self.__number_of_photos += len(photo_list)
         
-        self.__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="I found " + str(self.__number_of_photos) + " photos in the folders below!\nUncheck the folders that you don't want me to touch!\n", justify="center")
-        self.__widgets["Numb_photos_label"].pack(anchor="center")
+        self.__main_window_instance._Gui__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="I found " + str(self.__number_of_photos) + " photos in the folders below!\nUncheck the folders that you don't want me to touch!\n", justify="center")
+        self.__main_window_instance._Gui__widgets["Numb_photos_label"].pack(anchor="center")
 
 
     def __excl_w_checkboxes(self):
-        self.__photos_folders = set(self.__photos_roots.keys())
+        self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
 
         self.__excl_w_checkbox_variables = {}
         self.__excl_w_checkboxes_dict = {}
@@ -135,11 +135,11 @@ class ExcludeWidnow ():
         """Check if I can get the excluded paths form exclude window"""
         for key,_ in self.__excl_w_checkboxes_dict.items():
             if  self.__excl_w_checkbox_variables[key.replace('\\\\','\\')].get() == 0:
-                if key in self.__photos_roots:
-                    del self.__photos_roots[key]
-        self.__excl_photos_roots = self.__photos_roots.copy() # I had strange issues when I sent the photos_roots dict without copying
-        self.__run_button["state"] = "normal"
-        self.__change_widget_color(self.__widgets["inputfind_photos_button"], "grey95")
+                if key in self.__main_window_instance._Gui__photos_roots:
+                    del self.__main_window_instance._Gui__photos_roots[key]
+        self.__excl_photos_roots = self.__main_window_instance._Gui__photos_roots.copy() # I had strange issues when I sent the photos_roots dict without copying
+        self.__main_window_instance._Gui__run_button["state"] = "normal"
+        self.__main_window_instance._Gui__change_widget_color(self.__main_window_instance._Gui__widgets["inputfind_photos_button"], "grey95")
         # Close Toplevel window
         self.__found_photos_window.destroy()
         self.__found_photos_window.update()

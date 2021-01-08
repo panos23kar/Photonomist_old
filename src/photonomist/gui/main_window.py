@@ -113,7 +113,7 @@ class Gui:
                 #TODO Connect it with exclude_window
                 #self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
                 #self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos")
-                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= ExcludeWidnow(self.__gui, self.__photos_roots).excl_window)
+                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= ExcludeWidnow(self).excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
             #Grouping Radio Buttons trial
