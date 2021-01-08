@@ -7,12 +7,6 @@ from tkinter import messagebox
 from functools import partial
 import webbrowser
 from info_window import InfoWindow
-# Loading Window
-from threading import Thread
-from PIL import ImageTk
-from PIL import Image
-import base64
-from io import BytesIO
 
 
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
