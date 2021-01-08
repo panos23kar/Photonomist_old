@@ -8,7 +8,7 @@
         except:
             pass
         else:
-            # Triggers oading window
+            # Triggers loading window
             self.__start_load_w_thread(self.__excl_w_layout)
 
     def __excl_w_layout(self):

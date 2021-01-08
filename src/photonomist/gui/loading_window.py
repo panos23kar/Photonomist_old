@@ -1,4 +1,3 @@
-# Loading Window
 from threading import Thread
 from PIL import ImageTk
 from PIL import Image
@@ -10,7 +9,7 @@ class LoadingWindow():
     def __init__(self, main_window):
         self.__gui = main_window
 
-    def __start_load_w_thread(self, func2run):
+    def start_load_w_thread(self, func2run):
         self.__load_widnow_thread = Thread(target=func2run)
         self.__load_widnow_thread.start()
 

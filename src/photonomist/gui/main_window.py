@@ -7,6 +7,7 @@ from tkinter import messagebox
 from functools import partial
 import webbrowser
 from info_window import InfoWindow
+from loading_window import LoadingWindow
 
 
 from photonomist.__main__ import input_path_validation, export_path_validation, tidy_photos, open_export_folder
@@ -40,7 +41,8 @@ class Gui:
         #Run Button widget
         #TODO Connect it with loading window
         #self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
-        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
+        #self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
+        self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(LoadingWindow(self.__gui).start_load_w_thread, self.__run_app), state="disabled")
         
         self.__run_button.place(x=310, y=380, height=21)
     
