@@ -6,7 +6,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from functools import partial
 import webbrowser
-from .info_window import InfoWindow
+from info_window import InfoWindow
 # Loading Window
 from threading import Thread
 from PIL import ImageTk
@@ -70,7 +70,7 @@ class Gui:
         self.__sub_menu_file.add_command(label="Quit", underline=0, command=self.__quit)
         #SubMenu Info
         #TODO Connect it with info_window
-        #self.__main_menu.add_command(label="Info...", command=self.__info_app, underline=1)
+        self.__main_menu.add_command(label="Info...", command=InfoWindow(self.__gui).info_app, underline=1)
     
     def __start_gui(self):
         """
