@@ -41,9 +41,6 @@ class Gui:
         self.__gui.geometry("440x420")
 
         #Run Button widget
-        #TODO Connect it with loading window
-        #self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(self.__start_load_w_thread, self.__run_app), state="disabled")
-        #self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= self.__run_app, state="disabled")
         self.__run_button = tk.Button(self.__gui, text="Run, Forrest, Run!!", command= partial(LoadingWindow(self.__gui).start_load_w_thread, self.__run_app), state="disabled")
         
         self.__run_button.place(x=310, y=380, height=21)
@@ -114,9 +111,6 @@ class Gui:
             
             if mode[0] == "input":
                 #Button widget
-                #TODO Connect it with exclude_window
-                #self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
-                #self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos")
                 self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__exl_w.excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
@@ -209,9 +203,6 @@ class Gui:
             self.__widgets["export_invalid_path_value"].set("")
             year, month = self.__group_option()
             name_pattern = self.__create_name_pattern()
-            #TODO Connect it with exclude_window
-            #tidy_photos(self.__widgets["export_path_value"].get(), self.__excl_photos_roots, year=year, month=month, name_pattern=name_pattern)
-            #tidy_photos(self.__widgets["export_path_value"].get(), self.__photos_roots, year=year, month=month, name_pattern=name_pattern)
             tidy_photos(self.__widgets["export_path_value"].get(), self.__exl_w._ExcludeWidnow__excl_photos_roots, year=year, month=month, name_pattern=name_pattern)
             open_export_folder(self.__widgets["export_path_value"].get())
 
