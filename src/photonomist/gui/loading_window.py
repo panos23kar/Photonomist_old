@@ -1,4 +1,6 @@
-#----------------------- Loading Window -----------------------------
+class LoadingWindow():
+    def __init__(self, main_window):
+        self.__gui = main_window
 
     def __start_load_w_thread(self, func2run):
         self.__load_widnow_thread = Thread(target=func2run)
