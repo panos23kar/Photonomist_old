@@ -1,8 +1,9 @@
 import tkinter as tk
 
 class ExcludeWidnow ():
-    def __init__(self, main_window):
+    def __init__(self, main_window, photos_roots):
         self.__gui = main_window
+        self.__photos_roots = photos_roots
 
     def excl_window(self):
         try:
