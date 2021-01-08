@@ -1,6 +1,12 @@
-    #------------------------------ Info Window-------------------------------------#
+import tkinter as tk
+import webbrowser
 
-    def __info_app(self):
+
+class InfoWindow():
+    def __init__(self, main_window):
+        self.__gui = main_window
+
+    def info_app(self):
 
         # Info window cconfiguration
         self.__info_window = tk.Toplevel(self.__gui)
