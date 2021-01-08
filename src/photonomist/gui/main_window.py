@@ -28,6 +28,7 @@ class Gui:
         self.__gui = tk.Tk()
         self.__main_window()
         self.__menu()
+        self.__initiate_exclude_window()
         self.__user_paths()
 
         self.__start_gui() 
@@ -75,6 +76,9 @@ class Gui:
         |
         """
         self.__gui.mainloop()
+    
+    def __initiate_exclude_window(self):
+        self.__exl_w = ExcludeWidnow(self)
 
     def __user_paths(self):
         """It hosts the label, stringvar, entry and file explorer button for the export path
@@ -113,7 +117,7 @@ class Gui:
                 #TODO Connect it with exclude_window
                 #self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__excl_window)
                 #self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos")
-                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= ExcludeWidnow(self).excl_window)
+                self.__widgets[mode[0] + "find_photos_button"] = tk.Button(self.__gui, text="Find Photos", command= self.__exl_w.excl_window)
                 self.__widgets[mode[0] + "find_photos_button"].place(x=340, y=mode[1]+50, height=21)
             
             #Grouping Radio Buttons trial
