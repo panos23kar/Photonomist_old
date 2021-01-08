@@ -1,5 +1,7 @@
-#------------------------------ Exclude Window-------------------------------------#
-    
+class ExcludeWidnow ():
+    def __init__(self, main_window):
+        self.__gui = main_window
+
     def __excl_window(self):
         try:
             self.__validate_input_path()
