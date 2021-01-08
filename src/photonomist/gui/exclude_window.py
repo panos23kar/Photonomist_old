@@ -1,3 +1,5 @@
+import tkinter as tk
+
 class ExcludeWidnow ():
     def __init__(self, main_window):
         self.__gui = main_window
