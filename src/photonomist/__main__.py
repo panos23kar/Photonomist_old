@@ -164,14 +164,33 @@ def photo_dir_name(date:str, year:bool=False, month:bool=False, name_pattern:str
     |
     """
     if month:
-        year, month = date.split(':')
+        year, month = split_date(date, True)
         return f"{year}_{month}" + name_pattern
     elif year:
         year = date
         return f"{year}" + name_pattern
     else:
-        year, month, day = date.split(':')
+        year, month, day = split_date(date, False)
         return f"{year}_{month}_{day}" + name_pattern
+
+def split_date(date:str, month:bool):
+    """Splits the date into year, month, day or year, day according to user's option
+    
+    :param date: the date which will be used to populate the first three elements of the folder name
+    :type date: str
+    :param month: indicates if the photos will be grouped by month
+    :type month: boolean
+    :return: tuple with split date info
+    :rtype: tuple
+    |
+    """
+    separator = ":" if ":" in date else "-"
+    if month:
+        return date.split(separator)
+    else:
+        return date.split(separator)
+
+
 
 def dir_name_exists(dir_name:str, export_path:str)->bool:
     """Checks if a folder's name already contains the date of a photo
