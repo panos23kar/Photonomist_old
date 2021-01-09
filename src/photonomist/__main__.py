@@ -164,15 +164,12 @@ def photo_dir_name(date:str, year:bool=False, month:bool=False, name_pattern:str
     |
     """
     if month:
-        #year, month = date.split(':') if date.contains(":") else year, month = date.split('-')
-        #year, month = date.split(':')
         year, month = split_date(date, True)
         return f"{year}_{month}" + name_pattern
     elif year:
         year = date
         return f"{year}" + name_pattern
     else:
-        #year, month, day = date.split(':')
         year, month, day = split_date(date, False)
         return f"{year}_{month}_{day}" + name_pattern
 
