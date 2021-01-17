@@ -22,11 +22,7 @@ class ExcludeWidnow ():
 
     def __excl_w_layout(self):
         self.__create_toplevel()
-
-        ##Canvas for Exclude window (it is need for scrolling (scrollbar) functionality)
-        self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0)#, background="#ffffff"
-        self.__excl_w_canvas.bind_all("<MouseWheel>", self.__on_mousewheel)
-        self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
+        self.__create_canvas()
 
         ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
         self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=40)
@@ -46,7 +42,13 @@ class ExcludeWidnow ():
         self.__found_photos_window = tk.Toplevel(self.__main_window_instance._Gui__gui)
         self.__found_photos_window.title("Photos Folders")
         self.__found_photos_window.grab_set()
-        
+
+    def __create_canvas(self):
+        # Needed for scrollbar
+        self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0)#, background="#ffffff"
+        self.__excl_w_canvas.bind_all("<MouseWheel>", self.__on_mousewheel)
+        self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
+
 
     def __on_frame_configure(self):
         '''Reset the scroll region to encompass the inner frame'''
