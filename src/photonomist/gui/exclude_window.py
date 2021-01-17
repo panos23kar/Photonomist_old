@@ -24,9 +24,7 @@ class ExcludeWidnow ():
         self.__create_toplevel()
         self.__create_canvas()
 
-        ##Frame for Exclude window (it is need for scrolling (scrollbar) functionality)
-        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=40)
-        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
+        self.__create_frame()
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
         ##Scrollbar for Exclude window
@@ -48,6 +46,11 @@ class ExcludeWidnow ():
         self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0)#, background="#ffffff"
         self.__excl_w_canvas.bind_all("<MouseWheel>", self.__on_mousewheel)
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
+
+    def __create_frame(self):
+        # Needed for scrollbar
+        self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=40)
+        self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
 
 
     def __on_frame_configure(self):
