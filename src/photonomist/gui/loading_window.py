@@ -18,7 +18,6 @@ class LoadingWindow():
         except:
             pass
 
-
     def start_load_w_thread(self, func2run):
         self.__load_widnow_thread = Thread(target=func2run)
         self.__load_widnow_thread.start()
@@ -39,16 +38,16 @@ class LoadingWindow():
 
     def __load_w_layout(self):
         self.__create_toplevel()
-
-        ##Canvas for Load window (it is need for scrolling (scrollbar) functionality)
-        self.__load_w_canvas = tk.Canvas(self.__loading_window,  width=500, height=500)
-        self.__load_w_canvas.pack()
+        self.__create_canvas()
 
     def __create_toplevel(self):
         self.__loading_window = tk.Toplevel(self.__gui)
         self.__loading_window.title("I'm working on it!!")
         self.__loading_window.grab_set()
 
+    def __create_canvas(self):
+        self.__load_w_canvas = tk.Canvas(self.__loading_window,  width=500, height=500)
+        self.__load_w_canvas.pack()
     
     def __draw_loading_camera(self):
         image = Image.open(BytesIO(base64.b64decode(self.__filename)))
