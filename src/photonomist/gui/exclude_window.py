@@ -146,10 +146,13 @@ class ExcludeWidnow ():
                 if key in self.__main_window_instance._Gui__photos_roots:
                     del self.__main_window_instance._Gui__photos_roots[key]
         self.__excl_photos_roots = self.__main_window_instance._Gui__photos_roots.copy() # I had strange issues when I sent the photos_roots dict without copying
+
+        self.__change_main_w_state()
+        self.__close_toplevel()
+
+    def __change_main_w_state(self):
         self.__main_window_instance._Gui__run_button["state"] = "normal"
         self.__main_window_instance._Gui__change_widget_color(self.__main_window_instance._Gui__widgets["inputfind_photos_button"], "grey95")
-
-        self.__close_toplevel()
 
     def __close_toplevel(self):
         self.__found_photos_window.destroy()
