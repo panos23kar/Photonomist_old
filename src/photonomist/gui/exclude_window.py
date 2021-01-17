@@ -32,6 +32,7 @@ class ExcludeWidnow ():
         self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
 
         self.__excl_w_number_photos()
+        self.__create_num_photos_label()
         self.__excl_w_checkboxes()
         self.__excl_w_resize_canvas()
 
@@ -66,10 +67,10 @@ class ExcludeWidnow ():
         self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
     def __excl_w_number_photos(self):
-        #Number of photos Label for Exclude window
         for photo_list in self.__main_window_instance._Gui__photos_roots.values():
             self.__number_of_photos += len(photo_list)
-        
+
+    def __create_num_photos_label(self):
         self.__main_window_instance._Gui__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="I found " + str(self.__number_of_photos) + " photos in the folders below!\nUncheck the folders that you don't want me to touch!\n", justify="center")
         self.__main_window_instance._Gui__widgets["Numb_photos_label"].pack(anchor="center")
 
