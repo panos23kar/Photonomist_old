@@ -5,6 +5,10 @@ from loading_window import LoadingWindow
 class ExcludeWidnow ():
     def __init__(self, main_window):
         self.__main_window_instance = main_window
+        self.__excl_w_checkbox_variables = {}
+        self.__excl_w_checkboxes_dict = {}
+        self.__excl_w_checkboxes_arrow_label = {}
+
     def excl_window(self):
         try:
             self.__main_window_instance._Gui__validate_input_path()
@@ -65,10 +69,6 @@ class ExcludeWidnow ():
 
     def __excl_w_checkboxes(self):
         self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
-
-        self.__excl_w_checkbox_variables = {}
-        self.__excl_w_checkboxes_dict = {}
-        self.__excl_w_checkboxes_arrow_label = {}
 
         self.__y_coord_link = 54
         for photo_folder in self.__photos_folders:
