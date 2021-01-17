@@ -87,6 +87,8 @@ class ExcludeWidnow ():
             #link close to photo folder paths in order to open the folders in file explorer
             self.__create_checkbox_label(photo_folder)
 
+            self.__y_coord_link +=25
+
     def __create_checkbox(self, photo_folder):
         self.__excl_w_checkbox_variables[photo_folder] = tk.IntVar(value=1)
         self.__excl_w_checkboxes_dict[photo_folder] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder,  variable=self.__excl_w_checkbox_variables[photo_folder], onvalue = 1,  offvalue = 0)
@@ -96,7 +98,9 @@ class ExcludeWidnow ():
         self.__excl_w_checkboxes_arrow_label[photo_folder] = tk.Label(self.__excl_w_frame, text="link", font="Helvetica 8 bold", fg="blue", cursor="hand2")
         self.__excl_w_checkboxes_arrow_label[photo_folder].place(x=self.__calculate_x_coord(len(photo_folder)), y=self.__y_coord_link)
         self.__excl_w_checkboxes_arrow_label[photo_folder].bind("<Button-1>", lambda e, photo_folder=photo_folder:self.__open_folder(photo_folder))
-        self.__y_coord_link +=25
+    
+    def __open_folder(self, photo_folder):
+        open_export_folder(photo_folder)
 
     def __create_good2go(self):
         self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__exclude_paths)
@@ -130,14 +134,8 @@ class ExcludeWidnow ():
         else:
             return int(num_of_chars * 5.85 )
 
-    def __open_folder(self, photo_folder):
-        open_export_folder(photo_folder)
-
-
     def __excl_w_resize_canvas(self):
-
         self.__excl_w_frame.update()
-
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
         self.__excl_w_canvas.configure(height=self.__excl_w_frame.winfo_height())
         
@@ -150,6 +148,9 @@ class ExcludeWidnow ():
         self.__excl_photos_roots = self.__main_window_instance._Gui__photos_roots.copy() # I had strange issues when I sent the photos_roots dict without copying
         self.__main_window_instance._Gui__run_button["state"] = "normal"
         self.__main_window_instance._Gui__change_widget_color(self.__main_window_instance._Gui__widgets["inputfind_photos_button"], "grey95")
-        # Close Toplevel window
+
+        self.__close_toplevel()
+
+    def __close_toplevel(self):
         self.__found_photos_window.destroy()
         self.__found_photos_window.update()
