@@ -10,6 +10,8 @@ class LoadingWindow():
     def __init__(self, main_window):
         self.__gui = main_window
         self.__read_loading_image_bytestream()
+        self.__load_image = Image.open(BytesIO(base64.b64decode(self.__filename)))
+
     
     def __read_loading_image_bytestream(self):
         try:
@@ -50,11 +52,10 @@ class LoadingWindow():
         self.__load_w_canvas.pack()
     
     def __draw_loading_camera(self):
-        image = Image.open(BytesIO(base64.b64decode(self.__filename)))
         angle = 0
         #while True:
         while self.__load_widnow_thread.is_alive():
-            tkimage = ImageTk.PhotoImage(image.rotate(angle))
+            tkimage = ImageTk.PhotoImage(self.__load_image.rotate(angle))
             canvas_obj = self.__load_w_canvas.create_image(
                 250, 250, image=tkimage)
             self.__loading_window.after(30,self.__update_load_w)
