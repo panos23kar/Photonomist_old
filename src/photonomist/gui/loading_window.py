@@ -55,10 +55,10 @@ class LoadingWindow():
         # Redrwaing the loading image window while photonomist is working
         while self.__load_widnow_thread.is_alive():
             self.__tkimage = ImageTk.PhotoImage(self.__load_image.rotate(self.__angle))
-            canvas_obj = self.__load_w_canvas.create_image(250, 250, image=self.__tkimage)
+            self.__canvas_obj = self.__load_w_canvas.create_image(250, 250, image=self.__tkimage)
             self.__loading_window.after(30,self.__update_load_w)
             yield
-            self.__load_w_canvas.delete(canvas_obj)
+            self.__load_w_canvas.delete(self.__canvas_obj)
             self.__angle = (self.__angle-10)%360
         
         self.__close_toplevel()
