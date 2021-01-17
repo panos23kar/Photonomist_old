@@ -9,6 +9,7 @@ import json
 class LoadingWindow():
     def __init__(self, main_window):
         self.__gui = main_window
+        self.__angle = 0
         self.__read_loading_image_bytestream()
         self.__load_image = Image.open(BytesIO(base64.b64decode(self.__filename)))
 
@@ -52,7 +53,6 @@ class LoadingWindow():
         self.__load_w_canvas.pack()
     
     def __draw_loading_camera(self):
-        self.__angle = 0
         while self.__load_widnow_thread.is_alive():
             tkimage = ImageTk.PhotoImage(self.__load_image.rotate(self.__angle))
             canvas_obj = self.__load_w_canvas.create_image(
