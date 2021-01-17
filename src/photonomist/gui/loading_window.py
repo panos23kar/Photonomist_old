@@ -4,6 +4,7 @@ from PIL import Image
 import base64
 from io import BytesIO
 import tkinter as tk
+import json
 
 class LoadingWindow():
     def __init__(self, main_window):
@@ -48,8 +49,9 @@ class LoadingWindow():
     
     def __load_w_layout(self):
         # Loading window image bytestream
-        data = 
-        self.__filename = data
+        with open(r'src\photonomist\gui\load_image_bytes.json') as image_bytestream:
+            data = json.load(image_bytestream)
+            self.__filename = data["data"]
 
         # Load window cconfiguration
         self.__loading_window = tk.Toplevel(self.__gui)
