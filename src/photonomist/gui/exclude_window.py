@@ -47,24 +47,24 @@ class ExcludeWidnow ():
         self.__excl_w_canvas.bind_all("<MouseWheel>", self.__on_mousewheel)
         self.__excl_w_canvas.pack(side="left", fill="both", expand=True)
 
+    def __on_mousewheel(self, event):
+        """ It listens for mouse's wheel scrolling. 
+        https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
+        self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+
     def __create_frame(self):
         # Needed for scrollbar
         self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=40)
         self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
 
+    def __on_frame_configure(self):
+        '''Reset the scroll region to encompass the inner frame'''
+        self.__excl_w_canvas.configure(scrollregion=self.__excl_w_canvas.bbox("all"))
+
     def __create_scrollbar(self):
         # Scrollbar
         self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
         self.__excl_w_scrollbar.pack(side="right", fill="y")
-
-    def __on_frame_configure(self):
-        '''Reset the scroll region to encompass the inner frame'''
-        self.__excl_w_canvas.configure(scrollregion=self.__excl_w_canvas.bbox("all"))
-    
-    def __on_mousewheel(self, event):
-        """ It listens for mouse's wheel scrolling. 
-        https://stackoverflow.com/questions/17355902/tkinter-binding-mousewheel-to-scrollbar"""
-        self.__excl_w_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
     def __excl_w_number_photos(self):
         for photo_list in self.__main_window_instance._Gui__photos_roots.values():
@@ -73,7 +73,6 @@ class ExcludeWidnow ():
     def __create_num_photos_label(self):
         self.__main_window_instance._Gui__widgets["Numb_photos_label"] = tk.Label(self.__excl_w_frame, text="I found " + str(self.__number_of_photos) + " photos in the folders below!\nUncheck the folders that you don't want me to touch!\n", justify="center")
         self.__main_window_instance._Gui__widgets["Numb_photos_label"].pack(anchor="center")
-
 
     def __excl_w_checkboxes(self):
         self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
