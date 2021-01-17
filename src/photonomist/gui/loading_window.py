@@ -63,5 +63,4 @@ class LoadingWindow():
             angle -= 10
             angle %= 360
         
-        self.__loading_window.destroy()
-        self.__loading_window.update()
+        self.__close_toplevel()
