@@ -27,9 +27,7 @@ class ExcludeWidnow ():
         self.__create_frame()
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
-        ##Scrollbar for Exclude window
-        self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
-        self.__excl_w_scrollbar.pack(side="right", fill="y")
+
         self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
 
         self.__excl_w_number_photos()
@@ -52,6 +50,10 @@ class ExcludeWidnow ():
         self.__excl_w_frame = tk.Frame(self.__excl_w_canvas, background="grey95", padx=40)
         self.__excl_w_frame.bind("<Configure>", lambda event, canvas=self.__excl_w_canvas: self.__on_frame_configure())
 
+    def __create_scrollbar(self):
+        # Scrollbar
+        self.__excl_w_scrollbar = tk.Scrollbar(self.__found_photos_window, orient="vertical", command=self.__excl_w_canvas.yview)
+        self.__excl_w_scrollbar.pack(side="right", fill="y")
 
     def __on_frame_configure(self):
         '''Reset the scroll region to encompass the inner frame'''
