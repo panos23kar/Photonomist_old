@@ -13,7 +13,6 @@ class LoadingWindow():
         self.__read_loading_image_bytestream()
         self.__load_image = Image.open(BytesIO(base64.b64decode(self.__filename)))
 
-    
     def __read_loading_image_bytestream(self):
         try:
             with open(r'src\photonomist\gui\load_image_bytes.json') as image_bytestream:
