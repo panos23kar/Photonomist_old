@@ -9,25 +9,8 @@ import json
 class LoadingWindow():
     def __init__(self, main_window):
         self.__gui = main_window
-
-    def start_load_w_thread(self, func2run):
-        self.__load_widnow_thread = Thread(target=func2run)
-        self.__load_widnow_thread.start()
-        # Loading Image window while photonomist is working on user's request
-        self.__check_thread()
+        self.__read_loading_image_bytestream()
     
-    def __close_toplevel(self):
-        self.__loading_window.destroy()
-        self.__loading_window.update()
-    
-    def __check_thread(self):
-        if not self.__load_widnow_thread.is_alive():
-            self.__close_toplevel()
-        else:
-            self.__load_w_layout()
-            self.__update_load_w = self.__draw_loading_camera().__next__
-            self.__load_w_canvas.after(100, self.__update_load_w)
-
     def __read_loading_image_bytestream(self):
         try:
             with open(r'src\photonomist\gui\load_image_bytes.json') as image_bytestream:
@@ -36,18 +19,36 @@ class LoadingWindow():
             pass
 
 
-    def __load_w_layout(self):
-        # Loading window image bytestream
+    def start_load_w_thread(self, func2run):
+        self.__load_widnow_thread = Thread(target=func2run)
+        self.__load_widnow_thread.start()
+        # Loading Image window while photonomist is working on user's request
+        self.__check_thread()
+    
+    def __check_thread(self):
+        if not self.__load_widnow_thread.is_alive():
+            self.__close_toplevel()
+        else:
+            self.__load_w_layout()
+            self.__update_load_w = self.__draw_loading_camera().__next__
+            self.__load_w_canvas.after(100, self.__update_load_w)
+    
+    def __close_toplevel(self):
+        self.__loading_window.destroy()
+        self.__loading_window.update()
 
-        # Load window cconfiguration
-        self.__loading_window = tk.Toplevel(self.__gui)
-        self.__loading_window.title("I'm working on it!!")
-        ## Load window gets the 'full' focus of the app
-        self.__loading_window.grab_set()
+    def __load_w_layout(self):
+        self.__create_toplevel()
 
         ##Canvas for Load window (it is need for scrolling (scrollbar) functionality)
         self.__load_w_canvas = tk.Canvas(self.__loading_window,  width=500, height=500)
-        self.__load_w_canvas.pack()      
+        self.__load_w_canvas.pack()
+
+    def __create_toplevel(self):
+        self.__loading_window = tk.Toplevel(self.__gui)
+        self.__loading_window.title("I'm working on it!!")
+        self.__loading_window.grab_set()
+
     
     def __draw_loading_camera(self):
         image = Image.open(BytesIO(base64.b64decode(self.__filename)))
