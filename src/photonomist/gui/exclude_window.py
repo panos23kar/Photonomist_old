@@ -9,7 +9,6 @@ class ExcludeWidnow ():
         self.__excl_w_checkboxes_dict = {}
         self.__excl_w_checkboxes_arrow_label = {}
         self.__number_of_photos = 0
-        self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
 
     def excl_window(self):
         try:
@@ -78,10 +77,10 @@ class ExcludeWidnow ():
 
     def __excl_w_checkboxes(self):
         self.__y_coord_link = 54
+        self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
         for photo_folder in self.__photos_folders:
-            self.__excl_w_checkbox_variables[photo_folder] = tk.IntVar(value=1)
-            self.__excl_w_checkboxes_dict[photo_folder] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder,  variable=self.__excl_w_checkbox_variables[photo_folder], onvalue = 1,  offvalue = 0)
-            self.__excl_w_checkboxes_dict[photo_folder].pack(anchor="w")
+            self.__create_checkbox(photo_folder)
+
 
             #link close to photo folder paths in order to open the folders in file explorer
             self.__excl_w_checkboxes_arrow_label[photo_folder] = tk.Label(self.__excl_w_frame, text="link", font="Helvetica 8 bold", fg="blue", cursor="hand2")
@@ -92,7 +91,12 @@ class ExcludeWidnow ():
             
         self.__exclude_window_button = tk.Button(self.__excl_w_frame, text="Good2Go", command = self.__exclude_paths) #TODO --> Needs to be connected with a function
         self.__exclude_window_button.pack(side="bottom", padx=5, pady=5)
-    
+
+    def __create_checkbox(self, photo_folder):
+        self.__excl_w_checkbox_variables[photo_folder] = tk.IntVar(value=1)
+        self.__excl_w_checkboxes_dict[photo_folder] = tk.Checkbutton(self.__excl_w_frame, text=photo_folder,  variable=self.__excl_w_checkbox_variables[photo_folder], onvalue = 1,  offvalue = 0)
+        self.__excl_w_checkboxes_dict[photo_folder].pack(anchor="w")
+
     def __calculate_x_coord(self, num_of_chars):#TODO-> quick and dirty. chnage it
         if num_of_chars <  20:
             return int(num_of_chars * 6.8 )
