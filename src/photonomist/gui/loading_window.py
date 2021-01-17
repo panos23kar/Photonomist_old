@@ -60,7 +60,6 @@ class LoadingWindow():
             self.__loading_window.after(30,self.__update_load_w)
             yield
             self.__load_w_canvas.delete(canvas_obj)
-            angle -= 10
-            angle %= 360
+            self.__angle = (self.__angle-10)%360
         
         self.__close_toplevel()
