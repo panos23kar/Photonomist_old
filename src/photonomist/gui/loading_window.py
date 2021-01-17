@@ -16,13 +16,16 @@ class LoadingWindow():
         self.__check_thread()
         #self.__loading_window.after(50, self.__check_thread)
     
+    def __close_toplevel(self):
+        self.__loading_window.destroy()
+        self.__loading_window.update()
+
+
+    
     def __check_thread(self):
 
         if not self.__load_widnow_thread.is_alive():
-            # Close Toplevel window
-            self.__loading_window.destroy()
-            self.__loading_window.update()
-
+            self.__close_toplevel()
         else:
             self.__load_w_layout()
             self.__update_load_w = self.__draw_loading_camera().__next__
