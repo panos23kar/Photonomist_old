@@ -9,6 +9,7 @@ class ExcludeWidnow ():
         self.__excl_w_checkboxes_dict = {}
         self.__excl_w_checkboxes_arrow_label = {}
         self.__number_of_photos = 0
+        self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
 
     def excl_window(self):
         try:
@@ -33,6 +34,7 @@ class ExcludeWidnow ():
 
         self.__excl_w_number_photos()
         self.__create_num_photos_label()
+
         self.__excl_w_checkboxes()
         self.__excl_w_resize_canvas()
 
@@ -75,8 +77,6 @@ class ExcludeWidnow ():
         self.__main_window_instance._Gui__widgets["Numb_photos_label"].pack(anchor="center")
 
     def __excl_w_checkboxes(self):
-        self.__photos_folders = set(self.__main_window_instance._Gui__photos_roots.keys())
-
         self.__y_coord_link = 54
         for photo_folder in self.__photos_folders:
             self.__excl_w_checkbox_variables[photo_folder] = tk.IntVar(value=1)
@@ -128,12 +128,6 @@ class ExcludeWidnow ():
     def __excl_w_resize_canvas(self):
 
         self.__excl_w_frame.update()
-
-
-        print("Im here",self.__excl_w_frame.winfo_width())
-        #self.__excl_w_frame.configure(width=self.__excl_w_frame.winfo_width() + 30)
-        print("Now im here",self.__excl_w_frame.winfo_width())
-
 
         self.__excl_w_canvas.configure(width=self.__excl_w_frame.winfo_width())
         self.__excl_w_canvas.configure(height=self.__excl_w_frame.winfo_height())
