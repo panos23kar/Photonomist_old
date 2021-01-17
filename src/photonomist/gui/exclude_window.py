@@ -21,12 +21,7 @@ class ExcludeWidnow ():
             LoadingWindow(self.__main_window_instance._Gui__gui).start_load_w_thread(self.__excl_w_layout)
 
     def __excl_w_layout(self):
-
-        # Exclude window cconfiguration
-        self.__found_photos_window = tk.Toplevel(self.__main_window_instance._Gui__gui)
-        self.__found_photos_window.title("Photos Folders")
-        ## Exclude window gets the 'full' focus of the app
-        self.__found_photos_window.grab_set()
+        self.__create_toplevel()
 
         ##Canvas for Exclude window (it is need for scrolling (scrollbar) functionality)
         self.__excl_w_canvas = tk.Canvas(self.__found_photos_window, borderwidth=0)#, background="#ffffff"
@@ -47,6 +42,11 @@ class ExcludeWidnow ():
         self.__excl_w_checkboxes()
         self.__excl_w_resize_canvas()
 
+    def __create_toplevel(self):
+        self.__found_photos_window = tk.Toplevel(self.__main_window_instance._Gui__gui)
+        self.__found_photos_window.title("Photos Folders")
+        self.__found_photos_window.grab_set()
+        
 
     def __on_frame_configure(self):
         '''Reset the scroll region to encompass the inner frame'''
