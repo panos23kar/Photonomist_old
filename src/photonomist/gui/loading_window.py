@@ -52,10 +52,9 @@ class LoadingWindow():
         self.__load_w_canvas.pack()
     
     def __draw_loading_camera(self):
-        angle = 0
-        #while True:
+        self.__angle = 0
         while self.__load_widnow_thread.is_alive():
-            tkimage = ImageTk.PhotoImage(self.__load_image.rotate(angle))
+            tkimage = ImageTk.PhotoImage(self.__load_image.rotate(self.__angle))
             canvas_obj = self.__load_w_canvas.create_image(
                 250, 250, image=tkimage)
             self.__loading_window.after(30,self.__update_load_w)
