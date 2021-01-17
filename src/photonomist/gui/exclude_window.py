@@ -8,6 +8,7 @@ class ExcludeWidnow ():
         self.__excl_w_checkbox_variables = {}
         self.__excl_w_checkboxes_dict = {}
         self.__excl_w_checkboxes_arrow_label = {}
+        self.__number_of_photos = 0
 
     def excl_window(self):
         try:
@@ -27,7 +28,7 @@ class ExcludeWidnow ():
         self.__create_frame()
         self.__excl_w_canvas.create_window((1,1), window=self.__excl_w_frame, anchor="n")
 
-
+        self.__create_scrollbar()
         self.__excl_w_canvas.configure(yscrollcommand=self.__excl_w_scrollbar.set)
 
         self.__excl_w_number_photos()
@@ -66,7 +67,6 @@ class ExcludeWidnow ():
 
     def __excl_w_number_photos(self):
         #Number of photos Label for Exclude window
-        self.__number_of_photos = 0
         for photo_list in self.__main_window_instance._Gui__photos_roots.values():
             self.__number_of_photos += len(photo_list)
         
